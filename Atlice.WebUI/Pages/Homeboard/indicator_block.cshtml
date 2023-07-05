@@ -1,0 +1,39 @@
+﻿@model Atlice.Domain.Entities.AtliceTap
+@{
+    Layout = null;
+}
+@if (Model.Locked)
+{
+    <div id="lockstatus" class="indicator-block locked">
+        <div class="div-block-51">
+            <div class="div-block-50"><img src="../images/Artboard-1.png" loading="lazy" alt=""></div>
+            @if (Model.ContactPage != null)
+            {
+                <div class="device-status-box contact-page-selection" id="pagetypeupdate">@Model.ContactPage.PageType</div>
+
+            }
+        </div>
+
+    </div>
+    <div class="device-status-box locked">Device Not Activated</div>
+}
+else
+{
+    @if(Model.ContactPage is not null){
+        <div id="lockstatus" class="indicator-block">
+            <div class="div-block-51">
+                <div class="div-block-50"><img src="../images/Artboard-1.png" loading="lazy" alt=""></div>
+                <div class="device-status-box contact-page-selection" id="pagetypeupdate">@Model.ContactPage.PageType</div>
+            </div>
+            @if (Model.Bypass)
+            {
+                <div class="indicator-block horizontal">
+                    <div class="div-block-47"><img src="../images/Artboard-22_1.png" loading="lazy" alt=""></div>
+                    <div class="div-block-46"><img src="@Model.BypassImage" loading="lazy" alt=""></div>
+                </div>
+            }
+
+        </div>
+    }
+    
+}

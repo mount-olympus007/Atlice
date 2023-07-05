@@ -1,0 +1,36 @@
+﻿@{
+    Layout = null;
+}
+ <div style="display:none;opacity:0" class="modal link-to delete-confirmation">
+    <div class="modal-mask"></div>
+    <div class="modal-container-2 confirmation">
+      <div class="single-layout-right">
+        <div class="single-layout-right-content delete-confirmation">
+          <div class="single-layout-logo-right hidden">
+            <a href="#" class="w-inline-block"><img src="../images/Atlice-Tap-NFC-Tag--256px.png" width="40" alt=""></a>
+          </div>
+          <h3 class="text-center mb-40 hidden">Manage Pages</h3>
+          <div class="section-inner landing hidden">
+            <div class="account landing"><img src="../images/Profile-Photo.png" sizes="100vw" srcset="../images/Profile-Photo-p-500.png 500w, ../images/Profile-Photo.png 608w" alt="" class="account-user-icon">
+              <div class="account-user-datails">
+                <h6 class="mb-0 card-title"><strong class="bold-text-104 card-title">Alexander Oliver</strong></h6>
+              </div>
+            </div>
+            <div class="label-item">Personal</div>
+          </div>
+          <div class="div-block-87"><img src="../images/atlice-tap-nfc-tag-4.png" loading="lazy" sizes="100vw" height="50" srcset="../images/atlice-tap-nfc-tag-4-p-500.png 500w, ../images/atlice-tap-nfc-tag-4-p-800.png 800w, ../images/atlice-tap-nfc-tag-4-p-1080.png 1080w, ../images/atlice-tap-nfc-tag-4-p-1600.png 1600w, ../images/atlice-tap-nfc-tag-4.png 1800w" alt="" class="image-84"></div>
+          <div class="section-inner cropper">
+            <div class="div-block-72">
+              <a data-w-id="e558b7e4-3c7f-cc85-5186-bb3997286326" href="#" class="modal-close photo-upload w-inline-block"></a>
+            </div>
+            <h4 class="heading-65 delete-confirmation">Are you sure you want to delete? <br>This cannot be undone.</h4>
+            <div class="page-editor-top-bar image-save-button">
+                        <span id="contactIdHolder" class="hidden"></span>
+              <a href="#" onclick="fetch('/homeboard/index?handler=deletecontact&id='+ $(this).prev().attr('class')).then(x=>x.json())" data-w-id="ed9a9d82-c75f-f35f-8ae2-64acd4be4fae" class="button-5 atlice-button-primary delete w-button">DElete</a>
+            </div>
+          </div>
+          
+        </div>
+      </div>
+    </div>
+  </div>

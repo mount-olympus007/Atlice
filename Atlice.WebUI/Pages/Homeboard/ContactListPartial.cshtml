@@ -1,0 +1,51 @@
+﻿@model IEnumerable<Atlice.WebUI.Pages.Homeboard.IndexModel.ContactModel>
+@{
+    Layout = null;
+}
+
+@foreach (var contact in Model.OrderByDescending(x => x.Contact.DateMeet))
+{
+    if (contact.Contact.LinkedPage is not null)
+    {
+        string mail = "mailto:" + contact.Contact.Email;
+        <div class="div-block-56">
+            <div class="columns-5 contact-info w-row">
+                <div class="column-13 w-col w-col-5">
+                    <div class="div-block-54">
+                        <div class="div-block-55"><img src="../images/Orion_men.svg" loading="lazy" alt="" class="contacts-avatar contact-pad"></div>
+                    </div>
+                    <h6 class="contact-name-title">@contact.Contact.Name</h6>
+                </div>
+                <div class="column-13 w-col w-col-7">
+                    <div class="text-block-54">@contact.Contact.DateMeet.ToShortDateString(), @contact.Contact.DateMeet.ToShortTimeString()</div>
+                    <div class="text-block-55">@contact.Contact.LinkedPage.PageType</div>
+                </div>
+            </div>
+            <div class="contact-button-columns">
+                <div class="w-layout-grid contact-button-grid">
+                    <a style="background-color:black;" href="tel:@contact.Contact.Phone" class="call-contact w-inline-block"></a>
+                    <a style="background-color:black;" id="w-node-b856fbee-26f4-b214-692c-a07036270345-9c649d68" href="sms:@contact.Contact.Phone" class="message-contact w-inline-block"></a>
+                </div>
+                <div class="w-layout-grid contact-button-grid">
+                    <a style="background-color:black;" id="w-node-_146f66c2-6b03-3073-1134-fcf8b64699af-9c649d68" href="@mail" class="email-contact w-inline-block"></a>
+                    <a style="background-color:black;" id="w-node-_146f66c2-6b03-3073-1134-fcf8b64699b0-9c649d68" href="/homeboard/index?handler=downloadvcard&id=@contact.Contact.Id" class="save-contact w-inline-block"></a>
+                </div>
+            </div>
+            <div onclick="javascript:{$(this).parent().remove(); $('#contactIdHolder').attr('class','@contact.Contact.Id');}" data-w-id="fea45898-185d-e60e-c62f-179dfe7b24a2" class="div-block-59"><img src="../images/close-x-delete-reject-decline.png" loading="lazy" alt="" class="image-73"></div>
+
+
+        </div>
+        @if (User.IsInRole("Adminis"))
+        {
+            <div style="text-align:center;">
+                @if (contact.Role != "Citizen" && contact.Role != "Adminis" && !contact.CitizenTrack)
+                {
+                    <a href="/tap/invite?mobile=@contact.Contact.Phone" style="width:100%; text-align:center; color:black;" class="btn">Invite Prospect to Enroll</a>
+                }
+
+            </div>
+
+        }
+
+    }
+}

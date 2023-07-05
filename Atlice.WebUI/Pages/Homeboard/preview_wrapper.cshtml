@@ -1,0 +1,508 @@
+﻿@model Atlice.Domain.Entities.ContactPage
+
+@{
+    Layout = null;
+    var calendar = Model.TapLinks.FirstOrDefault(x => x.SocialProvider == Atlice.Domain.Entities.SocialProvider.Calendar);
+    var announcement = Model.TapLinks.FirstOrDefault(x => x.SocialProvider == Atlice.Domain.Entities.SocialProvider.Announcement);
+    var file = Model.TapLinks.FirstOrDefault(x => x.SocialProvider == Atlice.Domain.Entities.SocialProvider.File);
+    var pays = Model.TapLinks.Where(x => x.LinkType == Domain.Entities.LinkType.Pay && x.ShowPreview);
+    var connects = Model.TapLinks.Where(x => x.LinkType == Domain.Entities.LinkType.Connect && x.ShowPreview);
+    var chains = Model.TapLinks.Where(x => x.LinkType == Domain.Entities.LinkType.Blockchain && x.ShowPreview);
+    var shops = Model.TapLinks.Where(x => x.LinkType == Domain.Entities.LinkType.Shop && x.ShowPreview);
+    var listConnects = connects.Where(x =>!string.IsNullOrEmpty(x.Title));
+    var height = "";
+    if(!Model.SaveToContactsPreview && !Model.SubConpreview){
+        height = "600px";
+    }
+    
+}
+<div style="opacity:1" class="modal link-to stc-notes">
+    <div class="modal-mask pages-intro"></div>
+    <div class="modal-container-2 note modal">
+        <div class="single-layout-right">
+            <div class="stc-single-layout-right-content">
+                <div class="single-layout-logo-right hidden">
+                    <a href="#" class="w-inline-block"><img src="../images/Atlice-Tap-NFC-Tag--256px.png" width="40" alt=""></a>
+                </div>
+                <h3 class="text-center mb-40 hidden">Manage Pages</h3>
+              
+                <div class="notes-image-block"></div>
+                <h1 class="note-heading">Send yourself a private note about Alexander.</h1>
+                <div class="form-block w-form">
+                    <form id="email-form" name="email-form" data-name="Email Form" method="get" class="form-6"><textarea name="field-6" maxlength="5000" id="field-6" placeholder="Enter note" data-name="Field 6" class="note-textbox w-input"></textarea><input type="email" class="text-field-2 w-input" maxlength="256" name="Personal-Email" data-name="Personal Email" placeholder="Enter email address" id="Personal-Email" required=""><input type="submit" value="Send" data-wait="Please wait..." class="atlice-tap-button default loud w-button"><input type="submit" value="Close" data-wait="Please wait..." data-w-id="e05a28e9-6a45-b789-88ec-e816c77b5b7a" class="atlice-tap-button alternate w-button"></form>
+                    <div class="w-form-done">
+                        <div>Thank you! Your submission has been received!</div>
+                    </div>
+                    <div class="w-form-fail">
+                        <div>Oops! Something went wrong while submitting the form.</div>
+                    </div>
+                    <div class="text-block-50">By clicking send, you will get invite-only access to Atlice.<br></div>
+                </div>
+            </div>
+        </div>
+        <a data-w-id="e05a28e9-6a45-b789-88ec-e816c77b5b83" href="#" class="modal-close w-inline-block"></a>
+    </div>
+</div>
+<div class="div-block-16">
+    <div id="top" class="hero-background-image atlice wf-section" data-ix="header-image-fade-in-and-move-up-on-load"></div>
+</div>
+<div id="Top" class="nav02_top preview">
+    <div class="nav02_top_wrap contact-page">
+        <div class="nav02_top_right top-bar contact-page">
+            <div data-delay="0" data-hover="false" class="nav02_account w-dropdown">
+                <div class="nav02_account_toggle top-bar-contact-page w-dropdown-toggle"><img src="../images/Atlice-Tap-NFC-Tag-3.png" sizes="100vw" srcset="../images/Atlice-Tap-NFC-Tag-3-p-500.png 500w, ../images/Atlice-Tap-NFC-Tag-3-p-800.png 800w, ../images/Atlice-Tap-NFC-Tag-3-p-1080.png 1080w, ../images/Atlice-Tap-NFC-Tag-3-p-1600.png 1600w, ../images/Atlice-Tap-NFC-Tag-3.png 1800w" alt="" class="nav-logo-contact-page"></div>
+                <nav class="nav02_en_dropdown w-dropdown-list">
+                    <a href="#" class="nav02_dropdown_link hidden w-dropdown-link">My Devices</a>
+                    <a href="http://atlice.com" class="nav02_dropdown_link w-dropdown-link">Shop</a>
+                    <a href="http://atlice.com" class="nav02_dropdown_link w-dropdown-link">Sign in</a>
+                </nav>
+            </div>
+        </div>
+    </div>
+</div>
+<div style="height:@height;" data-w-id="9bd34b07-98ce-6250-d06b-1038161cc7e3" class="div-block-26">
+    <div id="1" class="brand-hero business-mobile-background preview-2">
+        <div class="business-brand-hero desktop-background w-container"></div>
+    </div>
+    <div id="Hero" class="business-profile-wrapper business-contact w-clearfix">
+        <div class="div-block-25"><img src="../images/Atlice-Tap-NFC-Tag--256px.png" style="opacity:1" data-w-id="578201d2-b35c-a09b-5b0b-1180f940967a" alt="" class="form11_image contact-page business-page"></div>
+        <div class="business-banner photo"></div>
+        <div class="business-banner no-photo"></div>
+        <div class="cp-preview-text-notification hero hidden">All links have been disabled in Preview</div>
+        <div class="div-block-83">
+            <div class="columns-8 w-row">
+                <div class="column-54 w-col w-col-7">
+                    <div class="div-block-89">
+                        <h2 id="w-node-_578201d2-b35c-a09b-5b0b-1180f9409683-9c649d68" class="profile-h2-3 business-black">@Model.Name</h2>
+                        @if(!string.IsNullOrEmpty(Model.BusinessName)){
+                            <p id="w-node-_578201d2-b35c-a09b-5b0b-1180f9409685-9c649d68" class="paragraph-13 black business-contact-company"><strong>@Model.BusinessName</strong></p>
+                        }
+                        
+                        <p id="w-node-_578201d2-b35c-a09b-5b0b-1180f9409688-9c649d68" class="paragraph-13 black contact-lead">@Model.ProfileLead<br> </p>
+                        <br />
+                        @if(!string.IsNullOrEmpty(Model.Location) && Model.LocationPreview){
+                            <div class="container-21 business-contact desktop-large-mobile w-container">
+                                <img src="../images/location.png" loading="lazy" height="15" alt="">
+
+                                <div class="business-contact-location">@Model.Location</div>
+                            </div>
+                            }
+                        
+                       
+                    </div>
+                </div>
+                <div class="column-53 w-col w-col-5"><img src="@Model.PreImage" width="195" id="w-node-_578201d2-b35c-a09b-5b0b-1180f94096bb-9c649d68" alt="" class="profile-image-2 preview-page"></div>
+            </div>
+        </div>
+      
+        <div class="business-profile-left-col">
+            <img src="@Model.PreImage" width="195" alt="" class="profile-image-mobile tap">
+            <h2 id="w-node-_578201d2-b35c-a09b-5b0b-1180f94096d7-9c649d68" class="profile-h2-3 business-black">@Model.Name</h2>
+            <div class="div-block-85">
+                @if(!string.IsNullOrEmpty(Model.BusinessName)){
+                    <p id="w-node-_578201d2-b35c-a09b-5b0b-1180f94096da-9c649d68" class="paragraph-13 black business-contact-company"><strong>@Model.BusinessName</strong></p>
+                }
+                
+                <p class="paragraph-13 black contact-lead">@Model.ProfileLead<br> </p>
+                  <br />
+            </div>
+
+            <img src="@Model.PreImage" width="195" id="w-node-_578201d2-b35c-a09b-5b0b-1180f940970b-9c649d68" alt="" class="profile-image-2">
+            @if(!string.IsNullOrEmpty(Model.Location) && Model.LocationPreview){
+                <div class="container-21 w-container">
+                <img src="../images/location.png" loading="lazy" height="15" alt="">
+                <div class="business-contact-location">@Model.Location</div>
+            </div>
+            }
+            
+           
+            <div class="company-title-block hidden">
+                <p class="paragraph-13 black contact-lead">@Model.ProfileLead<br> </p>
+            </div>
+            <div id="w-node-_578201d2-b35c-a09b-5b0b-1180f9409726-9c649d68" class="hr hr-left"></div>
+        </div>
+    </div>
+
+    <div class="desktop-contact-buttons">
+        <ul role="list" class="menu-list w-list-unstyled">
+            @if(Model.SaveToContactsPreview){
+                <li class="list-item-3">
+                    <a onclick="($('.cp-preview-text-notification').attr('style', 'display:block;'))" href="#" class="div-block-80 w-inline-block">
+                    <div class="business-profile-card-col"><img src="../images/contacts-icon-white.png" loading="lazy" alt="" class="image-58 menu-icon business-contact"></div>
+                    <div class="div-block-81 test">
+                        <div class="text-block-57 test"><strong class="bold-text-112 test">Save</strong></div>
+                    </div>
+                </a>
+            </li>
+            }
+            @if(Model.SubConpreview){
+                <li onclick="($('.cp-preview-text-notification').attr('style', 'display:block;'))" class="list-item-3">
+                <div id="w-node-_578201d2-b35c-a09b-5b0b-1180f9409732-9c649d68" class="div-block-80">
+                    <div data-w-id="578201d2-b35c-a09b-5b0b-1180f9409733" class="business-profile-card-col right"><img src="../images/contacts-icon-white.png" loading="lazy" alt="" class="image-58 menu-icon business-contact"></div>
+                    <div class="div-block-81 test">
+                        <div class="text-block-57 test"><strong class="bold-text-113">Submit</strong></div>
+                    </div>
+                </div>
+            </li>
+            }
+            
+        </ul>
+    </div>
+    <div class="small-mobile-contact-buttons icons-only">
+        <ul role="list" class="small-mobile-tap-links-list w-list-unstyled">
+            @if(Model.SaveToContactsPreview){
+                <li>
+                    <a onclick="($('.cp-preview-text-notification').attr('style', 'display:block;'))" href="#" class="div-block-80 w-inline-block">
+                    <div class="business-profile-card-col"><img src="../images/contacts-icon-white.png" loading="lazy" alt="" class="image-58 menu-icon business-contact"></div>
+                    <div class="div-block-81 test">
+                        <div class="text-block-57 test"><strong class="bold-text-112 test">Save</strong></div>
+                    </div>
+                </a>
+            </li>
+            }
+            @if(Model.SubConpreview){
+                <li onclick="($('.cp-preview-text-notification').attr('style', 'display:block;'))">
+                <div id="w-node-_578201d2-b35c-a09b-5b0b-1180f9409744-9c649d68" data-w-id="578201d2-b35c-a09b-5b0b-1180f9409744" class="div-block-80">
+                    <div class="business-profile-card-col right"><img src="../images/contacts-icon-white.png" loading="lazy" alt="" class="image-58 menu-icon business-contact"></div>
+                    <div data-w-id="578201d2-b35c-a09b-5b0b-1180f9409747" class="div-block-81 test">
+                        <div class="text-block-57 test"><strong class="bold-text-113">Submit</strong></div>
+                    </div>
+                </div>
+            </li>
+            }
+            
+        </ul>
+    </div>
+    <div class="small-mobile-contact-buttons mini">
+        <ul role="list" class="small-mobile-tap-links-list mini w-list-unstyled">
+            <li onclick="($('.cp-preview-text-notification').attr('style', 'display:block;'))">
+                    <div id="" class="div-block-80">
+                    @if (!string.IsNullOrEmpty(Model.PhoneNumber) && Model.PhonePreview)
+                    {
+                        <div data-w-id="" style="border-color:white;" class="business-profile-card-col right icon-only"><img src="../icons/phoneWhite.png" loading="lazy" alt="" class="image-58 menu-icon business-contact"></div>
+
+                        }
+                    </div>
+                </li>
+            <li onclick="($('.cp-preview-text-notification').attr('style', 'display:block;'))">
+                <div id="" class="div-block-80">
+                    @if (!string.IsNullOrEmpty(Model.PhoneNumber) && Model.SmsPreview)
+                    {
+                        <div data-w-id="" style="border-color:white;" class="business-profile-card-col right icon-only"><img src="../icons/chatWhite.png" loading="lazy" alt="" class="image-58 menu-icon business-contact"></div>
+
+                    }
+                </div>
+            </li onclick="($('.cp-preview-text-notification').attr('style', 'display:block;'))">
+            <li onclick="($('.cp-preview-text-notification').attr('style', 'display:block;'))">
+                    <div id="" class="div-block-80">
+                    @if (!string.IsNullOrEmpty(Model.Email) && Model.EmailPreview && !Model.Email.ToLower().Contains("atlicetap"))
+                    {
+                        <div data-w-id="" style="border-color:white;" class="business-profile-card-col right icon-only"><img src="../icons/emailWhite.png" loading="lazy" alt="" class="image-58 menu-icon business-contact"></div>
+
+                        }
+                    </div>
+                </li>
+                <li onclick="($('.cp-preview-text-notification').attr('style', 'display:block;'))">
+                    <div id="" class="div-block-80">
+                    @if (!string.IsNullOrEmpty(Model.Website) && Model.WebsitePreview)
+                    {
+                        <div data-w-id="" style="border-color:white;" class="business-profile-card-col right icon-only"><img src="../icons/wwwWhite.png" loading="lazy" alt="" class="image-58 menu-icon business-contact"></div>
+
+                        }
+                    </div>
+                </li>
+                <li onclick="($('.cp-preview-text-notification').attr('style', 'display:block;'))"> 
+                    <div id="w-node-_578201d2-b35c-a09b-5b0b-1180f9409752-9c649d68" class="div-block-80">
+                        @if(Model.NotetoSelfPreview){
+                        <div data-w-id="578201d2-b35c-a09b-5b0b-1180f9409753" style="border-color:white;" class="business-profile-card-col right icon-only"><img src="../icons/editWhite.png" loading="lazy" alt="" class="image-58 menu-icon business-contact"></div>
+
+                        }
+                    </div>
+                </li>
+        </ul>
+    </div>
+</div>
+<div class="contact-page-tap-links-section business-conttact">
+    <div class="cp-preview-text-notification tap-links hidden">All links have been disabled in Preview</div>
+    <div data-w-id="e87a2898-d497-aa44-291a-c01d6fcdd6e9" class="section-17 take-action preview-div wf-section">
+        <div class="container-27 preview-div">
+            <div class="column-grid">
+                @if (calendar != null && calendar.ShowPreview && !string.IsNullOrEmpty(calendar.Title))
+                {
+                    <a href="#" target="_blank" class="inline-card-thumbnail _w-photo hidden w-inline-block">
+                        @if(!string.IsNullOrEmpty(calendar.CustomImage)){
+                            <div class="flex-image-block _2" style="background-image:url('@calendar.CustomImage');"></div>
+                            <div id="w-node-e87a2898-d497-aa44-291a-c01d6fcdd6fd-9c649d68" class="tap-link-icon-wrap hidden"><img src="../images/file-tap-link.png" loading="lazy" alt="" class="icon-large social"></div>
+                            <div id="w-node-e87a2898-d497-aa44-291a-c01d6fcdd6ee-9c649d68" class="card-padding-small">
+                                <div>
+                                    <h2 class="h3 margin-bottom-xs">@calendar.Title</h2>
+                                    <div class="text-small-3">@calendar.Description</div>
+                                </div>
+                            </div>
+                        }
+                        else{
+                            <div class="flex-image-block _1 hidden"></div>
+                            <div id="w-node-_94b0623a-1b16-2ae0-4366-f478d0d76e7b-9c649d68" class="tap-link-icon-wrap">
+                                <img src="@calendar.GetLogo(calendar.SocialProvider)" loading="lazy" alt="" class="icon-large social"></div>
+                            <div class="card-padding-small">
+                                <div>
+                                    <h2 class="h3 margin-bottom-xs">@calendar.Title</h2>
+                                    <div class="text-small-3">@calendar.Description</div>
+                                </div>
+                            </div>
+                        }
+                        
+                    </a>
+                }
+                @if (announcement != null && announcement.ShowPreview && !string.IsNullOrEmpty(announcement.Title))
+                {
+                    <a href="#" target="_blank" class="inline-card-thumbnail _w-photo hidden w-inline-block">
+                        @if (!string.IsNullOrEmpty(announcement.CustomImage))
+                        {
+                            <div class="flex-image-block _2" style="background-image:url('@announcement.CustomImage');"></div>
+                            <div id="w-node-e87a2898-d497-aa44-291a-c01d6fcdd6fd-9c649d68" class="tap-link-icon-wrap hidden"><img src="../images/file-tap-link.png" loading="lazy" alt="" class="icon-large social"></div>
+                            <div id="w-node-e87a2898-d497-aa44-291a-c01d6fcdd6ee-9c649d68" class="card-padding-small">
+                                <div>
+                                    <h2 class="h3 margin-bottom-xs">@announcement.Title</h2>
+                                    <div class="text-small-3">@announcement.Description</div>
+                                </div>
+                            </div>
+                        }
+                        else
+                        {
+                            <div class="flex-image-block _1 hidden"></div>
+                            <div id="w-node-_94b0623a-1b16-2ae0-4366-f478d0d76e7b-9c649d68" class="tap-link-icon-wrap">
+                                <img src="@announcement.GetLogo(announcement.SocialProvider)" loading="lazy" alt="" class="icon-large social">
+                            </div>
+                            <div class="card-padding-small">
+                                <div>
+                                    <h2 class="h3 margin-bottom-xs">@announcement.Title</h2>
+                                    <div class="text-small-3">@announcement.Description</div>
+                                </div>
+                            </div>
+                        }
+
+                    </a>
+                }
+                @if (file != null && file.ShowPreview && !string.IsNullOrEmpty(file.Title))
+                {
+                    <a href="#" target="_blank" class="inline-card-thumbnail _w-photo hidden w-inline-block">
+                        @if (!string.IsNullOrEmpty(file.CustomImage))
+                        {
+                            <div class="flex-image-block _2" style="background-image:url('@file.CustomImage');"></div>
+                            <div id="w-node-e87a2898-d497-aa44-291a-c01d6fcdd6fd-9c649d68" class="tap-link-icon-wrap hidden"><img src="../images/file-tap-link.png" loading="lazy" alt="" class="icon-large social"></div>
+                            <div id="w-node-e87a2898-d497-aa44-291a-c01d6fcdd6ee-9c649d68" class="card-padding-small">
+                                <div>
+                                    <h2 class="h3 margin-bottom-xs">@file.Title</h2>
+                                    <div class="text-small-3">@file.Description</div>
+                                </div>
+                            </div>
+                        }
+                        else
+                        {
+                            <div class="flex-image-block _1 hidden"></div>
+                            <div id="w-node-_94b0623a-1b16-2ae0-4366-f478d0d76e7b-9c649d68" class="tap-link-icon-wrap">
+                                <img src="@file.GetLogo(file.SocialProvider)" loading="lazy" alt="" class="icon-large social">
+                            </div>
+                            <div class="card-padding-small">
+                                <div>
+                                    <h2 class="h3 margin-bottom-xs">@file.Title</h2>
+                                    <div class="text-small-3">@file.Description</div>
+                                </div>
+                            </div>
+                        }
+
+                    </a>
+                }
+             
+            </div>
+        </div>
+    </div>
+    @if(pays.Any()){
+        <div class="pay-tap-links-container centralized preview-div">
+            <p class="paragraph-23 business-contact">Pay / Receive</p>
+            <div class="row-2 business-tap-links w-row">
+                @if (pays.Count() == 3)
+                {
+                    foreach (var link in pays)
+                    {
+                        <div class="col col-border-right text-center new w-col w-col-4">
+                            <a onclick="($('.cp-preview-text-notification').attr('style', 'display:block;'))" data-w-id="e87a2898-d497-aa44-291a-c01d6fcdd71c" href="#" class="profile-card-col new w-inline-block">
+                                <img src="@link.GetLogo(link.SocialProvider)" loading="lazy" height="60" data-w-id="e87a2898-d497-aa44-291a-c01d6fcdd71d" alt="" class="image-58">
+                                <div class="hint-4 pages tap-links">@link.SocialProvider</div>
+                            </a>
+                        </div>
+                    }
+                }
+                @if (pays.Count() == 2)
+                {
+                    foreach (var link in pays)
+                    {
+                        <div class="col col-border-right text-center new w-col w-col-6">
+                            <a onclick="($('.cp-preview-text-notification').attr('style', 'display:block;'))" data-w-id="e87a2898-d497-aa44-291a-c01d6fcdd71c" href="#" class="profile-card-col new w-inline-block">
+                                <img src="@link.GetLogo(link.SocialProvider)" loading="lazy" height="60" data-w-id="e87a2898-d497-aa44-291a-c01d6fcdd71d" alt="" class="image-58">
+                                <div class="hint-4 pages tap-links">@link.SocialProvider</div>
+                            </a>
+                        </div>
+                    }
+                }
+                @if (pays.Count() == 1)
+                {
+                    var p = pays.FirstOrDefault(x => x.LinkType == Atlice.Domain.Entities.LinkType.Pay);
+                    if(p is not null){
+                        <div class="col text-center col-border-right new w-col w-col-12">
+                            <a onclick="($('.cp-preview-text-notification').attr('style', 'display:block;'))" data-w-id="e87a2898-d497-aa44-291a-c01d6fcdd721" href="#" class="profile-card-col new w-inline-block">
+                                <img src="@p.GetLogo(p.SocialProvider)" loading="lazy" height="60" data-w-id="e87a2898-d497-aa44-291a-c01d6fcdd71d" alt="" class="image-58">
+                                <div class="hint-4 pages tap-links">@p.SocialProvider</div>
+                            </a>
+                        </div>
+                    }
+            
+                }
+            </div>
+        </div>
+    }
+    @if(chains.Any()){
+        <div class="pay-tap-links-container crypto preview-div">
+            <p class="paragraph-23 business-contact">Send Token/NFT</p>
+            <div data-w-id="e87a2898-d497-aa44-291a-c01d6fcdd72d" class="row-2 blockchain-tap-links w-row">
+                @if (chains.Count() == 4)
+                {
+                    foreach (var link in chains)
+                    {
+                        <div class="col col-border-right text-center new w-col w-col-3">
+                            <a href="#" class="profile-card-col new w-inline-block">
+                                <img src="@link.GetLogo(link.SocialProvider)" loading="lazy" height="60" data-w-id="e87a2898-d497-aa44-291a-c01d6fcdd730" alt="" class="image-58">
+                                <div class="hint-4 pages tap-links">@link.SocialProvider</div>
+                            </a>
+                        </div>
+                    }
+
+                }
+                @if (chains.Count() == 3)
+                {
+                    foreach (var link in chains)
+                    {
+                        <div class="col col-border-right text-center new w-col w-col-4">
+                            <a href="#" class="profile-card-col new w-inline-block">
+                                <img src="@link.GetLogo(link.SocialProvider)" loading="lazy" height="60" data-w-id="e87a2898-d497-aa44-291a-c01d6fcdd730" alt="" class="image-58">
+                                <div class="hint-4 pages tap-links">@link.SocialProvider</div>
+                            </a>
+                        </div>
+                    }
+                }
+                @if (chains.Count() == 2)
+                {
+                    foreach (var link in chains)
+                    {
+                        <div class="col col-border-right text-center new w-col w-col-6">
+                            <a href="#" class="profile-card-col new w-inline-block">
+                                <img src="@link.GetLogo(link.SocialProvider)" loading="lazy" height="60" data-w-id="e87a2898-d497-aa44-291a-c01d6fcdd730" alt="" class="image-58">
+                                <div class="hint-4 pages tap-links">@link.SocialProvider</div>
+                            </a>
+                        </div>
+                    }
+                }
+                @if (chains.Count() == 1)
+                {
+                    var c = chains.FirstOrDefault(x => x.LinkType == Atlice.Domain.Entities.LinkType.Blockchain);
+                    @if(c is not null){
+                        <div class="col col-border-right text-center new w-col w-col-12">
+                        <a href="#" class="profile-card-col new w-inline-block">
+                            <img src="@c.GetLogo(c.SocialProvider)" loading="lazy" height="60" data-w-id="e87a2898-d497-aa44-291a-c01d6fcdd730" alt="" class="image-58">
+                            <div class="hint-4 pages tap-links">@c.SocialProvider</div>
+                        </a>
+                    </div>
+                    }
+                    
+                }
+            </div>
+        </div>
+    }
+        <div class="cp-preview-text-notification tap-links _2 hidden">All links have been disabled in Preview</div>
+
+    @if(Model.GridPreview && connects.Any()){
+        <div data-w-id="e87a2898-d497-aa44-291a-c01d6fcdd742" class="tap-links-list-container grid-format preview-div">
+            <p class="paragraph-23 business-contact">Connect</p>
+            <ol role="list" class="tap-links-list w-list-unstyled">
+                @foreach (var link in connects)
+                {
+                    <li class="tap-links-list-item">
+                        <a onclick="($('.cp-preview-text-notification').attr('style', 'display:block;'))" id="w-node-e87a2898-d497-aa44-291a-c01d6fcdd747-9c649d68" href="#" class="profile-card-col _1 test w-inline-block">
+                            <img src="@link.GetLogo(link.SocialProvider)" loading="lazy" height="50" alt="" class="image-58">
+                            <div class="hint-4 pages tap-links">@link.SocialProvider</div>
+                        </a>
+                    </li>
+                }
+            </ol>
+        </div>
+
+    }
+    else{
+        if(listConnects.Any()){
+            <div class="section-17 wf-section">
+                <p class="paragraph-23 business-contact">Connect</p>
+                <div class="container-27">
+                    <div class="column-grid">
+                        @foreach (var link in listConnects)
+                        {
+
+                            <a onclick="($('.cp-preview-text-notification').attr('style', 'display:block;'))" href="#" target="_blank" class="inline-card-thumbnail w-inline-block">
+                                <div id="w-node-e87a2898-d497-aa44-291a-c01d6fcdd7ab-9c649d68" class="tap-link-icon-wrap"><img src="@link.GetLogo(link.SocialProvider)" loading="lazy" alt="" class="icon-large social"></div>
+                                <div class="card-padding-small">
+                                    <div>
+                                        <h2 class="h3 margin-bottom-xs">@link.Title</h2>
+                                        <div class="text-small-3">@link.Description</div>
+                                    </div>
+                                </div>
+                            </a>
+
+                        }
+                    </div>
+                </div>
+            </div>
+
+        }
+    }
+    @if(shops.Any()){
+        <div data-w-id="9f667743-053a-63dc-915e-66e04015add4" class="shop-tap-links wf-section">
+            <p class="paragraph-23 business-contact">Shop</p>
+            <div class="container-27 hidden">
+                <div class="section-title"><img src="../images/V3-Banner.PNG" loading="lazy" sizes="100vw" srcset="../images/V3-Banner-p-500.png 500w, ../images/V3-Banner-p-800.png 800w, ../images/V3-Banner-p-1080.png 1080w, ../images/V3-Banner.PNG 1422w" alt="" class="card-thumbnail thumbnail-small"></div>
+            </div>
+            <div class="horizontal-slider">
+                <div class="div-block-99 right"></div>
+                <div class="div-block-99"></div>
+                <div class="horizontal-slider-track">
+                    <div class="container-27 slider-container">
+                        @foreach (var link in shops.Where(x => !string.IsNullOrEmpty(x.Title) && !string.IsNullOrEmpty(x.CustomImage)))
+                        {
+                            <div class="slider-item-large slider-padding-small">
+                                <a onclick="($('.cp-preview-text-notification').attr('style', 'display:block;'))" href="#" class="card-7 w-inline-block">
+                                    <img src="@link.CustomImage" loading="lazy" sizes="100vw" srcset="@link.CustomImage 1080w, @link.CustomImage 1600w, @link.CustomImage 2000w, @link.CustomImage 2048w" alt="Image URL must have proper image extension(.jpg, .png, .ico)" class="card-thumbnail thumbnail-small">
+                                    <div class="card-padding small">
+                                        <div class="margin-bottom-small-2">
+                                            <h2 class="h3 margin-bottom-xs">@link.Title</h2>
+                                            <div class="text-small-3">@link.Description</div>
+                                        </div>
+                                        <div class="flex-row">
+                                            <div class="button-6 button-small margin-right-20">Shop</div>
+                                            <div class="div-block-91"><img src="../av3.4/images/BA80C18C-AA4A-4EC0-9A83-E7C9A998A127.png" loading="lazy" alt=""></div>
+                                            <div class="text-small-3 hidden">$22</div>
+                                        </div>
+                                    </div>
+                                </a>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    }
+    <div class="cp-preview-text-notification tap-links _2 hidden">All links have been disabled in Preview</div>
+</div>
+<div class="footer-wrap-2 tap-copy"><img src="../images/Image-410.png" width="100" sizes="100vw" srcset="../images/Image-410-p-500.png 500w, ../images/Image-410-p-800.png 800w, ../images/Image-410-p-1080.png 1080w, ../images/Image-410.png 1316w" alt="" class="image-5 white"><img src="../images/Image-427.png" width="100" sizes="100vw" srcset="../images/Image-427-p-500.png 500w, ../images/Image-427-p-800.png 800w, ../images/Image-427-p-1080.png 1080w, ../images/Image-427.png 1316w" alt="" class="image-5 black"></div>
+
+
+

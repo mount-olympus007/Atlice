@@ -1,0 +1,59 @@
+﻿@page
+@model Atlice.Areas.Identity.Pages.Account.DeviceSelectModel
+@{
+    ViewData["Title"] = "Device Selector";
+    Layout = "_RegisterLayout";
+    AtliceTap? tap1 = Model.Taps.FirstOrDefault();
+    
+
+}
+<div class="single-layout-col activation w-col w-col-12">
+    <div class="single-layout-right">
+        <div class="single-layout-right-content">
+            <div class="single-layout-logo-right hidden">
+                <a href="../../index.html" class="w-inline-block"><img src="../../images/Image-427.png" width="100" sizes="100vw" srcset="../../images/Image-427-p-500.png 500w, ../../images/Image-427-p-800.png 800w, ../../images/Image-427-p-1080.png 1080w, ../../images/Image-427.png 1316w" alt=""></a>
+            </div>
+            <div class="card">
+                <h3 class="onboard-title">Activation.</h3>
+                <p class="mb-40 text-center-copy">
+                    Connect device(s) to a myAtlice account.<a href="#" class="link-405"><br></a>
+                </p>
+                <div class="w-form">
+                    <form id="email-form" name="email-form" data-name="Email Form" redirect="/onboarding/step-3" data-redirect="/onboarding/step-3">
+                        <div class="row radio-block-container w-row">
+                            @foreach (var tap in Model.Taps)
+                            {
+                                <div class="col w-col w-col-12">
+                                    <label class="radio-block w-radio">
+                                        <div class=""></div><img src="@tap.GetImage(tap.Sku)" width="65" sizes="65px" srcset="@tap.GetImage(tap.Sku) 500w, @tap.GetImage(tap.Sku) 800w, @tap.GetImage(tap.Sku) 1080w, @tap.GetImage(tap.Sku) 1600w, @tap.GetImage(tap.Sku) 1800w" alt="">
+                                        <h5 class="title">@tap.GetOfficialName(tap.Sku).Replace("25mm", "")</h5><span class="hidden w-form-label">Tap ID# @tap.SNumber.Substring(0,8)</span>
+                                    </label>
+                                </div>
+                            }
+
+                        </div>
+                        <div class="mt-20 text-center">
+                            @if(tap1 is not null){
+                                <a href="/identity/account/onboarding-setup-contact-page?id=@tap1.SNumber.Substring(0,8)" class="button atlice-button-primary mt-20 button-block w-button">Continue</a>
+
+                            }
+                            else{
+                                <a href="/identity/account/onboarding-step-2" class="button atlice-button-primary mt-20 button-block w-button">Error Finding Device, Click to Reload</a>
+
+                            }
+                        </div>
+                    </form>
+                    <div class="success-message w-form-done">
+                        <div>Thank you! Your submission has been received!</div>
+                    </div>
+                    <div class="error-message w-form-fail">
+                        <div>Oops! Something went wrong while submitting the form.</div>
+                    </div>
+                </div>
+                <div>
+                    <div class="container-5 w-container"><img src="../../images/Image-414.png" loading="lazy" width="100" sizes="100px" srcset="../../images/Image-414-p-500.png 500w, ../../images/Image-414-p-800.png 800w, ../../images/Image-414-p-1080.png 1080w, ../../images/Image-414.png 1316w" alt=""></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

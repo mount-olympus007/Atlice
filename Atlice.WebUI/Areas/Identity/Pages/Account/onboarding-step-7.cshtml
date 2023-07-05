@@ -1,0 +1,48 @@
+@page
+@model Atlice.Areas.Identity.Pages.Account.onboarding_step_7Model
+@{
+    Layout = "_RegisterLayout";
+}
+<div class="single-layout-col right contact-page-setup w-col w-col-12">
+    <div class="single-layout-right agreement">
+        <div class="single-layout-right-content">
+            <div class="card set-up-contact-page">
+                <h3 class="onboard-title left-align">Set up @Model.ContactPage.PageType Contact Page.</h3>
+                <p class="mb-40 text-center">Share what you want to display on your contact page and what prospects can save into their list of contacts.</p>
+                <div class="w-form">
+                    <form asp-page-handler="SetupContactPage" id="email-form" name="email-form" data-name="Email Form">
+                        <input type="hidden" asp-for="ContactPage.Id" />
+                        <input type="text" class="input w-input" maxlength="256" asp-for="ContactPage.Name" data-name="Full Name" placeholder="Full Name" id="Full-Name" required="">
+                        @if (Model.ContactPage.PageType != PageType.Personal)
+                        {
+                            <input type="text" class="input w-input" maxlength="256" asp-for="ContactPage.BusinessName" data-name="Business Name" placeholder="Business Name" id="Business-Name">
+
+                        }
+                        <textarea placeholder="Title or Brief Introduction" maxlength="5000" id="Contact-Title-Bio" asp-for="ContactPage.ProfileLead" data-name="Contact Title/Bio" class="textarea w-input"></textarea>
+                        <div class="div-block">
+                            <input type="tel" class="input w-input" maxlength="256" asp-for="ContactPage.PhoneNumber" data-name="Contact Phone" placeholder="Phone" id="Contact-Phone">
+                            <input type="email" class="input right-column w-input" maxlength="256" asp-for="ContactPage.Email" data-name="Contact Email" placeholder="Email" id="Contact-Email">
+                        </div>
+                        <input onblur="javascript:{var string = this.value;if (!~string.indexOf('http') && string != '') {string = 'https://' + string;} this.value=string;}" type="url" class="input w-input" maxlength="256" asp-for="ContactPage.Website" data-name="Contact Website" placeholder="Website Link" id="Contact-Website"><label class="w-checkbox checkbox-field hidden">
+                            <div class="w-checkbox-input w-checkbox-input--inputType-custom checkbox"></div>
+                            <input type="checkbox" id="checkbox" name="checkbox" data-name="Checkbox" style="opacity:0;position:absolute;z-index:-1"><span class="hint w-form-label">Fixed price<a href="../index.html" target="_blank" class="link"></a></span>
+                        </label><label class="w-checkbox checkbox-field hidden">
+                            <div class="w-checkbox-input w-checkbox-input--inputType-custom checkbox"></div>
+                            <input type="checkbox" id="checkbox-2" name="checkbox-2" data-name="Checkbox 2" style="opacity:0;position:absolute;z-index:-1"><span class="hint w-form-label">Due date<a href="../index.html" target="_blank" class="link"></a></span>
+                        </label>
+                        <div class="mt-20 text-center">
+                            <a onclick="($(this).next().click())" href="#" class="button atlice-button-primary mt-20 button-block w-button">Tap In</a>
+                            <input type="submit" class="hidden" />
+                        </div>
+                    </form>
+                    <div class="success-message w-form-done">
+                        <div>Thank you! Your submission has been received!</div>
+                    </div>
+                    <div class="error-message w-form-fail">
+                        <div>Oops! Something went wrong while submitting the form.</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

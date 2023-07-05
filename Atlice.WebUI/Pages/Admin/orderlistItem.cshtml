@@ -1,0 +1,83 @@
+﻿@model Atlice.WebUI.Pages.Admin.OrderListModel.OrderModel
+@{
+    Layout = null;
+}
+<div class="product-row" id="@Model.order.OrderNumber">
+    <div id="w-node-ab56874d-8e7b-18f1-732b-3df176a54fc8-87935a25" class="device-in-devices-block">
+
+        <div class="card-setting-text">
+            <p>Order No: <a href="/admin/orderdetails/@Model.order.Id">@Model.order.OrderNumber</a></p><br />
+            <p>Customer: <a href="/admin/customerprofile/@Model.order.UserId">@Model.order.Name</a></p>
+            <p>Received: @Model.order.OrderRecieved</p>
+        </div>
+
+    </div>
+
+    <div id="w-node-ab56874d-8e7b-18f1-732b-3df176a54fc8-87935a25" class="device-in-devices-block">
+        @if (Model.order.Status == Domain.Entities.OrderStatus.NewOrder || Model.order.Status == Domain.Entities.OrderStatus.RecuritmentOrder || Model.order.Status == Domain.Entities.OrderStatus.ManualOrder || Model.order.Status == Domain.Entities.OrderStatus.PartiallyComplete || Model.order.Status == Domain.Entities.OrderStatus.Incomplete)
+        {
+            <ol>
+                @foreach (var device in Model.order.Taps)
+                {
+                    <li>
+                        @if (device.Note.Contains("Created On"))
+                        {
+                            <p>@device.GetOfficialName has been Created</p>
+                        }
+                        else
+                        {
+                            <a href="#" onclick="fetch('/admin/orderlist?handler=createdevice&tapID=@device.Id').then(x=>x.json()).then(y=> document.getElementById('').innerHTML == y.view)">Create @device.GetOfficialName(device.Sku)</a>
+                        }
+                    </li>
+
+                }
+            </ol>
+
+        }
+        else
+        {
+            <img src="/images/checkmarkok.png" height="15">
+        }
+
+    </div>
+    <div id="w-node-ab56874d-8e7b-18f1-732b-3df176a54fc8-87935a25" class="device-in-devices-block">
+        @if (Model.order.Status == Domain.Entities.OrderStatus.Shipped || Model.order.Status == Domain.Entities.OrderStatus.Activated || Model.order.Status == Domain.Entities.OrderStatus.PartiallyActivated)
+        {
+            <img src="/images/checkmarkok.png" height="15">
+        }
+        else
+        {
+
+            <div class="card-setting-text"><input type="text" placeholder="Tracking Number" /><br /><a onclick="fetch('/admin/orderlist?handler=ship'+'&id=' + '@Model.order.Id'+ '&tracking='+ $(this).prev().attr('value')).then(x=>x.json()).then(y=> window.location = y.url)" href="#">Mark as Shipped</a></div>
+        }
+    </div>
+
+    <div id="w-node-ab56874d-8e7b-18f1-732b-3df176a54fc8-87935a25" class="device-in-devices-block">
+
+        @if (Model.order.Status == Domain.Entities.OrderStatus.Activated)
+        {
+            <img src="/images/checkmarkok.png" height="15">
+        }
+        else
+        {
+            <div class="card-setting-text">@Model.order.Status</div>
+        }
+
+    </div>
+    <div id="w-node-ab56874d-8e7b-18f1-732b-3df176a54fc8-87935a25" class="device-in-devices-block">
+
+        @if (Model.order.BookMarked)
+        {
+            <p style="color:red;">Bookmarked</p>
+            <form asp-page-handler="RemoveBookmark">
+                <input type="hidden" name="orderid" value="@Model.order.Id" />
+                <input type="submit" value="Remove Bookmark" />
+            </form>
+        }
+
+
+    </div>
+
+
+
+</div>

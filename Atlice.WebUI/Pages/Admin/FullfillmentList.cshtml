@@ -1,0 +1,141 @@
+﻿@model IEnumerable<Atlice.Domain.Entities.Order>
+@{
+        Layout = null;
+
+}
+@foreach (var order in Model)
+{
+    <div class="section-inner">
+        <div class="card">
+            <div class="table-wrapper">
+                <div class="table extra-wide single">
+                    <div class="row table-row flex-center single-row w-row">
+                        <div class="col table-col left-padding w-col w-col-4">
+                            <a href="/admin/customerprofile/@order.UserId" data-w-id="1f73dc94-06af-8056-e75e-858bffd26979" class="contact-profile w-inline-block">
+                                <img src="../AA1.3/images/Artboard-20.png" alt="" class="contacts-avatar">
+                                <div class="contact-profile-info">
+                                    <h6 class="mb-0 customer-link">@order.Name</h6>
+                                    <div class="text-block-51">Order# @order.OrderNumber</div>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="col table-col w-col w-col-2">
+                            <div class="label-item yellow">@order.Status</div>
+                        </div>
+                        <div class="col table-col w-col w-col-2">
+                            <div class="device-images fulfillment">
+                                @foreach (var device in order.Taps)
+                                {
+                                    <div class="device-div-block fb">
+                                        <img src="@device.GetImage(device.Sku)" loading="lazy" sizes="100vw" srcset="@device.GetImage(device.Sku) 500w, @device.GetImage(device.Sku) 800w, @device.GetImage(device.Sku) 1013w" alt="">
+
+                                    </div>
+                                }
+
+                            </div>
+                        </div>
+                        <div class="col table-col w-col w-col-2">
+                            <div class="status">@order.OrderRecieved.ToShortDateString()</div>
+                        </div>
+                        <div class="col table-col w-col w-col-2">
+                            <div class="contact-actions">
+                                <a data-w-id="25fc1321-2b83-1f55-02fb-65e7023ae774" href="#" class="show-purchase-order w-inline-block"></a>
+                                <a target="_blank" href="/admin/orderdetails/@order.Id" class="print-contact-order w-inline-block"></a>
+                                <form name="email-form-3" data-name="Email Form 3" asp-page-handler="ProcessOrder">
+                                    <input type="hidden" name="id" value="@order.Id" />
+                                    <input type="submit" class="hidden" />
+                                    <a onclick="($(this).prev().click())" data-w-id="1f73dc94-06af-8056-e75e-858bffd26990" class="send-to-devices w-inline-block"></a>
+
+                                </form>
+                                <a data-w-id="1f73dc94-06af-8056-e75e-858bffd2698e" href="/admin/customerprofile/@order.UserId" class="show-customer-devices-manager w-inline-block"></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+            <div class="purchase-details-block">
+                <div class="row w-row">
+                    <div class="col w-col w-col-6">
+                        <div class="flex-center profile-about-row">
+                            <div class="profile-info-heading-2">
+                                <strong>Order #</strong>
+                            </div>
+                            <div>@order.OrderNumber</div>
+                        </div>
+                        <div class="flex-center profile-about-row">
+                            <div class="profile-info-heading-2">
+                                <strong>Name</strong>
+                            </div>
+                            <div>@order.Name</div>
+                        </div>
+                        <div class="flex-center profile-about-row">
+                            <div class="profile-info-heading-2">
+                                <strong>Phone</strong>
+                            </div>
+                            <div>@order.Phone</div>
+                        </div>
+                        <div class="flex-center profile-about-row">
+                            <div class="profile-info-heading-2">
+                                <strong>Email</strong>
+                            </div>
+                            <div>@order.Email</div>
+                        </div>
+                        <div class="flex-center profile-about-row">
+                            <div class="profile-info-heading-2">
+                                <strong>Shipping Address</strong>
+                            </div>
+                            <div>
+                                @order.ShipAddressLine1.
+                                <br>@order.ShipAddressLine2
+                                <br>@order.ShipCity @order.ShipCode
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col w-col w-col-6">
+                        <div class="flex-center profile-about-row">
+                            <div class="profile-info-heading-2">
+                                <strong>Payment</strong>
+                            </div>
+                            <p>
+                                <strong></strong>xxxx-xxxx-xxxx-@order.Last4
+                                <strong> @order.Brand</strong>
+                                <strong><br></strong>
+                            </p>
+                        </div>
+                        <div class="flex-center profile-about-row">
+                            <div class="profile-info-heading-2">
+                                <strong>Items Ordered</strong>
+                            </div>
+                            @foreach (var device in order.Taps)
+                            {
+                                <div class="item-1-block">
+                                    <div id="w-node-_25fc1321-2b83-1f55-02fb-65e7023ae7af-023ae6ec">
+                                        <img src="@device.GetImage(device.Sku)" loading="lazy" sizes="100vw" height="20" srcset="@device.GetImage(device.Sku) 500w, @device.GetImage(device.Sku) 800w, @device.GetImage(device.Sku) 1013w" alt="" class="item-photo">
+
+                                    </div>
+                                    <div class="div-block-11">
+                                        <div class="item-text-box">@device.GetOfficialName(device.Sku)</div>
+
+                                    </div>
+                                    <div>
+                                        <div class="quantity-text-box">1</div>
+                                        @if (device.GetOfficialName(device.Sku).ToString().Contains("Custom"))
+                                        {
+                                            <img src="@order.LogoUrl" width="1000" height="500" />
+
+                                        }
+                                    </div>
+
+                                </div>
+                            }
+
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}

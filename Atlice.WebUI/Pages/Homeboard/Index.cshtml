@@ -1,0 +1,2074 @@
+﻿@page
+@model Atlice.WebUI.Pages.Homeboard.IndexModel
+@{
+    Layout = null;
+    TimeZoneInfo Eastern_Standard_Time = TimeZoneInfo.FindSystemTimeZoneById("Eastern Standard Time");
+    List<Atlice.Domain.Entities.ChatMessage> messages = new List<Atlice.Domain.Entities.ChatMessage>();
+    var personal = Model.ContactPages.FirstOrDefault(x => x.PageType == Domain.Entities.PageType.Personal);
+    var business = Model.ContactPages.FirstOrDefault(x => x.PageType == Domain.Entities.PageType.Business);
+    var professional = Model.ContactPages.FirstOrDefault(x => x.PageType == Domain.Entities.PageType.Professional);
+    var userid = "";
+    if (personal is not null)
+    {
+        userid = personal.UserId.ToString();
+    }
+
+}
+<!DOCTYPE html>
+<!--  Last Published: Fri Mar 11 2022 21:11:20 GMT+0000 (Coordinated Universal Time)  -->
+<html data-wf-page="61ec8ae2229b3e6e9c649d68" data-wf-site="5f2dbf258129c7429573f1a3">
+<head>
+    <meta charset="utf-8">
+    <title>AtliceTap Web App</title>
+    <meta content="AtliceTap Web App" property="og:title">
+    <meta content="../icons/AtliceTapAppCollage.png" property="og:image">
+    <meta content="AtliceTap Web App" property="twitter:title">
+    <meta content="../icons/AtliceTapAppCollage.png" property="twitter:image">
+    <meta content="width=device-width, initial-scale=1" name="viewport">
+    <link href="../css/normalize.css" rel="stylesheet" type="text/css">
+    <link href="../css/webflow.css" rel="stylesheet" type="text/css">
+    <link href="../css/link-you-page.webflow.css" rel="stylesheet" type="text/css">
+    <link href="../croppie/croppie.min.css" rel="stylesheet" type="text/css">
+    <script src="https://ajax.googleapis.com/ajax/libs/webfont/1.6.26/webfont.js" type="text/javascript"></script>
+    <script type="text/javascript">WebFont.load({ google: { families: ["PT Sans:400,400italic,700,700italic", "Droid Sans:400,700", "Montserrat:100,100italic,200,200italic,300,300italic,400,400italic,500,500italic,600,600italic,700,700italic,800,800italic,900,900italic", "Varela Round:400", "Varela:400", "Oswald:200,300,400,500,600,700"] } });</script>
+    <!-- [if lt IE 9]><script src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.min.js" type="text/javascript"></script><![endif] -->
+    <script type="text/javascript">!function (o, c) { var n = c.documentElement, t = " w-mod-"; n.className += t + "js", ("ontouchstart" in o || o.DocumentTouch && c instanceof DocumentTouch) && (n.className += t + "touch") }(window, document);</script>
+    <link href="../images/favicon.png" rel="shortcut icon" type="image/x-icon">
+    <link href="../icons/mobileIcon.png" rel="apple-touch-icon"><!--  Global site tag (gtag.js) - Google Analytics  -->
+    <script async="" src="https://www.googletagmanager.com/gtag/js?id=G-EWDP3C5M4W"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+        gtag('config', 'G-EWDP3C5M4W');
+    </script>
+    <!--  Global site tag (gtag.js) - Google Analytics  -->
+    <script async="" src="https://www.googletagmanager.com/gtag/js?id=G-RW7KPQVG6R"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+        gtag('config', 'G-RW7KPQVG6R');
+    </script>
+    <link rel="manifest" href="../manifest.webmanifest" />
+    <style>
+        #tooltip {
+            background: white;
+            color: black;
+            font-weight: bold;
+            padding: 4px 8px;
+            font-size: 13px;
+            border-radius: 4px;
+            display: none;
+        }
+
+            #tooltip[data-show] {
+                display: block;
+            }
+
+        #arrow,
+        #arrow::before {
+            position: absolute;
+            width: 8px;
+            height: 8px;
+            background: inherit;
+        }
+
+        #arrow {
+            visibility: hidden;
+        }
+
+            #arrow::before {
+                visibility: visible;
+                content: '';
+                transform: rotate(45deg);
+            }
+
+        /*#tooltip[data-popper-placement^='top'] > #arrow {
+                            bottom: -4px;
+                        }
+
+                        #tooltip[data-popper-placement^='bottom'] > #arrow {
+                            top: -4px;
+                        }
+                */
+        #tooltip[data-popper-placement^='left'] > #arrow {
+            right: -4px;
+        }
+
+        #tooltip[data-popper-placement^='right'] > #arrow {
+            left: -4px;
+        }
+    </style>
+</head>
+<body data-w-id="573f6a491d175a09162bbc99" style="background-color:rgb(2,2,2)" class="body atlice tap">
+    @await Html.PartialAsync("pages_manager", Model.ContactPages)
+    @await Html.PartialAsync("menu")
+
+    @await Html.PartialAsync("page_selector", Model.ContactPages)
+    @await Html.PartialAsync("modal_taplinks_selection", Model.ContactPages.FirstOrDefault())
+    @await Html.PartialAsync("modal_image_cropper")
+    @await Html.PartialAsync("modal_delete_confirm")
+    <div style="display:none;opacity:0" class="modal link-to update-account-info" id="accountSettingModal">
+        <div class="modal-mask"></div>
+        <div class="modal-container-2 confirmation">
+            <div class="single-layout-right">
+                <div class="single-layout-right-content delete-confirmation">
+                    <div class="single-layout-logo-right hidden">
+                        <a href="#" class="w-inline-block"><img src="../images/Atlice-Tap-NFC-Tag--256px.png" width="40" alt=""></a>
+                    </div>
+
+                    <div class="div-block-86">
+                        <div class="div-block-87"><img src="../images/atlice-tap-nfc-tag-4.png" loading="lazy" sizes="100vw" height="50" srcset="../images/atlice-tap-nfc-tag-4-p-500.png 500w, ../images/atlice-tap-nfc-tag-4-p-800.png 800w, ../images/atlice-tap-nfc-tag-4-p-1080.png 1080w, ../images/atlice-tap-nfc-tag-4-p-1600.png 1600w, ../images/atlice-tap-nfc-tag-4.png 1800w" alt="" class="image-84"></div>
+                    </div>
+                    <div class="section-inner cropper">
+                        <div class="div-block-72">
+                            <a data-w-id="802b3264-2e60-8d91-8e57-0263d478e070" href="#" class="modal-close photo-upload w-inline-block"></a>
+                        </div>
+                        <div class="account-info-container w-container">
+                            <h4 class="heading-65">Update your account info?</h4>
+                            <div class="w-form" id="accountmodal">
+                                @await Html.PartialAsync("modal_update_account", "name")
+
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+    <div data-w-id="b56d5e85-9041-f7ae-5b77-25373a7a358a" style="background-color:rgb(2,2,2);display:none" class="myatlice-nav-layout w-clearfix">
+        <div data-collapse="medium" data-animation="over-left" data-duration="400" data-easing="ease-in-out" data-easing2="ease-in-out" role="banner" class="sidebar-navbar w-nav">
+            <div class="sidebar-navbar-container w-container">
+                <div class="sidebar-navbar-heading">
+
+                    <img src="../images/Atlice-Tap-NFC-Tag--256px.png" loading="lazy" alt="" class="image-51">
+
+                    <div class="admin-dropdown">
+                        <div class="sidebar-navbar-menu-button w-nav-button"></div>
+                    </div>
+                    <a href="#" class="sidebar-navbar-brand w-nav-brand"><img src="../images/Atlice-Logo---Blk.png" height="20" sizes="100vw" srcset="../images/Atlice-Logo---Blk-p-500.png 500w, ../images/Atlice-Logo---Blk-p-800.png 800w, ../images/Atlice-Logo---Blk-p-1080.png 1080w, ../images/Atlice-Logo---Blk.png 1120w" alt="" class="sidebar-navbar-brand-logo"><img src="../images/Atlice-Tap-NFC-Tag--256px.png" height="20" alt="" class="sidebar-navbar-brand-logo-small"></a>
+                    <div class="top-bar-title contacts">
+                        <div class="page-tab-image-div"><img src="../images/Artboard-22.png" loading="lazy" alt=""></div>
+                        <h3 class="heading-64">Contacts</h3>
+                    </div>
+                    <div class="top-bar-title analytics">
+                        <div class="page-tab-image-div"><img src="../images/bar-chart-statistic-signal.png" loading="lazy" alt=""></div>
+                        <h3 class="heading-64">Analytics</h3>
+                    </div>
+                    <div class="top-bar-title devices">
+                        <div class="page-tab-image-div"><img src="../images/wifi-signal-network.png" loading="lazy" alt=""></div>
+                        <h3 class="heading-64">Devices</h3>
+                    </div>
+                    <div class="top-bar-title support">
+                        <div class="page-tab-image-div"><img src="../images/chat-conversation-message-bubble.png" loading="lazy" alt=""></div>
+                        <h3 class="heading-64">Support Center</h3>
+                    </div>
+                    <div class="top-bar-title home-board">
+                        <div class="page-tab-image-div"><img src="../images/Artboard-11.png" loading="lazy" alt=""></div>
+                        <h3 class="heading-64">Home Board</h3>
+                    </div>
+                    <div class="top-bar-title contact-page-editor">
+                        <div class="page-tab-image-div"><img src="../images/adjustment-settings-slider-horizontal.png" loading="lazy" alt=""></div>
+                        <h3 class="heading-64" id="editorHeader">Contact Page Editor</h3>
+                        <div id="tooltip" role="tooltip" style="color:green">Preview/Publish your changes<div id="arrow" data-popper-arrow></div></div>
+                    </div>
+                    <div class="top-bar-title features">
+                        <div class="page-tab-image-div"><img src="../images/file-text-check.svg" loading="lazy" alt=""></div>
+                        <h3 class="heading-64">Features</h3>
+                    </div>
+                    <div class="top-bar-title settings">
+                        <div class="page-tab-image-div"><img src="../images/file-text-check.svg" loading="lazy" alt=""></div>
+                        <h3 class="heading-64">Settings</h3>
+                    </div>
+                </div>
+                <nav role="navigation" class="sidebar-navbar-menu w-nav-menu">
+                    <div class="sidebar-navbar-body">
+                        <div class="sidebar-navbar-body-container">
+                            <a href="#" class="sidebar-navbar-link-2 link-home w-nav-link">Home<br></a>
+                            <a href="#" class="sidebar-navbar-link-2 admin-dash w-nav-link">Admin Dashboard<br></a>
+                            <a href="#" class="sidebar-navbar-link-2 w-nav-link">Devices<br></a>
+                            <a href="#" class="sidebar-navbar-link-2 link-onboarding w-nav-link">Contacts<br>‍<br></a>
+                            <a href="#" class="sidebar-navbar-link-2 link-profile w-nav-link">Analytics</a>
+                            <a href="#" class="sidebar-navbar-link-2 link-payment hidden w-nav-link">Payments</a>
+                            <a href="#" class="sidebar-navbar-link-2 link-setting w-nav-link">Account Settings</a>
+                            <a href="#" class="sidebar-navbar-link-2 link-projects hidden w-nav-link">Projects</a>
+                            <div data-delay="0" data-hover="false" class="sidebar-navbar-dropdown w-dropdown">
+                                <div class="sidebar-navbar-link-2 link-utils w-dropdown-toggle">
+                                    <div class="sidebar-navbar-dropdown-content">
+                                        <div>Pages</div>
+                                        <div class="w-icon-dropdown-toggle"></div>
+                                    </div>
+                                </div>
+                                <nav class="sidebar-navbar-dropdown-list w-dropdown-list">
+                                    <a href="#" class="sidebar-navbar-link-2 link-login w-dropdown-link">Personal</a>
+                                    <a href="#" class="sidebar-navbar-link-2 link-signup w-dropdown-link">Business</a>
+                                    <a href="#" class="sidebar-navbar-link-2 link-password w-dropdown-link">Professional</a>
+                                </nav>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="sidebar-navbar-footer">
+                        <a href="#" class="sidebar-navbar-link-2 link-inbox w-nav-link">Support / Feedback</a>
+                        <a href="#" class="sidebar-navbar-link-2 link-logout w-nav-link">Logout</a>
+                    </div>
+                    <div class="sidebar-navbar-footer nav-toggle">
+                        <a data-w-id="b56d5e85-9041-f7ae-5b77-25373a7a35c8" href="#" class="sidebar-navbar-toggle-button w-button"></a>
+                    </div>
+                </nav>
+            </div>
+        </div>
+        <div class="app-navbar-container">
+            <div class="app-navbar-menu">
+                <div class="app-navbar-menu-item">
+                    <div data-delay="0" data-hover="false" class="menu-dropdown w-dropdown">
+                        <div class="menu-dropdown-toggle dropdown-search hidden w-dropdown-toggle"></div>
+                        <nav class="menu-dropdown-list search search-dropdown-list w-dropdown-list">
+                            <form action="/search" class="search w-form"><input type="search" class="search-input w-input" maxlength="256" name="query" placeholder="Search…" id="search" required=""><input type="submit" value="Search" class="search-button w-button"></form>
+                        </nav>
+                    </div>
+                </div>
+                <div data-w-id="b56d5e85-9041-f7ae-5b77-25373a7a35d2" class="app-navbar-menu-item hidden"><img src="../images/QR-Code-Scan.png" loading="lazy" width="24" alt="" class="image-52"></div>
+                <div class="app-navbar-menu-item">
+                    <div data-delay="1" data-hover="false" class="menu-dropdown w-dropdown">
+                        <div class="menu-dropdown-toggle dropdown-message new-notification w-dropdown-toggle"></div>
+                        <nav class="menu-dropdown-list w-dropdown-list">
+                            <div data-duration-in="300" data-duration-out="100" data-current="Tab 2" data-easing="ease" class="notification-tabs w-tabs">
+                                <div class="tabs-menu-4 notification-menu w-tab-menu">
+                                    <a data-w-tab="Tab 1" class="tab-link-3 notification-tab w-inline-block w-tab-link">
+                                        <img width="25" src="../images/notifcation-alert-warning-notif.png" alt="" class="notification-icon">
+                                        <div class="hint"><strong>Notifications</strong></div>
+                                    </a>
+                                    <a data-w-tab="Tab 2" class="tab-link-3 notification-tab w-inline-block w-tab-link w--current">
+                                        <img width="25" src="../images/chat-bubble-message-conversation.png" alt="" class="notification-icon">
+                                        <div class="hint"><strong>Chat</strong></div>
+                                    </a>
+                                    <a data-w-tab="Tab 3" class="tab-link-3 notification-tab w-inline-block w-tab-link">
+                                        <img width="25" src="../images/speaker-marketing-sound-announce.png" alt="" class="notification-icon">
+                                        <div class="hint"><strong>News</strong></div>
+                                    </a>
+                                </div>
+                                <div class="tabs-content-3 notification-content w-tab-content">
+                                    <div data-w-tab="Tab 1" class="w-tab-pane">
+                                        <div class="notification-content-heading">
+                                            <div class="text-block-56">Notifications (@Model.Notifications.Count())</div>
+                                        </div>
+                                        <div class="notification-content-body">
+                                            @foreach (var notification in Model.Notifications)
+                                            {
+                                                int time = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, Eastern_Standard_Time).Hour - notification.Created.Hour;
+                                                string fi = time.ToString() + "h";
+                                                <a href="#1" data-w-id="b56d5e85-9041-f7ae-5b77-25373a7a362b" class="notification-item w-inline-block">
+                                                    <div class="notification-item-icon _4" style="background-image:url('@notification.GetImage(notification.Type)');"></div>
+                                                    <div class="notification-item-body">
+                                                        <div class="hint">@notification.Message</div>
+                                                        <div class="notification-item-time"> @fi ago</div>
+                                                    </div>
+                                                </a>
+                                            }
+
+
+                                        </div>
+                                        <div class="notification-content-footer hidden">
+                                            <a href="#" class="custom-link">View all</a>
+                                        </div>
+                                    </div>
+                                    <div data-w-tab="Tab 2" class="w-tab-pane w--tab-active">
+                                        <div class="notification-content-heading">
+                                            <div class="text-block-41">Chat (@Model.Chat.Messages.Count)</div>
+                                        </div>
+                                        <div class="notification-content-body">
+                                            @if (Model.Chat.Messages.Any())
+                                            {
+                                                foreach (var message in Model.Chat.Messages.Take(6))
+                                                {
+                                                    if (message.Sender is not null)
+                                                    {
+                                                        int time = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, Eastern_Standard_Time).Hour - message.TimeStamp.Hour;
+                                                        string fi = time.ToString() + "h";
+                                                        <a href="#Chat" data-w-id="50fc2070-0651-7334-e80c-9c5c5ddcdf14" class="notification-item w-inline-block">
+                                                            <div class="notification-item-icon _1"></div>
+                                                            <div class="notification-item-body">
+                                                                <div class="notification-item-title">@message.Sender.FirstName @message.Sender.LastName</div>
+                                                                <div class="notification-item-text">@message.Message</div>
+                                                            </div>
+                                                            <div class="notification-item-date">@fi ago</div>
+                                                        </a>
+                                                    }
+                                                }
+                                            }
+
+
+                                        </div>
+                                        <div data-w-id="50fc2070-0651-7334-e80c-9c5c5ddcdf4a" class="notification-content-footer">
+                                            <a href="#Chat" data-w-id="50fc2070-0651-7334-e80c-9c5c5ddcdf4b" class="custom-link">View all</a>
+                                        </div>
+                                        <div class="notification-content-heading hidden">
+                                            <div>Support Chat (0)</div>
+                                        </div>
+
+                                        <div class="notification-content-footer hidden">
+                                            <a href="#" class="custom-link">View all</a>
+                                        </div>
+                                    </div>
+                                    <div data-w-tab="Tab 3" class="w-tab-pane">
+                                        <div class="notification-content-heading">
+                                            <div class="text-block-47">
+                                                News (@Model.NewsStories.Count()) @if (User.IsInRole("Adminis"))
+                                                {
+                                                    <a href="/digest/index">All News ></a>
+                                                }
+                                            </div>
+                                        </div>
+                                        <div class="notification-content-body">
+                                            @foreach (var story in Model.NewsStories)
+                                            {
+                                                <a href="#1" data-w-id="b56d5e85-9041-f7ae-5b77-25373a7a368d" class="notification-item w-inline-block">
+                                                    <div class="notification-item-icon _7" style="background-image:url('@story.ImagePath');"></div>
+                                                    <div class="notification-item-body">
+                                                        <div class="notification-item-title">@story.Title</div>
+                                                        <div class="notification-item-text">@story.Description </div>
+                                                    </div>
+                                                </a>
+                                            }
+
+                                        </div>
+                                        <div class="notification-content-footer alerts">
+                                            <a href="#" class="custom-link">View all</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </nav>
+                    </div>
+                </div>
+
+                <div class="app-navbar-menu-item">
+                    <div data-delay="0" data-hover="false" class="menu-dropdown w-dropdown">
+                        <div class="menu-dropdown-toggle w-dropdown-toggle">
+                            <div class="navbar-dropdown-avatar-2" style="background-image:url('@Model.ContactPages.FirstOrDefault(x=>x.PageType == Domain.Entities.PageType.Business).ProImage')"></div>
+                        </div>
+                        <nav class="menu-dropdown-list w-dropdown-list">
+                            <a href="#" data-w-id="b56d5e85-9041-f7ae-5b77-25373a7a36a1" class="menu-dropdown-link hidden w-inline-block">
+                                <div class="munu-dropdown-link-container">
+                                    <img src="../images/User-Profile-4.png" width="20" alt="" class="menu-dropdown-link-icon">
+                                    <div>Profile</div>
+                                    <div class="hint grey-text">myAtlice account profile</div>
+                                </div>
+                            </a>
+                            <a href="#1" data-w-id="b56d5e85-9041-f7ae-5b77-25373a7a36a8" class="menu-dropdown-link w-inline-block">
+                                <div class="munu-dropdown-link-container">
+                                    <img src="../images/settings-service-cog-maintenance.png" width="20" alt="" class="menu-dropdown-link-icon">
+                                    <div>Settings</div>
+                                    <div class="hint grey-text">myAtlice Account Settings</div>
+                                </div>
+                            </a>
+                            <a href="#1" data-w-id="b56d5e85-9041-f7ae-5b77-25373a7a36af" class="menu-dropdown-link w-inline-block">
+                                <div class="munu-dropdown-link-container">
+                                    <img src="../images/chat-conversation-message-bubble.png" width="20" alt="" class="menu-dropdown-link-icon">
+                                    <div>Support Center / Feedback</div>
+                                    <div class="hint grey-text">Chat with Alexander and Allen</div>
+                                </div>
+                            </a>
+                            <div class="premium-container w-clearfix">
+                                <div class="premium-text">LOCK ALL DEVICES</div>
+                                <div class="form-block-2 w-form">
+                                    <form id="email-form-3" name="email-form-3" data-name="Email Form 3" method="get">
+                                        <div class="card-setting-switcher">
+                                            <label class="w-checkbox switcher-wrapper-checkbox">
+                                                @if (Model.AtliceTaps.All(x => x.Locked))
+                                                {
+                                                    <div class="w-checkbox-input w-checkbox-input--inputType-custom switcher-button-checkbox w--redirected-checked"></div>
+                                                    <input onclick="fetch(/'homeboard/index?handler=lockalldevices&value=' + this.previousElementSibling.getAttribute('class')).then(x=>x.json()).then(y=> document.getElementById('locks_update').innerHTML = y.view)" type="checkbox" id="checkbox-15" name="checkbox-15" data-name="Checkbox 15" checked="" style="opacity:0;position:absolute;z-index:-1">
+                                                    <span class="checkbox-label-8 w-form-label" for="checkbox-15"></span>
+
+                                                }
+                                                else
+                                                {
+                                                    <div class="w-checkbox-input w-checkbox-input--inputType-custom switcher-button-checkbox"></div>
+                                                    <input onclick="fetch('/homeboard/index?handler=lockalldevices&value=' + this.previousElementSibling.getAttribute('class')).then(x=>x.json()).then(y=> document.getElementById('locks_update').innerHTML = y.view)" type="checkbox" id="checkbox-15" name="checkbox-15" data-name="Checkbox 15" style="opacity:0;position:absolute;z-index:-1">
+                                                    <span class="checkbox-label-8 w-form-label" for="checkbox-15"></span>
+
+                                                }
+                                            </label>
+                                        </div>
+                                    </form>
+                                    <div class="w-form-done">
+                                        <div>Thank you! Your submission has been received!</div>
+                                    </div>
+                                    <div class="w-form-fail">
+                                        <div>Oops! Something went wrong while submitting the form.</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <a href="#1" data-w-id="b56d5e85-9041-f7ae-5b77-25373a7a36bc" class="menu-dropdown-link w-inline-block">
+                                <div class="munu-dropdown-link-container">
+                                    <img src="../images/file-text-check.svg" width="20" alt="" class="menu-dropdown-link-icon">
+                                    <div>Features</div>
+                                </div>
+                            </a>
+                            @if (User.IsInRole("Adminis"))
+                            {
+                                <a href="/admin/index" class="menu-dropdown-link w-inline-block">
+                                    <div class="munu-dropdown-link-container">
+                                        <img src="../images/settings-service-cog-maintenance.png" width="20" alt="" class="menu-dropdown-link-icon">
+                                        <div>Admin</div>
+                                    </div>
+                                </a>
+                            }
+
+
+                            <a href="/homeboard/index?handler=logout" class="menu-dropdown-link w-inline-block">
+                                <div class="munu-dropdown-link-container">
+                                    <img src="../images/logout-exit-arrow-sign-out.png" width="20" alt="" class="menu-dropdown-link-icon">
+                                    <div>Logout</div>
+                                </div>
+                            </a>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="devices-main-layout-container">
+            @if (Model.NotActiveOrders.Count() > 0)
+            {
+                <div class="statement-banner landing-page" style="margin-top:50px;" id="activateDeviceDiv">
+                    <div class="nav04_top_wrap">
+                        <div class="nav04_text col-md-2"><a href="/identity/account/deviceselect?tapid=@Model.NotActiveOrders.First().Taps.First().SNumber[..8]" onclick="document.getElementById('activateDeviceDiv').setAttribute('style','display:none;')">Activate </a> your recent order! <br><span class="nav04_span"></span></div>
+                    </div>
+                </div>
+            }
+
+            <div class="app-main-layout-mask"></div>
+            <div class="app-main-layout devices">
+                <header id="1" class="app-main-layout-header">
+                    <div class="app-main-layout-wrapper header atlice-tap-devices">
+                        <div class="page-heading with-button">
+                            <h2 class="admin-title">Settings</h2>
+                        </div>
+                        <div class="page-tabs-menu">
+                            <a href="#" data-w-id="e0e5e003-0a59-51f0-ac76-4bc517a13401" class="page-tab-link general-settings">General</a>
+                            <a href="#" class="page-tab-link notification hidden">Notifications</a>
+                            <a href="#" class="page-tab-link devices">Devices</a>
+                        </div>
+                    </div>
+                </header>
+                <div class="app-main-layout-wrapper atlice-tap-devices">
+
+                    <div class="section-10 wf-section"></div>
+                    <div class="app-main-layout-content">
+                        <div class="section-8 devices">
+                            <div id="1" class="menu-header">
+                                <div class="memu-header-image-block"><img src="../icons/deviceBlack.png" loading="lazy" alt=""></div>
+                            </div>
+                            <div style="padding-bottom:50px;" class="w-layout-grid grid-9" id="locks_update">
+                                @foreach (var device in Model.TapViewModels)
+                                {
+
+                                    string id = "device_div" + device.AtliceTap.Id;
+                                    <div class="card-2" id="@id">
+
+                                        @await Html.PartialAsync("/pages/homeboard/device_partial.cshtml", device)
+
+                                    </div>
+                                }
+                                @foreach (var order in Model.NotActiveOrders)
+                                {
+                                    foreach (var dev in order.Taps)
+                                    {
+                                        Atlice.WebUI.Pages.Homeboard.IndexModel.TapViewModel model = new IndexModel.TapViewModel();
+                                        model.AtliceTap = dev;
+                                        model.QR = null;
+
+                                        string id = "device_div" + dev.Id;
+                                        <div class="card-2" id="@id">
+
+                                            @await Html.PartialAsync("/pages/homeboard/device_partial.cshtml", model)
+
+                                        </div>
+                                    }
+                                }
+
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="contacts-main-layout-container">
+            <div class="app-main-layout-mask"></div>
+            <div class="app-main-layout-2">
+                <div class="app-main-layout-header hidden">
+                    <div class="app-main-layout-wrapper header">
+                        <div class="page-heading">
+                            <h2 class="heading-52">Contacts</h2>
+                        </div>
+                    </div>
+                </div>
+                <div class="app-main-layout-wrapper contacts">
+                    <div class="contacts-section">
+                        <div id="1" class="menu-header contacts">
+                            <div class="div-block-52">
+                                <div class="memu-header-image-block"><img src="../images/Artboard-22.png" loading="lazy" alt=""></div>
+                            </div>
+                        </div>
+                        <div data-duration-in="300" data-duration-out="100" data-current="Tab 4" data-easing="ease" class="w-tabs">
+                            <div class="align-right hidden w-tab-menu">
+                                <a data-w-tab="Tab 1" class="switcher-tab left w-inline-block w-tab-link">
+                                    <div class="text-block-43">Taps</div>
+                                </a>
+                                <a data-w-tab="Tab 4" class="switcher-tab w-inline-block w-tab-link w--current">
+                                    <div class="text-block-44">Invites</div>
+                                </a>
+                                <a data-w-tab="Tab 5" class="switcher-tab w-inline-block w-tab-link">
+                                    <div class="text-block-45">Recent</div>
+                                </a>
+                                <a data-w-tab="Tab 6" class="switcher-tab right w-inline-block w-tab-link">
+                                    <div class="text-block-46">Oldest</div>
+                                </a>
+                            </div>
+                            <div class="chart-tab-content w-tab-content">
+                                <div data-w-tab="Tab 1" class="w-tab-pane">
+                                    <div class="w-dyn-list">
+                                        <div role="list" class="w-dyn-items">
+                                            <div role="listitem" class="w-dyn-item"></div>
+                                        </div>
+                                        <div class="w-dyn-empty">
+                                            <div>No items found.</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div data-w-tab="Tab 4" class="tab-pane-tab-4 contacts-list-item w-tab-pane w--tab-active" id="contactListDiv">
+                                    @if (Model.ContactList.Any())
+                                    {
+                                        foreach (var contact in Model.ContactList.OrderByDescending(x => x.Contact.DateMeet))
+                                        {
+                                            if (contact.Contact.LinkedPage is not null)
+                                            {
+                                                string mail = string.Empty;
+                                                if (!string.IsNullOrEmpty(contact.Contact.Email))
+                                                {
+                                                    mail = "mailto:" + contact.Contact.Email;
+                                                }
+                                                <div class="div-block-56">
+                                                    <div class="columns-5 contact-info w-row">
+                                                        <div class="column-13 w-col w-col-5">
+                                                            <div class="div-block-54">
+                                                                <div class="div-block-55"><img src="../images/Orion_men.svg" loading="lazy" alt="" class="contacts-avatar contact-pad"></div>
+                                                            </div>
+                                                            <h6 class="contact-name-title">@contact.Contact.Name</h6>
+                                                        </div>
+                                                        <div class="column-13 w-col w-col-7">
+                                                            <div class="text-block-54">@contact.Contact.DateMeet.ToShortDateString(), @contact.Contact.DateMeet.ToShortTimeString()</div>
+                                                            <div class="text-block-55">@contact.Contact.LinkedPage.PageType</div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="contact-button-columns">
+                                                        <div class="w-layout-grid contact-button-grid">
+                                                            @if (!string.IsNullOrEmpty(contact.Contact.Phone))
+                                                            {
+                                                                <a style="background-color:black;" href="tel:@contact.Contact.Phone" class="call-contact w-inline-block"></a>
+                                                                <a style="background-color:black;" id="w-node-b856fbee-26f4-b214-692c-a07036270345-9c649d68" href="sms:@contact.Contact.Phone" class="message-contact w-inline-block"></a>
+
+                                                            }
+
+                                                        </div>
+                                                        <div class="w-layout-grid contact-button-grid">
+                                                            @if (!string.IsNullOrEmpty(mail))
+                                                            {
+                                                                <a style="background-color:black;" id="w-node-_146f66c2-6b03-3073-1134-fcf8b64699af-9c649d68" href="@mail" class="email-contact w-inline-block"></a>
+
+                                                            }
+                                                            <a style="background-color:black;" id="w-node-_146f66c2-6b03-3073-1134-fcf8b64699b0-9c649d68" href="/homeboard/index?handler=downloadvcard&id=@contact.Contact.Id" class="save-contact w-inline-block"></a>
+                                                        </div>
+                                                    </div>
+                                                    <div onclick="javascript:{$(this).parent().remove(); $('#contactIdHolder').attr('class','@contact.Contact.Id');}" data-w-id="fea45898-185d-e60e-c62f-179dfe7b24a2" class="div-block-59"><img src="../images/close-x-delete-reject-decline.png" loading="lazy" alt="" class="image-73"></div>
+
+
+                                                </div>
+                                                @if (User.IsInRole("Adminis"))
+                                                {
+                                                    <div style="text-align:center;">
+                                                        @if (contact.Role != "Citizen" && contact.Role != "Adminis" && !contact.CitizenTrack)
+                                                        {
+                                                            <a href="/tap/invite?mobile=@contact.Contact.Phone" style="width:100%; text-align:center; color:black;" class="btn">Invite Prospect to Enroll</a>
+                                                        }
+
+                                                    </div>
+
+                                                }
+
+                                            }
+                                        }
+                                    }
+
+
+
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="footer-2"></div>
+                </div>
+            </div>
+        </div>
+        <div class="analytics-main-layout-container">
+            <div class="app-main-layout-mask"></div>
+            <div class="app-main-layout-3">
+
+                <div class="app-main-layout-header hidden">
+                    <div class="app-main-layout-wrapper header">
+                        <div class="page-heading">
+                            <h2 class="heading-57">Dashboard</h2>
+                        </div>
+                        <div class="page-tabs-menu">
+                            <a href="#" class="page-tab-link traffic">Analytics</a>
+                            <a href="#" class="page-tab-link revenue">Ecommerce</a>
+                            <a href="#" class="page-tab-link crypto">Crypto</a>
+                            <a href="#" class="page-tab-link projects">Projects</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="app-main-layout-wrapper analytics">
+                    <div class="app-main-layout-content-2">
+                        <div class="page-tabs-content">
+                            <div id="1" class="section-8 analytics">
+                                <div id="1" class="menu-header">
+                                    <div class="memu-header-image-block"><img src="../images/bar-chart-statistic-signal.png" loading="lazy" alt=""></div>
+                                </div>
+                                <div class="flex row analytics w-row">
+                                    <div class="col w-col w-col-4">
+                                        <div class="card-4 text-center">
+                                            <div class="card-heading center">
+                                                <div class="caption-2 mb-0-copy">Total Visits</div>
+                                            </div>
+                                            <div class="key-price-value">@Model.TotalVisits</div>
+                                            <div class="data-status up">
+                                                <img src="../images/icons8-low-priority-100-1_1icons8-low-priority-100-1.png" width="20" alt="" class="data-status-icon">
+                                                <div class="data-status-text">+10.32%</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col w-col w-col-4">
+                                        <div class="card-4 text-center">
+                                            <div class="card-heading center">
+                                                <div class="caption-2 mb-0-copy">Unique Visits</div>
+                                            </div>
+                                            <div class="key-price-value">@Model.UniqueVisits</div>
+                                            <div class="data-status down">
+                                                <img src="../images/icons8-low-priority-100_1icons8-low-priority-100.png" width="20" alt="" class="data-status-icon">
+                                                <div class="data-status-text">-5.04%</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col w-col w-col-4">
+                                        <div class="card-4 text-center">
+                                            <div class="card-heading center">
+                                                <div class="caption-2 mb-0-copy">Link Clicks</div>
+                                            </div>
+                                            <div class="key-price-value">@Model.LinkClicks</div>
+                                            <div class="data-status up">
+                                                <img src="../images/icons8-low-priority-100-1_1icons8-low-priority-100-1.png" width="20" alt="" class="data-status-icon">
+                                                <div class="data-status-text">+ 1.85%</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="section-8">
+                                <div class="flex row w-row">
+                                    <div class="col w-col w-col-6">
+                                        <div class="card-4 hidden">
+                                            <div class="card-heading">
+                                                <h4 class="caption-2 mb-0 large">Traffic Overview</h4>
+                                            </div><img src="https://uploads-ssl.webflow.com/60442746f919e95d6b31b806/60442747f919e9ef7931b83b_Chart%20Visitors.svg" alt="">
+                                        </div>
+                                        <div class="card-4">
+                                            <div class="card-heading">
+                                                <h4 class="caption-2 mb-0 large">Traffic Source</h4>
+                                            </div>
+                                            <div class="table">
+                                                <div class="row-2 table-row table-header w-row">
+                                                    <div class="col table-col w-col w-col-8">
+                                                        <div class="analytics-title-text"><strong>Devices</strong></div>
+                                                    </div>
+                                                    <div class="col table-col w-col w-col-4">
+                                                        <div class="analytics-title-text"><strong>Taps</strong></div>
+                                                    </div>
+                                                </div>
+                                                @foreach (var tap in Model.AtliceTaps)
+                                                {
+                                                    <div class="row-2 table-row w-row">
+                                                        <div class="col table-col w-col w-col-8">
+                                                            @if (!string.IsNullOrEmpty(tap.CustomName))
+                                                            {
+                                                                <div class="text-block-51">@tap.CustomName</div>
+
+                                                            }
+                                                            else
+                                                            {
+                                                                <div class="text-block-51">@tap.GetOfficialName(tap.Sku)</div>
+
+                                                            }
+                                                        </div>
+                                                        <div class="col table-col w-col w-col-4">
+                                                            <div>@tap.Hits</div>
+                                                        </div>
+                                                    </div>
+                                                }
+
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                    @if (personal is not null && business is not null && professional is not null)
+                                    {
+                                        <div class="col w-col w-col-6">
+                                            <div class="card-4">
+                                                <div class="card-heading">
+                                                    <h4 class="caption-2 mb-0 large">Contact Pages</h4>
+                                                </div>
+                                                <div class="text-center"><img src="https://uploads-ssl.webflow.com/60442746f919e95d6b31b806/60442747f919e93a5231b83c_Chart%20Circle.svg" width="200" alt="" class="image-62"></div>
+                                                <div class="chart-symbols">
+                                                    <div class="chart-symbols-item">
+                                                        <img src="@personal.ProImage" loading="lazy" alt="" class="image-64">
+                                                        <div class="chart-symbols-item-name">Personal</div>
+                                                        <div>@personal.Visits.Count(x =>x.Ip != "test")</div>
+                                                    </div>
+                                                    <div class="chart-symbols-item">
+                                                        <img src="@business.ProImage" loading="lazy" alt="" class="image-64">
+                                                        <div class="chart-symbols-item-name">Business</div>
+                                                        <div>@business.Visits.Count(x =>x.Ip != "test")</div>
+                                                    </div>
+                                                    <div class="chart-symbols-item">
+                                                        <img src="@professional.ProImage" loading="lazy" alt="" class="image-64">
+                                                        <div class="chart-symbols-item-name">Professional</div>
+                                                        <div>@professional.Visits.Count(x =>x.Ip != "test")</div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    }
+
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <div class="main-layout-container">
+            <div class="app-main-layout-mask"></div>
+            <div class="app-main-layout devices">
+                <div class="app-main-layout-header">
+                    <div class="app-main-layout-wrapper header atlice-tap-devices">
+                        <div class="page-heading with-button">
+                            <h2 class="admin-title">Settings</h2>
+                        </div>
+                        <div class="page-tabs-menu">
+                            <a href="#" class="page-tab-link general-settings">General</a>
+                            <a href="#" class="page-tab-link notification hidden">Notifications</a>
+                            <a href="#" class="page-tab-link devices">Devices</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="app-main-layout-wrapper atlice-tap-devices">
+                    <div class="tap-id-entry hidden wf-section">
+                        <p class="mb-40 text-center admin"><strong>Enter new Tap ID#</strong> (if already entered then select Activate)</p>
+                        <div class="w-form">
+                            <form id="email-form" name="email-form" data-name="Email Form" method="get" class="form-4">
+                                <input type="text" class="text-field w-input" maxlength="256" name="name-5" data-name="Name 5" placeholder="" id="name-5">
+                                <div class="w-container"><input type="submit" value="Activate" data-wait="Please wait..." class="atlice-button-2 w-button"></div>
+                            </form>
+                            <div class="w-form-done">
+                                <div>Thank you! Your submission has been received!</div>
+                            </div>
+                            <div class="w-form-fail">
+                                <div>Oops! Something went wrong while submitting the form.</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="section-10 wf-section"></div>
+                    <div class="app-main-layout-content">
+                        <div class="section-8 logo"><img src="../images/Image-414.png" loading="lazy" sizes="100vw" srcset="../images/Image-414-p-500.png 500w, ../images/Image-414-p-800.png 800w, ../images/Image-414-p-1080.png 1080w, ../images/Image-414.png 1316w" alt="" class="image-57"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="support-center-app-layout-container">
+            <div class="app-main-layout-mask"></div>
+            <div class="app-main-layout-4 support-center">
+                <header id="1" class="app-main-layout-header hidden">
+                    <div class="app-main-layout-wrapper-2 header">
+                        <div class="page-heading">
+                            <h2 class="heading-58">Beta Support/Feedback</h2>
+                            <p class="paragraph-22">Your go-to for Atlice Tap private beta test communications.</p>
+                        </div>
+                    </div>
+                </header>
+                <div class="app-main-layout-wrapper-2">
+                    <div class="title-div hidden">
+                        <div id="w-node-_61b75455-f906-cb30-609a-af59221bd1af-9c649d68">
+                            <div class="text-block-49">Support Center </div>
+                            <div class="subheading-text-block">Private Beta</div>
+                        </div>
+                    </div>
+                    <div data-duration-in="300" data-duration-out="100" data-current="Chat/Feedback" data-easing="ease" class="w-tabs">
+                        <div class="tabs-menu-4 support-menu w-tab-menu">
+                            <a data-w-tab="Chat/Feedback" id="supportChatTabButton" class="tab-link-2 home-board w-inline-block w-tab-link w--current">
+                                <div class="support-tab-container">
+                                    <div class="div-block-65"><img loading="lazy" src="../images/chat-bubble-message-conversation.png" alt="" class="image-78"></div>
+                                    <div class="text-block-39">Chat</div>
+                                </div>
+                            </a>
+                            <a data-w-tab="FAQ&#x27;s" id="supportFaqTabButton" class="tab-link-2 w-inline-block w-tab-link">
+                                <div class="support-tab-container">
+                                    <div class="div-block-65"><img loading="lazy" src="../images/question-mark-ask-faq.png" alt=""></div>
+                                    <div class="text-block-38">FAQ&#x27;s</div>
+                                </div>
+                            </a>
+                            <a data-w-tab="Beta Agreement" id="supportBetaTabButton" class="tab-link-2 w-inline-block w-tab-link">
+                                <div class="support-tab-container">
+                                    <div class="div-block-65"><img loading="lazy" src="../images/file-document-paper-article.svg" alt=""></div>
+                                    <div class="text-block-38">Agreement </div>
+                                </div>
+                            </a>
+
+                        </div>
+                        <div class="tabs-content-3 w-tab-content">
+                            <div id="supportChatTab" data-w-tab="Chat/Feedback" class="w-tab-pane w--tab-active">
+                                <div class="section-inner-2 profile">
+                                    <div class="support-card">
+                                        <div class="avatar block-center"></div>
+                                        <h5 class="profile-name text-center">@Model.Me.FirstName @Model.Me.LastName</h5>
+                                        @if (business is not null)
+                                        {
+                                            <div class="text-center">@business.BusinessName</div>
+                                        }
+                                        <div class="profile-social text-center">
+                                            <a href="#" class="social-link fb hidden w-inline-block"></a>
+                                            <a href="#" class="social-link twitter hidden w-inline-block"></a>
+                                            <a href="https://www.instagram.com/" class="social-link insta hidden w-inline-block"></a>
+                                        </div>
+                                        <div class="profile-card-columns">
+                                            <div class="row-2 support-center w-row">
+                                                <div class="col col-border-right text-center w-col w-col-4 w-col-small-4 w-col-tiny-4">
+                                                    <div class="profile-card-col support">
+                                                        <div class="profile-card-col-number">@Model.errorFeedbacks.Count()</div>
+                                                        <div class="hint-4 support">Error Page</div>
+                                                    </div>
+                                                </div>
+                                                <div class="col text-center col-border-right w-col w-col-4 w-col-small-4 w-col-tiny-4">
+                                                    <div class="profile-card-col support">
+                                                        <div class="profile-card-col-number">@Model.UniqueVisits</div>
+                                                        <div class="hint-4 support">Unique Taps</div>
+                                                    </div>
+                                                </div>
+                                                <div class="col text-center col-border-right w-col w-col-4 w-col-small-4 w-col-tiny-4">
+                                                    <div class="profile-card-col support">
+                                                        <div class="profile-card-col-number">@Model.errorFeedbacks.Count()</div>
+                                                        <div class="hint-4 support">Error Feedback</div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="app-main-layout-content-2">
+                                    <div id="Chat" class="section-11">
+                                        <div class="section-inner-2 chat">
+                                            <div class="support-card support-messaging">
+                                                <div class="post-author highlight">
+                                                    <div class="feedback-title">
+                                                        <div class="text-heading-grey chat">Support/Feedback CHAT</div>
+                                                        <div class="hint-4 title">As a beta user we request that you share your experiences with us, both good and bad. We need to make this better!! Thank you.</div>
+                                                    </div>
+                                                </div>
+                                                <div class="post-author">
+                                                    <div class="friend-photo-container">
+                                                        <img width="50" sizes="100vw" src="../icons/newal.jpg" srcset="/icons/newal.jpg 500w, /icons/newal.jpg 800w, /icons/newal.jpg 1080w, /icons/newal.jpg 1424w" alt="" class="friend-photo-2">
+                                                        <div id="supportStatus" class="online-status off"></div>
+                                                    </div>
+                                                    <div>
+                                                        <div class="text-heading-grey">AO</div>
+                                                        <div class="hint-4 title">Co-Venturer, Atlice Tap</div>
+                                                    </div>
+                                                </div>
+                                                <div class="post-content-2" id="chatdiv">
+                                                    @if (Model.Chat is not null)
+                                                    {
+                                                        @foreach (var message in Model.Chat.Messages.OrderBy(x => x.TimeStamp).DistinctBy(x => x.TimeStamp.Date))
+                                                        {
+
+
+                                                            <div class="new-date-block">
+                                                                <div class="new-date-text">
+                                                                    <h6 class="heading-63">
+                                                                        <strong>@message.TimeStamp.ToShortDateString()</strong>
+                                                                    </h6>
+                                                                </div>
+
+                                                                @foreach (var mess in Model.Chat.Messages.OrderBy(x => x.TimeStamp).Where(x => x.TimeStamp.Date == message.TimeStamp.Date))
+                                                                {
+                                                                    if (mess.Sender is not null)
+                                                                    {
+                                                                        if (mess.Sender.Id == Model.Me.Id)
+                                                                        {
+                                                                            <a href="#" class="notification-item-away w-inline-block">
+                                                                                <div class="notification-item-body-2">
+                                                                                    <div class="notification-item-title-3">@mess.Message</div>
+                                                                                </div>
+                                                                                <div class="notification-item-time-stamp">@mess.TimeStamp.ToLocalTime().ToShortTimeString()</div>
+                                                                            </a>
+                                                                        }
+                                                                        else
+                                                                        {
+                                                                            <a href="#" class="notification-item-home w-inline-block">
+                                                                                <div class="notification-item-body">
+                                                                                    <div class="notification-item-title-home">
+                                                                                        @mess.Message
+                                                                                        <br>
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="notification-item-time-stamp">@mess.TimeStamp.ToLocalTime().ToShortTimeString()</div>
+                                                                            </a>
+                                                                        }
+                                                                    }
+
+
+                                                                }
+
+
+                                                            </div>
+                                                        }
+                                                        <div class="new-date-block">
+                                                            <div class="new-date-text">
+                                                                <h6 class="heading-63" id="chatLog">
+                                                                    <strong>@TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, Eastern_Standard_Time).ToShortDateString()</strong>
+                                                                </h6>
+                                                            </div>
+                                                        </div>
+                                                    }
+
+
+
+                                                </div>
+                                                <div class="post-feedback">
+                                                    <div class="post-feedback-item">
+                                                        <img width="25" src="../images/warning-alert-sign-danger.png" alt="" class="post-feedback-icon">
+                                                        <div class="hint-4">Please allow 24hours for a response.</div>
+                                                    </div>
+                                                </div>
+                                                <div class="post-form">
+                                                    <div class="w-form">
+                                                        <form id="wf-form-profile" name="wf-form-profile" data-name="profile" method="get">
+                                                            <textarea id="sendMessage" name="Example-Text" maxlength="5000" data-name="Example Text" placeholder="Share your thoughts..." class="textarea-3 w-input"></textarea>
+                                                            <input id="sendButton" type="submit" value="Send" data-wait="Please wait..." class="button-5 atlice-button-primary button-smaller w-button">
+                                                        </form>
+                                                        <div class="success-message-3 w-form-done">
+                                                            <div>Saved!</div>
+                                                        </div>
+                                                        <div class="error-message-3 w-form-fail">
+                                                            <div>Oops! Something went wrong while submitting the form.</div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div id="supportFaqTab" data-w-tab="FAQ&#x27;s" class="tab-pane-faq-s w-tab-pane">
+                                <div class="row-dark atlice-tap faq-s">
+                                    <div class="row-3">
+                                        <div class="hero-image-2"><img width="1000" src="../images/_VO0U7AE.jpeg" sizes="100vw" srcset="../images/_VO0U7AE-p-500.jpeg 500w, ../images/_VO0U7AE-p-800.jpeg 800w, ../images/_VO0U7AE.jpeg 1600w" alt="" class="image-8"></div>
+                                    </div>
+                                    <div class="row-3 center">
+                                        <h3 class="atlice-tap-text-title white">Frequently Asked Questions</h3>
+                                    </div>
+                                    <div class="row-3 center">
+                                        <div class="center-3">
+                                            <div class="question-item-2">
+                                                <h5 class="atlice-tap-text-title white">Where do I place my Atlice Tap tag?</h5>
+                                                <p class="text-small-2 last-item">First have an idea where you want to place it. It can be removed several times depending on the surface where it was placed.<br>‍<br>For iPhones: Place your Atlice Tap Tag on the bottom of your phone. If you place it at the top, it will set off your phone&#x27;s reader constantly!<br><br>For most Androids: Place your Atlice Tap Tag on the bottom as well.<br><br>For Galaxies/Notes: Place your Atlice Tap Tag at the top of your phone by your camera!</p>
+                                            </div>
+                                            <div class="question-item-2">
+                                                <h5 class="atlice-tap-text-title white">Does the other person need to download an app to share my contact page with them?</h5>
+                                                <p class="text-small-2 last-item">Not at all! Just tap with them or have the scan your QR code with their camera and they can connect to any links you have on your contact page. <br><br>Your prospect can also download your contact card (vCard) with just a click on the &quot;Save to Contacts&quot; button. Again, there is no need for anyone to download a mobile app,</p>
+                                            </div>
+                                            <div class="question-item-2">
+                                                <h5 class="atlice-tap-text-title white">Does Atlice Tap work with all phones?</h5>
+                                                <p class="text-small-2 last-item">Atlice Tap devices use NFC technology and is compatible with almost all mobile phones. Take a look at this <a href="https://en.wikipedia.org/api/rest_v1/page/pdf/List_of_NFC-enabled_mobile_devices#page2" target="_blank" class="link-6">list of mobile phones</a> for reference. </p>
+                                            </div>
+                                            <div class="question-item-2">
+                                                <h5 class="atlice-tap-text-title white">After participating in beta testing, can I keep my device?</h5>
+                                                <p class="text-small-2 last-item">Yes of course! We appreciate you joining as we provide solutions for leaders, creators and independent professionals who want an easy and safe way to network.</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="center-3 faq">
+                                    <a href="#" data-w-id="1b52e043-cb79-4aee-7ca4-325d45771583" class="button-large atlice-tap w-button">See Features</a>
+                                </div>
+                            </div>
+                            <div id="supportBetaTab" data-w-tab="Beta Agreement" class="w-tab-pane">
+                                <div id="Hero" class="beta-agreement-wrap">
+                                    <div class="form12 beta-agreement">
+                                        <div class="p07 atlice-tap">
+                                            <h1 class="heading-xl text-white t-c">Beta testing Terms &amp; Conditions</h1>
+                                            <h1 class="paragraph-8"><strong class="bold-text-95">This agreement is between SOSKYHIGH Media and you (Beta Customer) for the purposes of testing any Beta Products but more specifically Atlice (software as a service) and Atlice Tap (contactless devices). This agreement can be updated at any time and you will be updated. <br><br>Please review this carefully and reach out to Alexander Oliver with any questions or concerns at alexander@atlice.com. </strong></h1>
+                                            <h1 class="heading-4 t-c">All devices remain the property of SOSKYHIGH Media during the testing period and are solely for the purpose of beta testing.</h1>
+                                            <div class="rich-text-block t-c w-richtext">
+                                                <p>‍</p>
+                                                <figure style="max-width:40%" class="w-richtext-align-center w-richtext-figure-type-image">
+                                                    <div><img loading="lazy" src="../images/SOSKYHIGH-Media-LOGO.png" alt=""></div>
+                                                    <figcaption>
+                                                        <a href="http://soskyhighmedia.com" target="_blank"><strong>soskyhighmedia.com</strong></a>
+                                                    </figcaption>
+                                                </figure>
+                                                <p>‍<br></p>
+                                                <p><strong>Beta Testing Agreement Terms &amp; Conditions</strong></p>
+                                                <ol role="list">
+                                                    <li><strong>Scope of Agreement.</strong> Beta Customer is being granted rights under this Agreement for the purpose of testing and providing input and other Feedback to SOSKYHIGH Media regarding one or more of SOSKYHIGH Media’s proprietary, non-commercially available hosted software applications, application platform interfaces, services, features and/or functionalities in connection with the Existing Account as more fully described in the Beta Testing Order Form (the “<strong>Beta Product(s)</strong>”). This Agreement covers all Beta Products made available to Beta Customer by SOSKYHIGH Media, including, without limitation, any Beta Products specifically identified by SOSKYHIGH Media as being in “Beta” or any similar stage of development. SOSKYHIGH Media retains sole and absolute discretion as to what, if any, Beta Products will be made available to Beta Customer during the Term. While Beta Customer is not required to utilize or enable any Beta Products, if Beta Customer elects to do so, then Beta Customer’s use of and access to any such Beta Products shall be subject to the terms of this Agreement.<br></li>
+                                                    <li><strong>Payment; Fees.</strong> SOSKYHIGH Media reserves the right to charge fees for use and access to SOSKYHIGH Media websites or may provide SOSKYHIGH Media Beta Products for no charge. SOSKYHIGH Media reserves the right to start charging or revise fee amounts at any time, at its sole discretion, under this Agreement or after the Beta Products are made widely available and incorporated into a SOSKYHIGH Media service.<br></li>
+                                                    <li><strong>Limited Use Rights.</strong> For the term of the Agreement, SOSKYHIGH Media grants to Beta Customer a limited, non-transferable, non-exclusive, revocable right to access and use the Beta Product(s) in connection with an Existing Account to test its functionality and provide Feedback to SOSKYHIGH Media. SOSKYHIGH Media hosts and retains physical control over the Beta Product(s) and only makes the Beta Product(s) available for access and use by Beta Customer using contactless devices and also over the Internet through a Web-browser or mobile device. Nothing in this Agreement obligates SOSKYHIGH Media to deliver or make available any copies of computer programs or code from the Beta Product(s) to Customer, whether in object code or source code form. SOSKYHIGH Media reserves the right, in its sole discretion, to revoke access and use of the Beta Products at any time. Further, SOSKYHIGH Media reserves the right to enter (“assume into”) the Existing Account as needed to (i) monitor or measure use of the Beta Product(s); (ii) validate certain features or functionality of the Beta Product(s); and (iii) to provide services or support necessary to maintain the Beta Product(s).<br></li>
+                                                    <li><strong>Use Restrictions.</strong> Customer may not rent, lease, distribute, or resell the Beta Product(s), or use the Beta Product(s) as the basis for developing a competitive solution (or contract with a third party to do so), or remove or alter any of the logos, trademark, patent or copyright notices, confidentiality or proprietary legends or other notices or markings that are on or in the Beta Product(s).<br></li>
+                                                    <li><strong>Feedback.</strong> Upon reasonable request by SOSKYHIGH Media, Beta Customer agrees to provide suggestions, enhancement requests, and recommendations (individually and collectively, “<strong>Feedback</strong>”) regarding the Beta Product(s). Feedback shall include informing SOSKYHIGH Media about the performance, ease of use, features that may be missing, and any bugs encountered during the use of the Beta Product(s). SOSKYHIGH Media may contact Beta Customer and Beta Customer agrees to make available a reasonable amount of time to discuss the Beta Product(s) with SOSKYHIGH Media if so requested. SOSKYHIGH Media may without restriction or fee use, modify and incorporate this Feedback into the Beta Product(s) and other SOSKYHIGH Media products and/or services without any restriction and without any payment.<br></li>
+                                                    <li><strong>Intellectual Property.</strong> The parties acknowledge that this Agreement does not transfer any right, title or interest in any intellectual property right to the other. SOSKYHIGH Media maintains all rights, title and interest in and to all its patents, inventions, copyrights, trademarks, domain names, trade secrets, know-how and any other intellectual property and/or proprietary rights (collectively, “<strong>Intellectual Property Rights</strong>”). The limited rights granted to Customer to access and use the Beta Product(s) under this Agreement do not convey any additional rights in the Beta Product(s), or in or to any Intellectual Property Rights associated therewith. Subject only to the limited rights to access and use the Beta Product(s) as expressly provided herein, all rights, title and interest in and to the Beta Product(s) and all hardware, software and other components of or used to provide the Beta Product(s), including all related Intellectual Property Rights, will remain with and belong exclusively to SOSKYHIGH Media.<br></li>
+                                                    <li><strong>Term of Agreement and Renewal.</strong> This Agreement shall commence upon the Beta Testing Start Date and shall expire on the Beta Testing End Date, each as set forth in the Beta Testing Order Form (the “<strong>Initial Term</strong>”). Upon expiration, this Agreement shall automatically renew for subsequent one (1) month periods until terminated by either party (each a “<strong>Renewal Term</strong>” and, collectively with the Initial Term, the “<strong>Term</strong>”).<br></li>
+                                                    <li><strong>Termination and Expiration.</strong> Either party may terminate this Agreement at any time, for any or no reason, and at either party’s convenience by providing written notice to the other. Upon termination of this Agreement, Customer will notify its Users that their access to the Beta Product(s) has terminated, and SOSKYHIGH Media may withhold, remove or discard any content, data, or other information that Customer’s Users post or upload into SOSKYHIGH Media’s system while using the Beta Product(s). Following termination or expiration of this Agreement, SOSKYHIGH Media is not obligated to store, maintain or provide a copy of any content, data or other information that Customer or its Users made available or provided when using the Beta Product(s). If not earlier terminated, Customer’s obligations under this Agreement shall terminate upon termination of this Agreement; provided that the foregoing shall not limit SOSKYHIGH Media’s rights pursuant to Section 5 as related to any Feedback provided before or after such termination. Sections 2, 5, 6, 11, and 13 to 17, and all obligations thereunder, shall survive any termination of this Agreement.<br></li>
+                                                    <li><strong>Users.</strong> Customer will not, and will not permit its Users to, share Beta Product access rights with any other individual. Customer will ensure that its Users comply with the Atlice General Terms of Use (the current version of which is located at www.atlice.com/termsofservice or at any successor site, as designated by Atlice and as supplemented by the SOSKYHIGH Media Special Terms, collectively, the “TOU”), which are hereby incorporated into this Agreement. In the event a User violates the TOU, SOSKYHIGH Media may suspend and / or terminate Customer’s access to the Beta Product(s).<br></li>
+                                                    <li><strong>Suspension of Services.</strong> SOSKYHIGH Media may immediately suspend Customer or one of its User’s access to and use of the Beta Product(s) if Customer or one of its Users is in breach of <strong>Section 9</strong>, provided that the suspension will continue only for as long as reasonably necessary for Customer to remedy the breach.<br></li>
+                                                    <li><strong>Confidential Information.</strong> Customer acknowledges and agrees that participation in the Beta testing under this Agreement will result in SOSKYHIGH Media disclosing certain confidential, proprietary and/or trade secret information related to the Beta Products and/or SOSKYHIGH Media (the “<strong>Confidential Information</strong>”). Such Confidential Information includes, without limitation, the features, functionality and existence of the Beta Product(s), and any know how, trade secrets, computer programs, source code, flowcharts, diagrams, manuals, schematics, development tools, specifications, design documents, marketing information, financial information, business plans or reports made available to Customer. Customer agrees that it will not, without the express prior written consent of SOSKYHIGH Media, disclose any Confidential Information or any part thereof to any third party, except to the extent that such Confidential Information (a) is or becomes generally available to the public through any means other than as a result of any act or omission by Customer; (b) is rightfully received by Customer from a third party that is not subject to any obligation of confidentiality with respect thereto and without limitation as to its use; or (c) is independently developed by Customer without any reliance on any Confidential Information. At the termination of this Agreement or at any time by request of SOSKYHIGH Media, Customer will return all Confidential Information in its possession to SOSKYHIGH Media and further agrees that it will not duplicate, translate, modify, copy, print, disassemble, decompile or otherwise tamper with the Beta Product(s) or any Confidential Information.<br></li>
+                                                    <li><strong>Third Party Tool Integrations.</strong> If applicable, one or more Beta Products may integrate with third party services. Beta Customer hereby consents to the sharing of the information in the Beta Products with these third party services and certifies that it has any and all required consents for doing so.<br></li>
+                                                    <li><strong>Disclaimer of Warranties.</strong> THE BETA PRODUCT(S) ARE PROVIDED “AS IS”. SOSKYHIGH MEDIA MAKES NO REPRESENTATIONS OR WARRANTIES, EXPRESS OR IMPLIED, REGARDING THE BETA PRODUCT(S), INCLUDING ANY REPRESENTATION THAT THE SERVICES THEREUNDER WILL BE UNINTERRUPTED OR ERROR-FREE. TO THE FULLEST EXTENT PERMITTED UNDER APPLICABLE LAW, SOSKYHIGH MEDIA DISCLAIMS ANY IMPLIED OR STATUTORY WARRANTY, INCLUDING ANY IMPLIED WARRANTY OF TITLE, NON-INFRINGEMENT, MERCHANTABILITY OR FITNESS FOR A PARTICULAR PURPOSE IN RESPECT OF THE BETA PRODUCT(S). FOR THE AVOIDANCE OF DOUBT, ALL BETA PRODUCT(S) ARE PRELEASE, ARE EXPECTED TO CONTAIN DEFECTS WHICH MAY BE MATERIAL, AND ARE NOT EXPECTED TO OPERATE AT THE LEVEL OF PERFORMANCE OR COMPATIBILITY OF A FINAL, GENERALLY AVAILABLE PRODUCT OFFERING. BETA PRODUCT(S) MAY NOT OPERATE ACCURATELY AND MAY BE SUBSTANTIALLY MODIFIED PRIOR TO PUBLIC AVAILABILITY OR WITHDRAWN AT ANY TIME. ACCORDINGLY, ACCESS TO AND USE OF THE BETA PRODUCT(S) IS ENTIRELY AT CUSTOMER’S OWN RISK. IN NO EVENT SHALL SOSKYHIGH MEDIA BE LIABLE FOR ANY DAMAGE WHATSOEVER ARISING OUT OF THE USE OF OR INABILITY TO USE THE BETA PRODUCT(S), EVEN IF SOSKYHIGH MEDIA HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES. YOU ARE ADVISED TO SAFEGUARD IMPORTANT DATA, TO USE CAUTION AND NOT TO RELY IN ANY WAY ON THE CORRECT FUNCTIONING OR PERFORMANCE OF ANY BETA PRODUCT.<br></li>
+                                                    <li><strong>Indemnity.</strong> Customer agrees to indemnify and hold SOSKYHIGH Media, its officers, directors and employees harmless from any losses (including attorneys’ fees) that result from any third party claims related to Customer’s (or its Users) access, use or misuse of the Beta Product(s), or any act or omission by Customer or its Users in violation of this Agreement.<br></li>
+                                                    <li><strong>Dispute Resolution, Governing Law and Venue.</strong> The parties will attempt to resolve any dispute related to this Agreement through good faith, informal negotiation. If initial negotiation does not resolve the dispute, the parties will select a mutually agreed mediator in a mutually agreed location to attempt to resolve the dispute. If mediation fails to resolve the dispute, either party may file an action in a federal court in the Eastern District of New York only and each party irrevocably submits to the jurisdiction and venue of the applicable courts. The laws of the State of New York govern this Agreement. The prevailing party in any litigation may seek to recover its legal fees and costs. Any breach of confidentiality obligations in this Agreement, or any unauthorized use of the services or a party’s intellectual property by the other, may cause irreparable harm. In no event may this agreement be governed by the United Nations convention on contracts for the international sale of goods.<br></li>
+                                                    <li><strong>Compliance with Laws and Legal Advice.</strong> Each party must comply with all laws, rule or regulations applicable to such party’s activities in relation to this Agreement, including export control laws of the United States which are applicable to the Application and which may prohibit use of the Application in certain sanctioned or embargoed countries. SOSKYHIGH Media will not provide Customer with any legal advice regarding compliance with data privacy or other relevant laws, rules or regulations in the jurisdictions in which Customer uses the Beta Product(s) (“<strong>Laws</strong>”). The parties acknowledge and agree that not all features, functions and capabilities of the Beta Product(s)may be used in all jurisdictions and Customer recognizes that certain features, functions and capabilities may need to be configured differently or not used in certain jurisdictions in order to comply with applicable local Laws, and in certain jurisdictions consents may need to be obtained from individuals submitting data via the Beta Product(s) as to the intended purpose, storage, distribution, access and use of the data submitted (“<strong>Local Use Decisions</strong>”). Customer is responsible for Local Use Decisions and SOSKYHIGH Media disclaims all liability for Local Use Decisions.<br></li>
+                                                    <li><strong>Miscellaneous.</strong> This Agreement does not create a partnership, agency relationship, or joint venture between the parties. Any assignment of this Agreement by Customer in whole or in part without SOSKYHIGH Media’s prior written consent will be null and void, except an assignment to a successor that is not a competitor of SOSKYHIGH Media’s made in connection with a merger or sale of all or substantially all of Customer’s assets or stock or to an Affiliate. If this Agreement is translated into a language other than English, the translation is for convenience only, and the English language version will govern. If any provision of this Agreement is unenforceable, that provision will be modified to render it enforceable to the extent possible to affect the parties’ intention and the remaining provisions will not be affected. Failure of SOSKYHIGH Media to enforce a right under this Agreement shall not act as a waiver of that right or the ability to later assert that right relative to the particular situation involved. This Agreement includes any schedules and exhibits attached hereto. Such documents encompass the entire agreement between Customer and SOSKYHIGH Media with respect to the subject matter hereof and supersede all prior representations, agreements and understandings, written or oral. This Agreement may only be altered, amended or modified by duly executed written instrument. All notices to be provided by SOSKYHIGH Media to Customer under this Agreement may be delivered in writing (a) by nationally recognized overnight delivery service (“<strong>Courier</strong>”) or US mail to the contact mailing address provided by Customer on any form; or (b) electronic mail to the electronic mail address provided for Customer’s Existing Account owner. </li>
+                                                </ol>
+                                                <p><br></p>
+                                                <p>Customer must give notice to SOSKYHIGH Media in writing by Courier or US Mail to the following address: SOSKYHIGH Media, Attn: Legal Department, 580 Flatbush Avenue, Suite 17L, Brooklyn, NY 11225. All notices shall be deemed to have been given immediately upon delivery by electronic mail, or if otherwise delivered upon receipt or, if earlier, two (2) business days after being deposited in the mail or with a Courier as permitted above. You may not assign this Agreement without the prior written consent of SOSKYHIGH Media. Subject to the foregoing, the Agreement shall be binding upon the parties and their respective administrators, successors and assigns.<br></p>
+                                            </div>
+                                            <h1 class="paragraph-13 black">*Beta Testing is subject to change at any time at the sole discretion SOSKYHIGH Media.</h1>
+                                            <div class="row footer atlice-tap">
+                                                <div class="social-links center text-small">
+                                                    <a href="https://soskyhighmedia.com" target="_blank" class="social-icon-2 w-inline-block"><img width="98" src="https://uploads-ssl.webflow.com/5ebb1acdd055a526ac0aa59e/5ebb2ae239593cee4d21c19c_SOSKYHIGH%20Media%20LOGO.png" alt=""></a><img width="56" sizes="100vw" src="../images/Vally-Logo.png" srcset="../images/Vally-Logo-p-500.png 500w, ../images/Vally-Logo.png 641w" alt="">
+                                                    <a href="#" class="social-icon-2 w-inline-block"><img width="87" src="https://uploads-ssl.webflow.com/5ebb1acdd055a526ac0aa59e/5ebb2c7332a9e12245b6108c_Atlice%20Logo%20-%20Blk.png" alt=""></a>
+                                                </div>
+                                                <div class="center">
+                                                    <div class="text-light text-small">
+                                                        Atlice Tap Beta is a product by<strong> </strong>
+                                                        <a href="http://soskyhighmedia.com" class="link-2">SOSKYHIGH Media</a> and <a href="http://soskyhighmedia.com" class="link-2"><strong class="bold-text-97">Valley of the Kings LLC</strong></a><strong><br></strong>
+                                                    </div>
+                                                    <div class="text-light text-small"><strong><strong class="bold-text-97"></strong></strong><strong><br></strong></div>
+                                                    <div class="text-small text-light hidden">Mastergrind is a registered trademark of <strong>SOSKYHIGH Media</strong>, Brooklyn, NY</div>
+                                                    <div class="footer-link-buttons no-footer-links">
+                                                        <a href="http://atlice.com" target="_blank" class="button-small-light">Log In</a>
+                                                        <a href="http://atlice.com/beta-customer-terms-and-conditions" target="_blank" class="button-small-light">Beta Terms and Conditions</a>
+                                                        <a href="http://atlicetap.com" target="_blank" class="button-small-light">Shop (coming soon)</a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="fulfillment-main-layout-container">
+            <div class="app-main-layout-mask"></div>
+            <div class="app-main-layout-5">
+                <div class="app-main-layout-header-2">
+                    <div class="app-main-layout-wrapper-3 header">
+                        <div class="page-heading with-button">
+                            <h2>Contacts</h2>
+                        </div>
+                        <div class="page-tabs-menu">
+                            <a href="#" class="page-tab-link price-plans">Payment details</a>
+                            <a href="#" class="page-tab-link subscription">Subscription</a>
+                            <a href="#" class="page-tab-link price-plans">Price plans</a>
+                            <a href="#" class="page-tab-link receipt">Receipt</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="app-main-layout-wrapper-3">
+                    <div class="app-main-layout-content-2">
+                        <div class="section-11">
+                            <div class="section-inner-3">
+                                <div class="card-6 no-padding receipt-table">
+                                    <div class="receipt-row">
+                                        <div class="card-setting-text caption">Name</div>
+                                        <div class="card-setting-text caption">Date</div>
+                                        <div class="card-setting-text caption">Tap Location</div>
+                                        <div class="card-setting-switcher">
+                                            <div class="receipt-download hidden"></div>
+                                        </div>
+                                    </div>
+                                    <div class="receipt-row">
+                                        <div class="card-setting-text">Andra Wishom</div>
+                                        <div class="card-setting-text">April 25, 2020</div>
+                                        <div class="card-setting-text primary-text">St. Louis, MI</div>
+                                        <div class="card-setting-switcher">
+                                            <a href="#" class="receipt-download w-inline-block"></a>
+                                        </div>
+                                    </div>
+                                    <div class="receipt-row">
+                                        <div class="card-setting-text">Sarah Bowen</div>
+                                        <div class="card-setting-text">May 25, 2020</div>
+                                        <div class="card-setting-text primary-text">Rutland, VT</div>
+                                        <div class="card-setting-switcher">
+                                            <a href="#" class="receipt-download w-inline-block"></a>
+                                        </div>
+                                    </div>
+                                    <div class="receipt-row">
+                                        <div class="card-setting-text">Allen Bradford</div>
+                                        <div class="card-setting-text">June 25, 2020</div>
+                                        <div class="card-setting-text primary-text">Philadelphia, PA</div>
+                                        <div class="card-setting-switcher">
+                                            <a href="#" class="receipt-download w-inline-block"></a>
+                                        </div>
+                                    </div>
+                                    <div class="receipt-row">
+                                        <div class="card-setting-text">Tony Christie</div>
+                                        <div class="card-setting-text">July 25, 2020</div>
+                                        <div class="card-setting-text primary-text">Brooklyn, NY</div>
+                                        <div class="card-setting-switcher">
+                                            <a href="#" class="receipt-download w-inline-block"></a>
+                                        </div>
+                                    </div>
+                                    <div class="receipt-row">
+                                        <div class="card-setting-text">Doug Oliver</div>
+                                        <div class="card-setting-text">August 25, 2020</div>
+                                        <div class="card-setting-text primary-text">Philadelphia, PA</div>
+                                        <div class="card-setting-switcher">
+                                            <a href="#" class="receipt-download w-inline-block"></a>
+                                        </div>
+                                    </div>
+                                    <div class="receipt-row">
+                                        <div class="card-setting-text">Malcolm Brown</div>
+                                        <div class="card-setting-text">September 25, 2020</div>
+                                        <div class="card-setting-text primary-text">Tamarac, FL</div>
+                                        <div class="card-setting-switcher">
+                                            <a href="#" class="receipt-download w-inline-block"></a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="settings-main-layout-container">
+            <div class="app-main-layout-mask"></div>
+            <div class="app-main-layout-2">
+
+                <div class="app-main-layout-wrapper atlice-tap-devices">
+                    <div class="app-main-layout-content">
+
+                        <div class="section-8 plan">
+                            <div id="1" class="menu-header">
+                                <div class="memu-header-image-block"><img src="../images/settings-service-cog-maintenance.png" loading="lazy" alt=""></div>
+                            </div>
+                            <div class="card-3 settings">
+                                <div class="card-heading-small-2">
+                                    <h4 class="heading-55">Plan</h4>
+                                </div>
+                                <div class="input-group">
+                                    <div class="input-group-item-left">
+                                        <div class="label-2"><strong class="bold-text-103">Private Beta Testing</strong></div>
+                                    </div>
+                                    <a href="#" class="button-5 button-small button-growth-none hidden w-button">Change</a>
+                                </div>
+                                <div class="input-group">
+                                    <div class="input-group-item-left">
+                                        @if (!User.IsInRole("Tourist"))
+                                        {
+                                            <div class="label-2">Beta Customer Plan (Beta Premium)</div>
+                                        }
+                                        else
+                                        {
+                                            <div class="label-2">Beta Customer Plan (Beta)</div>
+                                        }
+                                       @* @if (Model.Passport.Stamps.Any(x => x.Name.Contains("Founder's")))
+                                        {
+                                            <div class="label-2">Founders Club</div>
+                                        }*@
+                                    </div>
+
+                                    <a href="#" class="button-5 button-small button-growth-none inactive w-button">Upgrade</a>
+                                </div>
+                            </div>
+                            <div class="flex row w-row">
+                                <div class="col settings w-col w-col-6">
+                                    <div class="card-3 settings">
+                                        <h4 class="heading-55">Account Information</h4>
+                                        <div class="input-group">
+                                            <div class="input-group-item-left">
+                                                <div class="label-2">Full Name</div>
+                                                <div class="account-login-text" id="nameUpdate">@Model.Me.FirstName @Model.Me.LastName</div>
+                                            </div>
+                                            <a onclick="fetch('/homeboard/index?handler=updateaccount&value=name').then(x=> x.json()).then(y=> document.getElementById('accountmodal').innerHTML = y.view)" data-w-id="22c32a63-44e9-e835-59b7-6ea12fa29cef" href="#" class="atlice-tap-button w-button">Update</a>
+
+                                        </div>
+                                        <div class="input-group">
+                                            <div class="input-group-item-left">
+                                                <div class="label-2">Mobile Number</div>
+                                                <div class="account-login-text" id="mobileUpdate">@Model.Me.PhoneNumber</div>
+                                                <div id="confirmPhone"></div>
+                                            </div>
+                                            <a onclick="fetch('/homeboard/index?handler=updateaccount&value=mobile').then(x=> x.json()).then(y=> document.getElementById('accountmodal').innerHTML = y.view)" data-w-id="8bcbab6a-d6aa-757e-7095-69ca22e0b80e" href="#" class="atlice-tap-button w-button">Update</a>
+
+                                        </div>
+                                        <div class="input-group">
+                                            <div class="input-group-item-left">
+                                                <div class="label-2">Email</div>
+                                                <div class="account-login-text" id="emailUpdate">@Model.Me.Email</div>
+                                                <div id="confirmEmail"></div>
+
+                                            </div>
+                                            <a onclick="fetch('/homeboard/index?handler=updateaccount&value=email').then(x=> x.json()).then(y=> document.getElementById('accountmodal').innerHTML = y.view)" data-w-id="c0f12e3a-e858-74a5-f661-015284cdd4ef" href="#" class="atlice-tap-button w-button">Update</a>
+
+                                        </div>
+                                        <div class="w-form">
+                                            <form id="email-form" name="email-form" data-name="Email Form" method="get">
+                                                <div class="form-group-2">
+                                                    <label for="SMS" class="label-2">SMS Alerts</label>
+                                                    <span id="smsUpdate"></span>
+                                                    <select id="SMS" name="SMS" data-name="SMS" class="input-2 sms w-select">
+                                                        <option value="Yes">Yes</option>
+                                                        <option value="No">No</option>
+                                                    </select>
+                                                    <label class="w-checkbox">
+                                                        <input type="checkbox" id="checkbox-2" name="checkbox-2" data-name="Checkbox 2" checked="" class="w-checkbox-input"><span class="hint-4 w-form-label" for="checkbox-2">Allow communications via SMS from Atlice</span>
+                                                    </label>
+                                                </div>
+                                                <div class="button-group">
+                                                    <a onclick="fetch('/homeboard/index?handler=saveaccountstate&name=SMS&value='+document.getElementById('SMS').value).then(x=> x.json()).then(y=> document.getElementById('smsUpdate').innerHTML = y.view)" href="#" data-wait="Please wait..." class="atlice-tap-button w-button">Save</a>
+                                                </div>
+                                            </form>
+                                            <div class="success-message-3 w-form-done">
+                                                <div>Thank you! Your submission has been received!</div>
+                                            </div>
+                                            <div class="error-message-3 w-form-fail">
+                                                <div>Oops! Something went wrong while submitting the form.</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col w-col w-col-6">
+
+                                    <div class="card-3 settings">
+                                        <div class="card-heading-small-2">
+                                            <h4 class="heading-55">Delete account</h4>
+                                            <p class="paragraph-21">Before deleting you account, please request a return shipping label for your Atlice Tap beta devices.</p>
+                                        </div>
+                                        <a data-w-id="22c32a63-44e9-e835-59b7-6ea12fa29cd3" href="#" class="atlice-tap-button w-button">Delete account</a>
+                                        <div class="modal settings">
+                                            <div class="modal-mask"></div>
+                                            <div class="modal-container-2 settings">
+                                                <a href="#" class="modal-close w-inline-block"></a>
+                                                <div class="modal-title">
+                                                    <h4 class="text-center">Delete account</h4>
+                                                    <p class="text-center">Are you sure you want to delete the account?</p>
+                                                </div>
+                                                <div>
+                                                    <a href="#" class="atlice-tap-button alternate w-button">Delete account</a>
+                                                    <a data-w-id="22c32a63-44e9-e835-59b7-6ea12fa29cdf" href="#" class="atlice-tap-button w-button">Cancel</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="footer-2">
+                        <div class="w-row">
+                            <div class="w-col w-col-6">
+                                <div class="hint-4">Atlice is created by SOSKYHIGH Media and Valley of the Kings</div>
+                            </div>
+                            <div class="footer-right w-col w-col-6">
+                                <div class="hint-4">
+                                    <a href="https://webflow.com/" class="footer-link-4">Empowered by Atlice</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    @await Html.PartialAsync("features_wrap")
+    <div class="professional-contact-page">
+        <div class="container-16 w-container"></div>
+        <div class="div-block-61">
+            <div id="editorbar">
+                <div class="page-editor-top-bar black">
+                    <a onclick="javascript:{document.getElementById('editor').innerHTML = ''; document.getElementById('spinner').setAttribute('style', 'display:block; text-align:center;')}" href="#" data-w-id="8b01e613-c281-ceb4-ec52-ecf4e1f0ad82" class="close-editor-button w-inline-block"><img src="../images/back-button---white.png" loading="lazy" width="40" alt="" class="image-75"></a>
+                    <div class="div-block-29">
+
+
+                        <a id="publishButton" href="#" class="button-5 atlice-button-primary publish w-button">Publish</a>
+                        <a id="previewButton" href="#1" data-w-id="c77ebc4f-8e07-46d8-01d6-5d3739809c94" class="button-5 atlice-button-primary preview w-button">Preview</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card profile">
+                <div data-duration-in="300" data-duration-out="100" data-current="Contact Card" data-easing="ease" class="w-tabs">
+                    <div id="editortabs">
+                        <div id="1" class="tabs-menu-4 contact w-tab-menu">
+                            <a data-w-tab="Contact Card" onclick="javascript:{document.getElementById('contacttab').classList.add('w--tab-active'); this.classList.add('w--current');  document.getElementById('linktab').classList.remove('w--tab-active'); document.getElementById('linkTabAnchor').classList.remove('w--current'); document.getElementById('vcardtab').classList.remove('w--tab-active'); document.getElementById('vcardTrigger').classList.remove('w--current'); }" id="contactTabAnchor" class="tab-link-2 contact-page-editor w-inline-block w-tab-link w--current">
+                                <div class="div-block-30">
+                                    <div class="text-block-39">Contact card</div><img loading="lazy" src="../images/Orion_men.svg" alt="" class="image-65">
+                                </div>
+                            </a>
+                            <a data-w-tab="Tap Links" onclick="javascript:{document.getElementById('linktab').classList.add('w--tab-active'); this.classList.add('w--current'); document.getElementById('contacttab').classList.remove('w--tab-active'); document.getElementById('contactTabAnchor').classList.remove('w--current'); document.getElementById('vcardtab').classList.remove('w--tab-active'); document.getElementById('vcardTrigger').classList.remove('w--current');}" id="linkTabAnchor" class="tab-link-2 w-inline-block w-tab-link">
+                                <div class="div-block-30">
+                                    <div class="text-block-39">Tap Links</div><img loading="lazy" height="23" src="../images/link-hyperlink-chain.png" alt="" class="image-65">
+                                </div>
+                            </a>
+                            <a data-w-tab="Contact Menu" id="vcardTrigger" class="tab-link-2 w-inline-block w-tab-link">
+                                <div class="div-block-30">
+                                    <div class="text-block-39">Menu</div><img sizes="100vw" srcset="../images/41D9008B-E11E-42C7-9963-6394AA4EA00A-p-500.png 500w, ../images/41D9008B-E11E-42C7-9963-6394AA4EA00A-p-800.png 800w, ../images/41D9008B-E11E-42C7-9963-6394AA4EA00A.png 8192w" src="../images/41D9008B-E11E-42C7-9963-6394AA4EA00A.png" loading="lazy" alt="" class="image-65">
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+
+                    <div style="text-align:center; display:none;" id="spinner"><img src="~/icons/loading.gif" height="200" width="200" /></div>
+                    <div class="tabs-content-3 w-tab-content" id="editor">
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <div class="mobile-bottom-bar">
+            <div class="app-navbar-container-2">
+                <div class="bottom-bar-nav-menu">
+                    <a href="#" data-w-id="c50b29c6-7d0e-3551-3a59-f37d2d20f0ea" class="bottom-bar-item w-inline-block">
+                        <img src="../images/bar-chart-statistic-signal.png" loading="lazy" width="32" alt="" class="user-profile-icon">
+                        <div class="icon-text-box">Analytics</div>
+                    </a>
+                    <a href="#" data-w-id="c50b29c6-7d0e-3551-3a59-f37d2d20f0ee" class="bottom-bar-item w-inline-block">
+                        <img src="../images/Artboard-22.png" loading="lazy" width="30" alt="" class="contacts-icon">
+                        <div class="icon-text-box">Contacts</div>
+                    </a>
+                    <div id="w-node-c50b29c6-7d0e-3551-3a59-f37d2d20f0f2-9c649d68" data-w-id="c50b29c6-7d0e-3551-3a59-f37d2d20f0f2" class="bottom-bar-item center"><img src="../images/pages-icon.png" loading="lazy" width="50" alt="" class="home-icon"></div>
+                    <a href="#" data-w-id="c50b29c6-7d0e-3551-3a59-f37d2d20f0f4" class="bottom-bar-item w-inline-block">
+                        <img src="../images/wifi-signal-network.png" loading="lazy" width="30" alt="" class="analytics-icon">
+                        <div class="icon-text-box">Devices</div>
+                    </a>
+                    <a href="#1" data-w-id="c50b29c6-7d0e-3551-3a59-f37d2d20f0f8" class="bottom-bar-item w-inline-block">
+                        <img src="../images/chat-conversation-message-bubble.png" loading="lazy" width="30" alt="" class="shop-line-icon">
+                        <div class="icon-text-box">Support</div>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    @await Html.PartialAsync("preloader")
+    @* <div class="statement-banner" id="downloadDiv" style="margin-top:0px;">
+    <div class="nav04_top_wrap">
+    <div class="nav04_text col-md-10" style="color:orange;">Add Atlice Tap to your homescreen! <br><span class="nav04_span"></span></div>
+    <div class="col-md-2"><a href="#">X</a></div>
+    </div>
+    </div>*@
+    <div class="dashboard-main-layout-container" id="dashboardMain">
+        @*   <div class="statement-banner landing-page hidden" id="downloadDiv">
+        <div class="nav04_top_wrap">
+        <div class="nav04_text" style="color:orange;">Add Atlice Tap to your homescreen! <br><span class="nav04_span"></span></div>
+        </div>
+        </div>*@
+        <div class="app-main-layout-mask"></div>
+        <div class="app-main-layout-3">
+            <div class="app-main-layout-header hidden">
+                <div class="app-main-layout-wrapper header">
+                    <div class="page-heading">
+                        <h2 class="heading-57">Dashboard</h2>
+                    </div>
+                    <div class="page-tabs-menu">
+                        <a href="#" class="page-tab-link traffic">Analytics</a>
+                        <a href="#" class="page-tab-link revenue">Ecommerce</a>
+                        <a href="#" class="page-tab-link crypto">Crypto</a>
+                        <a href="#" class="page-tab-link projects">Projects</a>
+                    </div>
+                </div>
+            </div>
+            <div class="app-main-layout-wrapper analytics">
+                <div class="app-main-layout-content-2">
+                    <div class="page-tabs-content dashboard">
+                        <div class="banner-section">
+                            <div id="1" class="menu-header">
+                                <div class="memu-header-image-block"><img src="../images/Artboard-11.png" loading="lazy" alt=""></div>
+                            </div>
+                            <div class="wf-section">
+                                <a href="#1" data-w-id="ab4f33c5-f24b-6314-f79c-b12b588e5a18" class="link-block-43 w-inline-block">
+                                    <div class="card-4 text-center banner">
+                                        <div class="div-block-34 hidden">
+                                            <div class="button-icon-2 features">→</div>
+                                            <div class="caption-2 mb-0-copy large-white">FEATURES</div>
+                                        </div>
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+
+                        <div class="section-8">
+
+                            <div class="wf-section">
+                                <a href="#1" data-w-id="9efd6573-e572-40f9-1e8b-b8004b1d776f" class="link-block-43 w-inline-block">
+                                    <div class="card-4 text-center banner-2">
+                                        <div class="div-block-34">
+                                            <div class="caption-2 mb-0-copy large home-board">See FEATURES</div>
+                                            <div class="button-icon-2 features">→</div>
+                                        </div>
+                                    </div>
+                                </a>
+                            </div>
+                            <div class="flex row w-row">
+                                <div class="col w-col w-col-4">
+                                    <div class="card-4 text-center">
+                                        <div class="card-heading center">
+                                            <div class="caption-2 mb-0-copy">Total Visits</div>
+                                        </div>
+                                        <div class="key-price-value">@Model.TotalVisits</div>
+                                        <div class="data-status up">
+                                            <img src="../images/icons8-low-priority-100-1_1icons8-low-priority-100-1.png" width="20" alt="" class="data-status-icon">
+                                            <div class="data-status-text">+10.32%</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col w-col w-col-4">
+                                    <div class="card-4 text-center">
+                                        <div class="card-heading center">
+                                            <div class="caption-2 mb-0-copy">Unique Visits</div>
+                                        </div>
+                                        <div class="key-price-value">@Model.UniqueVisits</div>
+                                        <div class="data-status down">
+                                            <img src="../images/icons8-low-priority-100_1icons8-low-priority-100.png" width="20" alt="" class="data-status-icon">
+                                            <div class="data-status-text">-5.04%</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col w-col w-col-4">
+                                    <div class="card-4 text-center">
+                                        <div class="card-heading center">
+                                            <div class="caption-2 mb-0-copy">Link Clicks</div>
+                                        </div>
+                                        <div class="key-price-value">@Model.LinkClicks</div>
+                                        <div class="data-status up">
+                                            <img src="../images/icons8-low-priority-100-1_1icons8-low-priority-100-1.png" width="20" alt="" class="data-status-icon">
+                                            <div class="data-status-text">+ 1.85%</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="section-8">
+                            <div class="flex row w-row">
+                                <div class="col w-col w-col-6">
+                                    <div class="card-4 hidden">
+                                        <div class="card-heading">
+                                            <h4 class="caption-2 mb-0 large">Traffic Overview</h4>
+                                        </div><img src="https://uploads-ssl.webflow.com/60442746f919e95d6b31b806/60442747f919e9ef7931b83b_Chart%20Visitors.svg" alt="">
+                                    </div>
+                                    <div class="card-4">
+                                        <div class="card-heading">
+                                            <h4 class="caption-2 mb-0 large">Traffic Source</h4>
+                                        </div>
+                                        <div class="table">
+                                            <div class="row-2 table-row table-header w-row">
+                                                <div class="col table-col w-col w-col-8">
+                                                    <div class="analytics-title-text"><strong>Devices</strong></div>
+                                                </div>
+                                                <div class="col table-col w-col w-col-4">
+                                                    <div class="analytics-title-text"><strong>Taps</strong></div>
+                                                </div>
+                                            </div>
+                                            @foreach (var tap in Model.AtliceTaps)
+                                            {
+                                                <div class="row-2 table-row w-row">
+                                                    <div class="col table-col w-col w-col-8">
+                                                        @if (!string.IsNullOrEmpty(tap.CustomName))
+                                                        {
+                                                            <div class="text-block-51">@tap.CustomName</div>
+
+                                                        }
+                                                        else
+                                                        {
+                                                            <div class="text-block-51">@tap.GetOfficialName(tap.Sku)</div>
+
+                                                        }
+                                                    </div>
+                                                    <div class="col table-col w-col w-col-4">
+                                                        <div>@tap.Hits</div>
+                                                    </div>
+                                                </div>
+                                            }
+
+
+                                        </div>
+                                    </div>
+                                </div>
+                                @if (personal is not null && business is not null && professional is not null)
+                                {
+                                    <div class="col w-col w-col-6">
+                                        <div class="card-4">
+                                            <div class="card-heading">
+                                                <h4 class="caption-2 mb-0 large">Contact Pages</h4>
+                                            </div>
+                                            <div class="text-center"><img src="https://uploads-ssl.webflow.com/60442746f919e95d6b31b806/60442747f919e93a5231b83c_Chart%20Circle.svg" width="200" alt="" class="image-62"></div>
+                                            <div class="chart-symbols">
+                                                <div class="chart-symbols-item">
+                                                    <img src="../images/Orion_men.svg" loading="lazy" alt="" class="image-64">
+                                                    <div class="chart-symbols-item-name">Personal</div>
+                                                    <div>@personal.Visits.Count(x =>x.Ip != "test")</div>
+                                                </div>
+                                                <div class="chart-symbols-item">
+                                                    <img src="../images/Orion_men.svg" loading="lazy" alt="" class="image-64">
+                                                    <div class="chart-symbols-item-name">Business</div>
+                                                    <div>@business.Visits.Count(x =>x.Ip != "test")</div>
+                                                </div>
+                                                <div class="chart-symbols-item">
+                                                    <img src="../images/Orion_men.svg" loading="lazy" alt="" class="image-64">
+                                                    <div class="chart-symbols-item-name">Professional</div>
+                                                    <div>@professional.Visits.Count(x =>x.Ip != "test")</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                }
+
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    @await Html.PartialAsync("bottom_bar")
+    <div class="contact-page-preview-wrapper">
+        <div id="previewupdate">
+            <div class="div-block-60 preview">
+                <div class="page-editor-top-bar preview-page">
+                    <a href="#" class="close-editor-button w-inline-block"><img src="../images/back-button---white.png" loading="lazy" width="35" data-w-id="eb9dc1e9-c85b-ee6e-2d5c-1d1dc412528d" alt=""></a>
+                    <div class="div-block-29">
+                        <a id="previewPublishButton" href="#" data-w-id="eb9dc1e9-c85b-ee6e-2d5c-1d1dc412528f" class="button-5 atlice-button-primary publish w-button">Publish</a>
+                    </div>
+                </div>
+            </div>
+            <div class="div-block-60 published-page">
+                <div class="page-editor-top-bar published-page-copy">
+                    <a href="../tap/app.html" id="w-node-_74130f81-588a-e7a9-33ed-916484df7f2a-9c649d68" aria-current="page" class="close-editor-button published-page w-inline-block w--current"><img src="../images/pages-icon.png" loading="lazy" height="35" width="35" data-w-id="74130f81-588a-e7a9-33ed-916484df7f2b" alt="" class="image-89 hidden"></a>
+                    <div id="w-node-e5cf7c87-41ff-3b93-c5c7-865239d79c60-9c649d68" class="button-5 atlice-button-primary publish preview-page">Preview</div>
+                    <a href="#" class="close-editor-button published-page w-inline-block"></a>
+                </div>
+            </div>
+            <div class="business-contact-page-container preview-2" id="previewWrapper">
+            </div>
+        </div>
+
+    </div>
+    <div data-w-id="50da6a71-3cf5-d16e-d43b-e92afceb5952" class="qr-view-wrapper" id="qrWrapper">
+        <div style="text-align:center; display:none;" id="qrspinner"><img src="~/icons/loading.gif" height="200" width="200" /></div>
+    </div>
+    @await Html.PartialAsync("desktop_mask")
+
+
+
+    <script src="https://d3e54v103j8qbb.cloudfront.net/js/jquery-3.5.1.min.dc5e7f18c8.js?site=5f2dbf258129c7429573f1a3" type="text/javascript" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
+    <script src="~/croppie/croppie.min.js"></script>
+    <script src="../js/webflow.js" type="text/javascript"></script>
+    <script src="~/jquery-ajax-unobtrusive/jquery.unobtrusive-ajax.min.js"></script>
+   
+    <script src="../js/homeboard.js"></script>
+    <script>'serviceWorker' in navigator && navigator.serviceWorker.register('/serviceworker')</script>
+    <script>
+        
+    </script>
+    <script>
+        var sendMessage = document.getElementById("sendMessage");
+        var sendButton = document.getElementById("sendButton");
+        var chatLog = document.getElementById("chatLog");
+        var socket;
+        var scheme = document.location.protocol === "https:" ? "wss" : "ws";
+        var port = document.location.port ? (":" + document.location.port) : "";
+        var connectionUrl = scheme + "://" + document.location.hostname + port + "/ws?username=";
+
+        function updateState() {
+            function disable() {
+                sendMessage.disabled = true;
+                sendButton.disabled = true;
+            }
+            function enable() {
+                sendMessage.disabled = false;
+                sendButton.disabled = false;
+            }
+
+
+            if (!socket) {
+                disable();
+            } else {
+                switch (socket.readyState) {
+                    case WebSocket.CLOSED:
+                        disable();
+                        break;
+                    case WebSocket.CLOSING:
+                        disable();
+                        break;
+                    case WebSocket.CONNECTING:
+                        disable();
+                        break;
+                    case WebSocket.OPEN:
+                        enable();
+                        break;
+                    default:
+                        disable();
+                        break;
+                }
+            }
+        }
+
+        sendButton.onclick = function () {
+
+            var data = sendMessage.value;
+
+            var message = {};
+            message.Type = "chat";
+            message.Sender = '@User.Identity.Name';
+            message.Content = data;
+            message.Receiver = "Admin";
+            message.IsPrivate = true;
+            console.log(JSON.stringify(message));
+
+            socket.send(JSON.stringify(message));
+
+            sendMessage.value = "";
+        };
+
+        $(document).ready(function () {
+
+            socket = new WebSocket(connectionUrl + '@User.Identity.Name');
+            socket.onopen = function (event) {
+                updateState();
+
+                console.log("socket opened", event);
+                var message = {};
+                message.Type = "connection";
+                message.Sender = '@User.Identity.Name';
+                message.Content = "Ping";
+                message.Receiver = "Admin";
+                message.IsPrivate = true;
+                console.log(JSON.stringify(message));
+
+                socket.send(JSON.stringify(message));
+
+                sendMessage.value = "";
+            };
+            socket.onclose = function (event) {
+                updateState();
+                chatLog.innerHTML += '<p>Connection closed: ' + htmlEscape(event.reason) + '</p>';
+            };
+            socket.onerror = updateState;
+            socket.onmessage = function (event) {
+                console.log(event.data);
+                var receivedMessage = JSON.parse(event.data);
+
+                if (receivedMessage.Content) {
+                    if (receivedMessage.Content.includes("Is online")) {
+                        document.getElementById("supportStatus").setAttribute("class", "online-status on");
+                    }
+
+                    if (receivedMessage.Sender == "Admin") {
+                        alert();
+                        var li = document.createElement("div");
+                        li.setAttribute("class", "col-md-12");
+                        li.textContent = receivedMessage.Content;
+
+                        var anchor = document.createElement("a");
+                        anchor.setAttribute("class", "notification-item-home w-inline-block");
+                        var itemBody = document.createElement("div");
+                        itemBody.setAttribute("class", "notification-item-body");
+                        var itemTitle = document.createElement("div");
+                        itemTitle.setAttribute("class", "notification-item-title-home");
+                        itemTitle.textContent = encodedMsg;
+                        var itemStamp = document.createElement("div");
+                        itemStamp.setAttribute("class", "notification-item-time-stamp");
+                        itemStamp.textContent = '@TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, Eastern_Standard_Time).ToLocalTime().ToShortTimeString()';
+                        itemBody.appendChild(itemTitle);
+                        anchor.appendChild(itemBody);
+                        anchor.appendChild(itemStamp);
+
+                        document.getElementById("chatLog").appendChild(anchor);
+                    }
+                    else {
+                        
+                        var anchor = document.createElement("a");
+                        anchor.setAttribute("class", "notification-item-away w-inline-block");
+                        var itemBody = document.createElement("div");
+                        itemBody.setAttribute("class", "notification-item-body-2");
+                        var itemTitle = document.createElement("div");
+                        itemTitle.setAttribute("class", "notification-item-title-3");
+                        itemTitle.setAttribute("style", "font-size:12px;");
+
+                        itemTitle.textContent = receivedMessage.Content;
+                        var itemStamp = document.createElement("div");
+                        itemStamp.setAttribute("class", "notification-item-time-stamp");
+                        itemStamp.textContent = '@TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, Eastern_Standard_Time).ToLocalTime().ToShortTimeString()';
+                        itemBody.appendChild(itemTitle);
+                        anchor.appendChild(itemBody);
+                        anchor.appendChild(itemStamp);
+
+                        document.getElementById("chatLog").appendChild(anchor);
+                    }
+                    $('#chatdiv').scrollTop($('#chatdiv')[0].scrollHeight);
+
+
+
+                }
+
+            };
+        });
+
+        function htmlEscape(str) {
+            return str.toString()
+                .replace(/&/g, '&amp;')
+                .replace(/"/g, '&quot;')
+                .replace(/'/g, '&#39;')
+                .replace(/</g, '&lt;')
+                .replace(/>/g, '&gt;');
+        }
+    </script>
+   
+    <script>
+        $("#supportChatTabButton").click(function () {
+            $("#supportChatTabButton").attr("class", "tab-link-2 home-board w-inline-block w-tab-link w--current");
+            $("#supportFaqTabButton").attr("class", "tab-link-2 w-inline-block w-tab-link");
+            $("#supportBetaTabButton").attr("class", "tab-link-2 w-inline-block w-tab-link");
+            $("#supportChatTab").attr("class", "w-tab-pane w--tab-active");
+            $("#supportFaqTab").attr("class", "tab-pane-faq-s w-tab-pane");
+            $("#supportBetaTab").attr("class", "w-tab-pane");
+        });
+        $("#supportFaqTabButton").click(function () {
+            $("#supportChatTabButton").attr("class", "tab-link-2 w-inline-block w-tab-link");
+            $("#supportFaqTabButton").attr("class", "tab-link-2 home-board w-inline-block w-tab-link w--current");
+            $("#supportBetaTabButton").attr("class", "tab-link-2 w-inline-block w-tab-link");
+            $("#supportChatTab").attr("class", "w-tab-pane");
+            $("#supportFaqTab").attr("class", "tab-pane-faq-s w-tab-pane w--tab-active");
+            $("#supportBetaTab").attr("class", "w-tab-pane");
+        });
+        $("#supportBetaTabButton").click(function () {
+            $("#supportChatTabButton").attr("class", "tab-link-2 w-inline-block w-tab-link");
+            $("#supportFaqTabButton").attr("class", "tab-link-2 w-inline-block w-tab-link");
+            $("#supportBetaTabButton").attr("class", "tab-link-2 home-board w-inline-block w-tab-link w--current");
+            $("#supportChatTab").attr("class", "w-tab-pane");
+            $("#supportFaqTab").attr("class", "tab-pane-faq-s w-tab-pane");
+            $("#supportBetaTab").attr("class", "w-tab-pane w--tab-active");
+        });
+        $("#featuresTabButton").click(function () {
+            $("#featuresTabButton").attr("class", "tab-link-2 contact-page-editor w-inline-block w-tab-link w--current");
+            $("#newslettersTabButton").attr("class", "tab-link-2 w-inline-block w-tab-link");
+            $("#featuresTab").attr("class", "tab-pane-features w-tab-pane w--tab-active");
+            $("#newslettersTab").attr("class", "w-tab-pane");
+        });
+        $("#newslettersTabButton").click(function () {
+            $("#featuresTabButton").attr("class", "tab-link-2 w-inline-block w-tab-link");
+            $("#newslettersTabButton").attr("class", "tab-link-2 contact-page-editor w-inline-block w-tab-link w--current");
+            $("#featuresTab").attr("class", "w-tab-pane");
+            $("#newslettersTab").attr("class", "tab-pane-features w-tab-pane w--tab-active");
+        });
+        $(".disabledTrigger").click(function () {
+            $(".cp-preview-text-notification tap-links preview_warning hidden").attr('class', 'cp-preview-text-notification tap-links preview_warning');
+        });
+
+        var basic = $('#main-cropper').croppie({
+            viewport: { width: 300, height: 300 },
+            boundary: { width: 325, height: 325 },
+            showZoomer: true,
+            url: '/images/Orion_men.svg',
+            format: 'png' //'jpeg'|'png'|'webp'
+        });
+        function readFile(input) {
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+                reader.onload = function (e) {
+                    $('#main-cropper').croppie('bind', {
+                        url: e.target.result
+                    });
+                    document.getElementById('imagedataholder').setAttribute('value', e.target.result.replace('data:', '').replace(/^.+,/, ''));
+                }
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+        function updateImage() {
+            basic.croppie('result', 'base64').then(function (blob) {
+                var im = "background-image:url(" + blob + ")";
+                document.getElementById("previewImage").setAttribute("style", im);
+                var picInput = document.getElementById('imagedataholder');
+                picInput.setAttribute("value", blob.replace('data:', '').replace(/^.+,/, ''));
+
+
+                $('#changeImageForm').submit();
+            });
+        }
+ 
+
+
+        var qrTriggers = document.getElementsByClassName('qrTrigger');
+        for (i = 0; i < qrTriggers.length; i++) {
+            var data = qrTriggers[i];
+            data.addEventListener('click', async function (x) {
+                document.getElementById('qrWrapper').innerHTML = "<div style='text-align:center; padding-top:50px;' id='qrspinner'><img src='/icons/spinner2.gif' height='100' width='100' /></div>"
+                await fetch("/homeboard/Index?handler=pageqr&id=" + this.id).then(x => x.json()).then(y => document.getElementById('qrWrapper').innerHTML = y.view);
+
+            });
+
+        }
+
+        var editorTriggers = document.getElementsByClassName('editorTrigger');
+        for (i = 0; i < editorTriggers.length; i++) {
+            var data = editorTriggers[i];
+            data.addEventListener('click', async function (x) {
+                document.getElementById('editorbar').setAttribute("style", "display:none;");
+                document.getElementById('editortabs').setAttribute("style", "display:none;");
+                document.getElementById('spinner').setAttribute("style", "display:block;text-align:center;");
+
+
+                let id = this.id;
+                var response = await fetch('/homeboard/Index?handler=loadeditor&id=' + id);
+                var data = await response.json();
+
+                document.getElementById('editor').innerHTML = data.view;
+                document.getElementById('previewWrapper').innerHTML = data.preview;
+                document.getElementById('vcardTrigger').setAttribute("onclick", "fetch('/homeboard/Index?handler=updatevcardlinks&pageId=" + id + "').then(x => x.json()).then(y=> document.getElementById('vcardlinks').innerHTML = y.view).then(y=> document.getElementById('vcardtab').classList.add('w--tab-active')).then(this.classList.add('w--current')).then(y=> document.getElementById('linktab').classList.remove('w--tab-active')).then(document.getElementById('linkTabAnchor').classList.remove('w--current')).then(y=> document.getElementById('contacttab').classList.remove('w--tab-active')).then(document.getElementById('contactTabAnchor').classList.remove('w--current'))");
+                document.getElementById('publishButton').setAttribute("href", "/homeboard/index?handler=publish&id=" + id);
+                document.getElementById('previewButton').setAttribute("onclick", "fetch('/homeboard/Index?handler=preview&id=" + id + "').then(x => x.json()).then(y=> document.getElementById('previewWrapper').innerHTML = y.view)");
+                document.getElementById('previewPublishButton').setAttribute("href", "/homeboard/index?handler=publish&id=" + id);
+                document.getElementById('editortabs').setAttribute("style", "display:block;");
+                document.getElementById('editorbar').setAttribute("style", "display:block;");
+                document.getElementById('spinner').setAttribute("style", "display:none;");
+            });
+        }
+
+        var tapPageSelectTriggers = document.getElementsByClassName('tapPageSelectTrigger');
+        for (i = 0; i < tapPageSelectTriggers.length; i++) {
+            var data = tapPageSelectTriggers[i];
+            data.addEventListener('click', async function (x) {
+                let id = this.id;
+                document.getElementById('personaltapId').setAttribute('data-name', id);
+                document.getElementById('businesstapId').setAttribute('data-name', id);
+                document.getElementById('professionaltapId').setAttribute('data-name', id);
+            });
+        }
+
+
+        function updateBypassGrid(x) {
+            var bypaycontainer = document.getElementById("bypassPayHolder");
+            bypaycontainer.innerHTML = "";
+            var bypassConnectHolder = document.getElementById("bypassConnectHolder");
+            bypassConnectHolder.innerHTML = "";
+            let payList = [];
+            let connectList = [];
+            //var deviceId = x[x.length - 1].Id;
+            var deviceId = x.AtliceTap.Id;
+            var deviceIdIUpdate = "deviceinfo" + deviceId;
+            var reBy = document.getElementById('removeBypassButton');
+            reBy.setAttribute("onclick", "fetch('/homeboard/index?handler=bypass&linkid=0&deviceid=" + deviceId + "').then(x=> x.json()).then(y=> document.getElementById('" + deviceIdIUpdate + "').innerHTML=y.view)");
+            x.AtliceTap.ContactPage.TapLinks.slice(0, -1);
+            for (let i = 0; i < x.AtliceTap.ContactPage.TapLinks.length; i++) {
+                let obj = x.AtliceTap.ContactPage.TapLinks[i];
+                if (obj.ContactPage == true) {
+                    if (obj.LinkType == 0) {
+                        payList.push(obj);
+                    }
+                    if (obj.LinkType == 1) {
+                        connectList.push(obj);
+                    }
+                }
+            }
+            if (payList.length > 0) {
+                var container = document.createElement('div');
+                container.setAttribute('class', 'pay-tap-links-container business-contact');
+                var title = document.createElement('p');
+                title.setAttribute('class', 'paragraph-23 business-contact');
+                var strong = document.createElement('strong');
+                strong.innerHTML = "Pay / Receive";
+                container.appendChild(title);
+                title.appendChild(strong);
+                var list = document.createElement('div');
+                list.setAttribute('class', 'row-2 business-tap-links w-row');
+                container.appendChild(list);
+                var payClass;
+                if (payList.length == 3) {
+                    payClass = "w-col-4";
+                }
+                if (payList.length == 2) {
+                    payClass = "w-col-6";
+                }
+                if (payList.length == 1) {
+                    payClass = "w-col-12";
+                }
+                for (var i = 0; i < payList.length; i++) {
+                    var data = payList[i];
+                    var updateId = "deviceinfo" + deviceId;
+                    var image;
+                    var provider;
+                    let x = data.SocialProvider;
+                    switch (x) {
+                        case 17:
+                            image = "../icons/PayPal.png";
+                            provider = "Paypal";
+                            break;
+                        case 18:
+                            image = "../icons/CashApp.png";
+                            provider = "CashApp";
+                            break;
+                        case 19:
+                            image = "../icons/Venmo.png";
+                            provider = "Venmo"
+                            break;
+                        default:
+                            image = "No value found";
+                    }
+                    var fetch = "onclick=\"fetch('/homeboard/index?handler=bypass&linkid=" + data.Id + "&deviceid=" + deviceId + "').then(x=> x.json()).then(y=> document.getElementById('" + updateId + "').innerHTML = y.view).then(z=> document.getElementsByClassName('modal link-to tap-links-selection')[0].setAttribute(\'style\',\'display:none;\'))\"";
+                    var content = "<div class='col col-border-right text-center new w-col " + payClass + "'><a data-w-id='ffa53457-9640-7eb7-b5a5-4a4b9f32d23a'" + fetch + "href='#' class='profile-card-col new w-inline-block'><img src='" + image + "' loading='lazy' height='60' alt='' class='image-58'><div class='hint-4 pages tap-links'>" + provider + "</div></a></div>";
+                    list.insertAdjacentHTML('beforeend', content);
+                }
+                bypaycontainer.appendChild(container);
+            }
+            if (connectList.length > 0) {
+                var container = document.createElement('div');
+                container.setAttribute('class', 'tap-links-list-container limited w-container');
+                var title = document.createElement('p');
+                title.setAttribute('class', 'paragraph-23 business-contact');
+                var strong = document.createElement('strong');
+                strong.innerHTML = "Connect";
+                container.appendChild(title);
+                title.appendChild(strong);
+                var list = document.createElement('ol');
+                list.setAttribute('class', 'tap-links-list w-list-unstyled');
+                list.setAttribute('role', 'list');
+                container.appendChild(list);
+                for (var i = 0; i < connectList.length; i++) {
+                    var data = connectList[i];
+                    var updateId = "deviceinfo" + deviceId;
+                    var image;
+                    var provider;
+                    let x = data.SocialProvider;
+                    switch (x) {
+                        case 0:
+                            image = "../icons//Patreon.png";
+                            provider = "Patreon";
+                            break;
+                        case 1:
+                            image = "../icons//WhatsApp.png";
+                            provider = "WhatsApp";
+                            break;
+                        case 2:
+                            image = "../icons//Discord.png";
+                            provider = "Discord";
+                            break;
+                        case 3:
+                            image = "../icons//Telegram.png";
+                            provider = "Telegram";
+                            break;
+                        case 4:
+                            image = "../icons//LinkedIn.png";
+                            provider = "LinkedIn";
+                            break;
+                        case 5:
+                            image = "../icons//Facebook.png";
+                            provider = "Facebook";
+                            break;
+                        case 6:
+                            image = "../icons//Instagram.png";
+                            provider = "Instagram";
+                            break;
+                        case 7:
+                            image = "../icons//Twitter.png";
+                            provider = "Twitter";
+                            break;
+                        case 8:
+                            image = "../icons//TikTok.png";
+                            provider = "TikTok";
+                            break;
+                        case 9:
+                            image = "../icons//Snapchat.png";
+                            provider = "SnapChat";
+                            break;
+                        case 10:
+                            image = "../icons//Twitch.png";
+                            provider = "Twitch";
+                            break;
+                        case 11:
+                            image = "../icons//Vimeo.png";
+                            provider = "Vimeo";
+                            break;
+                        case 12:
+                            image = "../icons//YouTube.png";
+                            provider = "YouTube";
+                            break;
+                        case 13:
+                            image = "../icons//Apple.png";
+                            provider = "Apple";
+                            break;
+                        case 14:
+                            image = "../icons//Spotify.png";
+                            provider = "Spotify";
+                            break;
+                        case 15:
+                            image = "../icons//SoundCloud.png";
+                            provider = "SoundCloud";
+                            break;
+                        case 16:
+                            image = "../icons//calendly.png";
+                            provider = "Calendly";
+                            break;
+                        case 20:
+                            image = "../icons//Clubhouse.png";
+                            provider = "Clubhouse";
+                            break;
+                        case 21:
+                            image = "../icons//mixcloud.png";
+                            provider = "MixCloud";
+                            break;
+                        default:
+                            image = "No value found";
+                    }
+                    var fetch = "onclick=\"fetch('/homeboard/index?handler=bypass&linkid=" + data.Id + " &deviceid=" + deviceId + "').then(x=> x.json()).then(y=> document.getElementById('" + updateId + "').innerHTML = y.view).then(z=> document.getElementsByClassName('modal link-to tap-links-selection')[0].setAttribute(\'style\',\'display:none;\'))\"";
+                    var content = "<li style='display:block;' class='tap-links-list-item'><a data-w-id='ffa53457-9640-7eb7-b5a5-4a4b9f32d23a'" + fetch + " id='w-node-_74c836a7-cc57-d503-fb9c-75b622c66622-9c649d68' href='#' class='profile-card-col _1 test w-inline-block'><img src='" + image + "' loading='lazy' height='50' alt=' class='image-58'><div class='hint-4 pages tap-links'>" + provider + "</div></a></li>";
+                    list.insertAdjacentHTML('beforeend', content);
+                }
+                bypassConnectHolder.appendChild(container);
+            }
+        }
+
+    </script>
+   
+    @* <script>
+    const isInStandaloneMode = () => ('standalone' in window.navigator) && (window.navigator.standalone);
+    if (isIos() && !isInStandaloneMode()) {
+    $("#downloadDiv").show();
+    }
+    </script>*@
+</body>
+</html>

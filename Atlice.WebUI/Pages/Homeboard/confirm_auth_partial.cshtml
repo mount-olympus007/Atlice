@@ -1,0 +1,22 @@
+﻿@model string
+@{
+    Layout = null;
+}
+@if(Model == "mobile")
+{
+    <span>
+    <input type="text" name="codephone" placeholder="Enter Code" />
+    <div class="page-editor-top-bar image-save-button">
+        <a href="#" onclick="fetch('/homeboard/index?handler=saveaccountstate&value='+this.parentElement.previousElementSibling.value+'&name='+this.parentElement.previousElementSibling.getAttribute('name')).then(x=>x.json()).then(y=>document.getElementById('mobileUpdate').innerHTML = y.view).then(z=> document.getElementById('accountSettingModal').setAttribute('style','display:none;'))" data-w-id="802b3264-2e60-8d91-8e57-0263d478e077" class="button-5 atlice-button-primary w-button">Confirm</a>
+    </div>
+</span>
+}
+@if(Model == "email")
+{
+    <span>
+    <input type="text" name="codeEmail" placeholder="Enter Code" />
+    <div class="page-editor-top-bar image-save-button">
+        <a href="#" onclick="fetch('/homeboard/index?handler=saveaccountstate&value='+this.parentElement.previousElementSibling.value+'&name='+this.parentElement.previousElementSibling.getAttribute('name')).then(x=>x.json()).then(y=>document.getElementById('emailUpdate').innerHTML = y.view).then(z=> document.getElementById('accountSettingModal').setAttribute('style','display:none;'))" data-w-id="802b3264-2e60-8d91-8e57-0263d478e077" class="button-5 atlice-button-primary w-button">Confirm</a>
+    </div>
+</span>
+}

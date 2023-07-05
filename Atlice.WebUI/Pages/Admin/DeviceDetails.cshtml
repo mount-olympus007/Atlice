@@ -1,0 +1,39 @@
+﻿@page
+@model Atlice.WebUI.Pages.Admin.DeviceDetailsModel
+@{
+    Layout = "_AdminLayout";
+
+}
+<h1>@Model.Device.Tap.GetOfficialName(Model.Device.Tap.Sku) - @Model.Device.Tap.SNumber</h1>
+<form asp-page-handler="EditDevice" method="post">
+    <input type="hidden" asp-for="Device.Tap.Id" />
+    <label>Custom Name</label>
+    <input type="text" asp-for="Device.Tap.CustomName" />
+    <hr />
+    <label>Assignment</label>
+    @if(Model.Device.Tap.UserId == null){
+        <select asp-for="Device.UserId">
+            @foreach (var user in Model.Device.Users)
+            {
+                <option value="@user.Id">
+                    @user.FirstName @user.LastName
+                </option>
+            }
+        </select>
+    }
+    else{
+        <p>Currently assigned to: @Model.Device.Tap.UserId</p><hr /><a href="/admin/devicedetails?handler=wipedevice&deviceid=@Model.Device.Tap.Id">Wipe Device</a>
+    }
+    <hr />
+    <p>@Model.Device.Tap.Note</p>
+    <hr />
+    <label>Lock?</label>
+    <select asp-for="Device.Tap.Locked">
+        <option value="true">Yes</option>
+        <option value="false">No</option>
+
+    </select>
+   
+    
+    <input type="submit" value="Save" />
+</form>

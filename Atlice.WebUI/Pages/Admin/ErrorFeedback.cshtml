@@ -1,0 +1,105 @@
+﻿@page
+@model Atlice.WebUI.Pages.Admin.ErrorFeedbackModel
+@{
+    Layout = "_AdminLayout";
+}
+<div class="app-main-layout-header">
+    <div class="app-main-layout-wrapper header">
+        <div class="page-heading with-button">
+            <h2 class="heading-62">Errors</h2>
+        </div>
+    </div>
+</div>
+<div class="app-main-layout-wrapper">
+    <div class="app-main-layout-content">
+        <div class="section inventory">
+            <div class="section-inner">
+                <div class="card no-padding receipt-table">
+                    <div class="product-row">
+                        <div id="w-node-dd1f8cdf-78a6-786d-a1b0-68f62504f3a9-87935a25" class="filter-bar-form-block w-form">
+                            <form id="email-form-2" name="email-form-2" data-name="Email Form 2" class="fulfillment-filter-bar-form-item">
+                                <div id="w-node-dd1f8cdf-78a6-786d-a1b0-68f62504f3ab-87935a25" class="card-setting-text caption">Date</div>
+                                <input type="submit" value="" data-wait="Please wait..." class="submit-button-2 filter-bar-form-button w-button">
+                            </form>
+                            <div class="w-form-done">
+                                <div class="text-block-52">Thank you! Your submission has been received!</div>
+                            </div>
+                            <div class="w-form-fail">
+                                <div class="text-block-53">Oops! Something went wrong while submitting the form.</div>
+                            </div>
+                        </div>
+                        <div id="w-node-a9835915-8bb6-3090-16df-a9775d9c6f17-87935a25" class="filter-bar-form-block w-form">
+                            <form id="email-form-2" name="email-form-2" data-name="Email Form 2" class="fulfillment-filter-bar-form-item">
+                                <div id="w-node-a9835915-8bb6-3090-16df-a9775d9c6f19-87935a25" class="card-setting-text caption">What Happened</div>
+                                <input type="submit" value="" data-wait="Please wait..." class="submit-button-2 filter-bar-form-button w-button">
+                            </form>
+                            <div class="w-form-done">
+                                <div>Thank you! Your submission has been received!</div>
+                            </div>
+                            <div class="w-form-fail">
+                                <div>Oops! Something went wrong while submitting the form.</div>
+                            </div>
+                        </div>
+                        <div id="w-node-_03be10bc-f510-9b1a-db72-4133cf3a7c30-87935a25" class="filter-bar-form-block w-form">
+                            <form id="email-form-2" name="email-form-2" data-name="Email Form 2" class="fulfillment-filter-bar-form-item">
+                                <div id="w-node-_03be10bc-f510-9b1a-db72-4133cf3a7c32-87935a25" class="card-setting-text caption">User</div>
+                                <input type="submit" value="" data-wait="Please wait..." class="submit-button-2 filter-bar-form-button w-button">
+                            </form>
+                            <div class="w-form-done">
+                                <div>Thank you! Your submission has been received!</div>
+                            </div>
+                            <div class="w-form-fail">
+                                <div>Oops! Something went wrong while submitting the form.</div>
+                            </div>
+                        </div>
+                        <div id="w-node-_83421015-f101-7b66-67cb-69837e9a56fd-87935a25" class="filter-bar-form-block w-form">
+                            <form id="email-form-2" name="email-form-2" data-name="Email Form 2" class="fulfillment-filter-bar-form-item">
+                                <div id="w-node-eb023710-730f-759a-d7e5-fb0c3b5d3130-87935a25" class="card-setting-text caption">Fixed</div>
+                                <input type="submit" value="" data-wait="Please wait..." class="submit-button-2 filter-bar-form-button w-button">
+                            </form>
+                            <div class="w-form-done">
+                                <div>Thank you! Your submission has been received!</div>
+                            </div>
+                            <div class="w-form-fail">
+                                <div>Oops! Something went wrong while submitting the form.</div>
+                            </div>
+                        </div>
+                       
+                    </div>
+                    <div id="deviceGrid">
+                        @foreach (var error in Model.ErrorFeedbacks)
+                        {
+                            <div class="product-row">
+                                <div id="w-node-ab56874d-8e7b-18f1-732b-3df176a54fc8-87935a25" class="device-in-devices-block">
+
+                                    <div class="card-setting-text"><a href="#">@error.TimeStamp</a></div>
+
+                                </div>
+                                <div class="card-setting-text">@error.Comment + @error.RequestId</div>
+                                <div class="card-setting-text">@error.FirstName  @error.LastName</div>
+                                <div class="card-setting-text">Fixed</div>
+
+
+                                
+                            </div>
+                        }
+                    </div>
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="footer">
+        <div class="w-row">
+            <div class="w-col w-col-6">
+                <div class="hint">© Copyright Atlice LLC. All rights reserved</div>
+            </div>
+            <div class="footer-right w-col w-col-6">
+                <div class="hint">
+                    <a href="https://webflow.com/" class="footer-link">Empowered by Atlice</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

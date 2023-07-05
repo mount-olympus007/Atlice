@@ -1,0 +1,68 @@
+﻿@page
+@model ErrorModel
+@{
+    ViewData["Title"] = "Error";
+}
+<div class="error-page-section">
+    <div class="content-wrapper">
+        <div class="section-header align-center error-page"></div>
+        <div class="columns w-row">
+            <div class="column-4 w-col w-col-1"></div>
+            <div class="column w-col w-col-10">
+                <div class="padding-error-page outline error">
+                    <div class="error-wrap">
+                        <div class="utility-page-content-2">
+                            <img src="https://uploads-ssl.webflow.com/5de5ed53766a8e20114b1256/5de5ed53766a8e23314b137a_Orion_important-warning.svg" alt="" class="icon-medium margin-bottom">
+                            <h3 class="display-4 margin-bottom-small">Error</h3>
+                            <div class="error-message-2">
+                                <strong>During beta testing we expect errors. However you can help us fix them by briefly sharing your intentions and the steps you took prior to landing on this page. <br>Thank you for your feedback!</strong>
+                                <br>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="margin-bottom-small">
+                        <div class="align-center w-form">
+                            <form asp-page-handler="SubmitError" method="post">
+                                <div class="horizontal">
+                                    <input type="hidden" asp-for="Input.Id" />
+                                    <input asp-for="Input.FirstName" type="text" class="text-field-v2 margin-right w-input" maxlength="256" name="firstName" data-name="Name 3" placeholder="Your name" id="name-3" required />
+                                    <textarea asp-for="Input.Comment" placeholder="Briefly describe what happened" maxlength="5000" id="field" name="comment" required="" class="textarea w-input"></textarea>
+                                </div>
+                                <input type="submit" value="Submit" data-wait="Please wait..." class="">
+                            </form>
+
+                            <div class="success-message-2 w-form-done">
+                                <div>
+                                    <strong class="bold-text-101">Thank you! Your submission has been received!</strong>
+                                </div>
+                                <img src="~/webflow1.3/images/Image-407.png" loading="lazy" width="80" srcset="/webflow1.3/images/Image-407-p-500.png 500w, /webflow1.3/images/Image-407-p-800.png 800w, /webflow1.3/images/Image-407-p-1080.png 1080w, /webflow1.3/images/Image-407.png 1294w" sizes="100vw" alt="" class="image-31">
+                            </div>
+                            @*<div class="w-form-fail">
+                                    <div>Oops! Something went wrong while submitting the form.</div>
+                                </div>*@
+                        </div>
+                    </div>
+                    <div class="align-center error-footer">
+                        <div>
+                            <strong>Or message AO via WhatsApp</strong>
+                        </div>
+                        <div class="ao-whatsapp-wrap">
+                            <div class="nav02_email-2 hidden">
+                                <img src="https://uploads-ssl.webflow.com/5de5e999eee2054fa942a10b/5de5e999eee205032542a2df_mail.svg" alt="" class="nav02_icons">
+                                <div class="nav02_text">atlicetap@atlice.com</div>
+                            </div>
+                            <div class="ao-whatsapp-frame">
+                                <img src="https://uploads-ssl.webflow.com/5de5e999eee2054fa942a10b/5de5e999eee2057e8642a2de_call-answer.svg" alt="" class="nav02_icons hidden">
+                                <a href="http://atlice.com" class="w-inline-block"><img src="~/webflow1.3/images/Atlice-Tap-NFC-Tag-3.png" loading="lazy" sizes="30px" srcset="/webflow1.3/images/Atlice-Tap-NFC-Tag-3-p-500.png 500w, /webflow1.3/images/Atlice-Tap-NFC-Tag-3-p-800.png 800w, /webflow1.3/images/Atlice-Tap-NFC-Tag-3-p-1080.png 1080w, /webflow1.3/images/Atlice-Tap-NFC-Tag-3-p-1600.png 1600w, /webflow1.3/images/Atlice-Tap-NFC-Tag-3.png 1800w" alt="" class="image-25"></a>
+                                <img src="../icons/newal.jpg" loading="lazy" sizes="30px" srcset="/icons/newal.jpg 500w, /icons/newal.jpg 800w, /icons/newal.jpg 1080w, /icons/newal.jpg 1424w" alt="" class="image-25">
+                                <a href="https://wa.me/message/TWJHV2RWDNDXJ1" class="w-inline-block"><img src="~/webflow1.3/images/Whatsapp-logo.png" loading="lazy" sizes="30px" srcset="/webflow1.3/images/Whatsapp-logo-p-500.png 500w, /webflow1.3/images/Whatsapp-logo-p-800.png 800w, /webflow1.3/images/Whatsapp-logo.png 1000w" alt="" class="image-25"></a>
+                                <div class="nav02_text hidden"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="w-col w-col-1"></div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,55 @@
+﻿@model IEnumerable<Atlice.Domain.Entities.ContactPage>
+
+@{
+    Layout = null;
+    var personal = Model.FirstOrDefault(x => x.PageType == Domain.Entities.PageType.Personal);
+    var business = Model.FirstOrDefault(x => x.PageType == Domain.Entities.PageType.Business);
+    var professional = Model.FirstOrDefault(x => x.PageType == Domain.Entities.PageType.Professional);
+
+}
+<div data-w-id="074f3bb8-f33e-f36c-de06-9fab237b3faf" style="display:none;opacity:0" class="modal link-to devices" id="pageselectmodal">
+    <div class="modal-mask"></div>
+    <div class="modal-container-2 devices">
+
+      <div class="single-layout-right pages-selector">
+        <div class="single-layout-right-content" id="pageSelectDeviceIdHolder">
+            @if(personal is not null){
+                    <div onclick="javascript:{var deviceid = document.getElementById('pageSelectDeviceIdHolder').getAttribute('data-name'); var updateid = 'device_div'+ deviceid; fetch('/homeboard/index?handler=tappageselect&pageid=@personal.Id'+'&tapid='+deviceid).then(x=> x.json()).then(y=> document.getElementById(updateid).innerHTML = y.view);}" data-w-id="074f3bb8-f33e-f36c-de06-9fab237b3fb9" class="section-inner landing" id="personaltapId">
+                        <div class="account landing">
+                            <img src="@personal.ProImage" alt="" class="account-user-icon">
+                            <div class="account-user-datails">
+                                <h6 class="mb-0 card-title"><strong class="bold-text-104 card-title">@personal.Name</strong></h6>
+                            </div>
+                            <div class="label-item">Personal</div>
+                        </div>
+                    </div>
+            }
+            @if(business is not null){
+                    <div onclick="javascript:{var deviceid = document.getElementById('pageSelectDeviceIdHolder').getAttribute('data-name'); var updateid = 'device_div'+ deviceid; fetch('/homeboard/index?handler=tappageselect&pageid=@business.Id'+'&tapid='+deviceid).then(x=> x.json()).then(y=> document.getElementById(updateid).innerHTML = y.view);}" data-w-id="074f3bb8-f33e-f36c-de06-9fab237b3fcb" class="section-inner landing" id="businesstapId">
+                        <div class="account landing">
+                            <img src="@business.ProImage" alt="" class="account-user-icon">
+                            <div class="account-user-datails">
+                                <h6 class="mb-0 card-title devices"><strong class="bold-text-104 card-title">@business.Name</strong></h6>
+                                <div class="hint-3">@business.BusinessName</div>
+                            </div>
+                            <div class="label-item">Business</div>
+                        </div>
+                    </div>
+            }
+            @if(professional is not null){
+                    <div onclick="javascript:{var deviceid = document.getElementById('pageSelectDeviceIdHolder').getAttribute('data-name'); var updateid = 'device_div'+ deviceid; fetch('/homeboard/index?handler=tappageselect&pageid=@professional.Id'+'&tapid='+deviceid).then(x=> x.json()).then(y=> document.getElementById(updateid).innerHTML = y.view);}" data-w-id="074f3bb8-f33e-f36c-de06-9fab237b3fdf" class="section-inner landing" id="professionaltapId">
+                        <div class="account landing">
+                            <img src="@professional.ProImage" alt="" class="account-user-icon">
+                            <div class="account-user-datails">
+                                <h6 class="mb-0 card-title"><strong class="bold-text-104 card-title">@professional.Name</strong></h6>
+                                <div class="hint-3">@professional.BusinessName</div>
+                            </div>
+                            <div class="label-item">Professional</div>
+                        </div>
+                    </div>
+            }
+    
+        </div>
+      </div>
+    </div>
+  </div>

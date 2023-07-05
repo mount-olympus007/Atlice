@@ -1,0 +1,12 @@
+﻿@model IEnumerable<Atlice.Domain.Entities.AtliceTap>
+@{
+    Layout = null;
+}
+@foreach (var device in Model)
+{
+
+    <div class="card-2" id="device_div">
+        @await Html.PartialAsync("/pages/homeboard/device_partial.cshtml", device)
+
+    </div>
+}

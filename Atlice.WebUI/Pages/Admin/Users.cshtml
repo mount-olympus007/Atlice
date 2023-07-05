@@ -1,0 +1,504 @@
+﻿@page
+@model Atlice.WebUI.Pages.Admin.UsersModel
+@{
+    Layout = "_AdminLayout";
+}
+<div class="app-main-layout-header">
+    <div class="app-main-layout-wrapper header">
+        <div class="page-heading">
+            <h2 class="admin-title">Users</h2>
+            <p class="text-danger">@TempData["message"]</p>
+
+        </div>
+
+    </div>
+</div>
+<div class="app-main-layout-wrapper">
+    <div class="app-main-layout-content">
+        <div class="filter-bar-form-dropdown-block">
+            <div class="app-navbar-menu-item">
+                <div data-delay="0" class="menu-dropdown-2 w-dropdown">
+                    <div class="menu-dropdown-toggle-2 dropdown-filter w-dropdown-toggle"></div>
+                    <nav class="menu-dropdown-list-2 filter-search filter-search-dropdown w-dropdown-list">
+                        <div class="fulfilment-search-form-block w-form">
+                            <form class="inventory-search-form" name="email-form-3" data-name="Email Form 3" asp-page-handler="FindUser" data-ajax="true" data-ajax-method="POST" data-ajax-mode="replace" data-ajax-update="#fullfillmentList">
+                                <label for="name-8" class="field-label-2">Name</label>
+                                <div class="div-block-4">
+                                    <input type="text" class="text-field-3 w-input" maxlength="256" name="name" data-name="Name 7" placeholder="" id="name-7">
+                                    <input type="submit" value="" data-wait="Please wait..." class="search-order-button w-button">
+                                </div>
+                                <label for="email-5" class="field-label-2">Phone #</label>
+                                <div class="div-block-3">
+                                    <input type="text" class="text-field-2 w-input" maxlength="256" name="phone" data-name="Email 5" placeholder="" id="email-5">
+                                    <input type="submit" value="" data-wait="Please wait..." class="search-order-button w-button">
+                                </div>
+                            </form>
+                            <div class="w-form-done">
+                                <div>Thank you! Your submission has been received!</div>
+                            </div>
+                            <div class="w-form-fail">
+                                <div>Oops! Something went wrong while submitting the form.</div>
+                            </div>
+                        </div>
+                    </nav>
+                </div>
+            </div>
+        </div>
+        <div data-duration-in="300" data-duration-out="100" class="w-tabs">
+            <div class="align-right w-tab-menu">
+          
+                <a data-w-tab="Tab 10" class="switcher-tab w-inline-block w-tab-link w--current">
+                    <div>Citizens</div>
+                </a>
+                <a data-w-tab="Tab 11" class="switcher-tab w-inline-block w-tab-link">
+                    <div>Tourists</div>
+                </a>
+                <a data-w-tab="Tab 12" class="switcher-tab w-inline-block w-tab-link">
+                    <div>Prospects</div>
+                </a>
+                <a data-w-tab="Tab 13" class="switcher-tab right w-inline-block w-tab-link">
+                    <div>Invitees</div>
+                </a>
+                <a data-w-tab="Tab 19" class="switcher-tab right w-inline-block w-tab-link">
+                    <div>Leads</div>
+                </a>
+                <a data-w-tab="Tab 14" class="switcher-tab w-inline-block w-tab-link">
+                    <div>Try Later/Deleted</div>
+                </a>
+                <a data-w-tab="Tab 15" class="switcher-tab w-inline-block w-tab-link">
+                    <div>Admins/Special Clients</div>
+                </a>
+                <a data-w-tab="Tab 16" class="switcher-tab w-inline-block w-tab-link">
+                    <div>Beta Test</div>
+                </a>
+            </div>
+            <div class="chart-tab-content w-tab-content">
+         
+                <div data-w-tab="Tab 10" class="w-tab-pane w--tab-active">
+                    <div id="fullfillmentList">
+                        @foreach (var user in Model.Users.Where(x => x.Role == "Citizen"))
+                        {
+                            <div class="section-inner">
+                                <div class="card">
+                                    <div class="table-wrapper">
+                                        <div class="table extra-wide single">
+                                            <div class="row table-row flex-center single-row w-row">
+                                                <div class="col table-col left-padding w-col w-col-4">
+                                                    <a href="/admin/userprofile/@user.User.Id" data-w-id="1f73dc94-06af-8056-e75e-858bffd26979" class="contact-profile w-inline-block">
+                                                        <img src="@user.User.CoverUrl" alt="" class="contacts-avatar">
+                                                        <div class="contact-profile-info">
+                                                            @if (string.IsNullOrEmpty(user.User.FirstName))
+                                                            {
+                                                                <h6 class="mb-0 customer-link">@user.User.Email</h6>
+                                                            }
+                                                            else
+                                                            {
+                                                                <h6 class="mb-0 customer-link">@user.User.FirstName @user.User.LastName</h6>
+                                                            }
+                                                            <div class="text-block-51">Role: @user.Role</div>
+                                                        </div>
+                                                    </a>
+                                                </div>
+                                                <div class="col table-col w-col w-col-2">
+
+                                                    <div class="label-item yellow">Orders: @*@user.Orders*@</div>
+                                                </div>
+                                                <div class="col table-col w-col w-col-2">
+                                                    <div class="status">Pages: @*@user.Pages*@</div>
+
+                                                </div>
+                                                <div class="col table-col w-col w-col-2">
+                                                    <div class="status">Taps: @*@user.Taps*@</div>
+                                                </div>
+                                                <div class="col table-col w-col w-col-2">
+                                                    <div class="contact-actions">
+                                                        <a data-w-id="25fc1321-2b83-1f55-02fb-65e7023ae774" href="#" class="show-purchase-order w-inline-block"></a>
+                                                        <a href="" class="print-contact-order w-inline-block"></a>
+
+                                                        <a data-w-id="1f73dc94-06af-8056-e75e-858bffd2698e" href="" class="show-customer-devices-manager w-inline-block"></a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+
+                                    </div>
+
+                                </div>
+                            </div>
+                        }
+                    </div>
+                </div>
+                <div data-w-tab="Tab 11" class="w-tab-pane">
+                    <div>
+                        @foreach (var user in Model.Users.Where(x => x.Role == "Tourist"))
+                        {
+                            <div class="section-inner">
+                                <div class="card">
+                                    <div class="table-wrapper">
+                                        <div class="table extra-wide single">
+                                            <div class="row table-row flex-center single-row w-row">
+                                                <div class="col table-col left-padding w-col w-col-4">
+                                                    <a href="/admin/userprofile/@user.User.Id" data-w-id="1f73dc94-06af-8056-e75e-858bffd26979" class="contact-profile w-inline-block">
+                                                        <img src="@user.User.CoverUrl" alt="" class="contacts-avatar">
+                                                        <div class="contact-profile-info">
+                                                            @if (string.IsNullOrEmpty(user.User.FirstName))
+                                                            {
+                                                                <h6 class="mb-0 customer-link">@user.User.Email</h6>
+                                                            }
+                                                            else
+                                                            {
+                                                                <h6 class="mb-0 customer-link">@user.User.FirstName @user.User.LastName</h6>
+                                                            }                                                            <div class="text-block-51">Role: @user.Role</div>
+                                                        </div>
+                                                    </a>
+                                                </div>
+                                                <div class="col table-col w-col w-col-2">
+
+                                                    <div class="label-item yellow">Orders: @user.Orders</div>
+                                                </div>
+                                                <div class="col table-col w-col w-col-2">
+                                                    <div class="status">Pages: @user.Pages</div>
+
+                                                </div>
+                                                <div class="col table-col w-col w-col-2">
+                                                    <div class="status">Taps: @user.Taps</div>
+                                                </div>
+                                                <div class="col table-col w-col w-col-2">
+                                                    <div class="contact-actions">
+                                                        @if (user.Orders > 0)
+                                                        {
+                                                            <a href="/admin/customerprofile/@user.User.Id" class="show-purchase-order w-inline-block"></a>
+                                                        }
+                                                        <a href="/admin/userprofile/@user.User.Id" class="users w-inline-block"></a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+
+                                    </div>
+
+                                </div>
+                            </div>
+                        }
+                    </div>
+                </div>
+                <div data-w-tab="Tab 12" class="w-tab-pane">
+                    <div>
+                        @foreach (var user in Model.Users.Where(x => x.Role == "Prospect").OrderByDescending(x=>x.User.Created))
+                        {
+                            <div class="section-inner">
+                                <div class="card">
+                                    <div class="table-wrapper">
+                                        <div class="table extra-wide single">
+                                            <div class="row table-row flex-center single-row w-row">
+                                                <div class="col table-col left-padding w-col w-col-4">
+                                                    <a href="/admin/userprofile/@user.User.Id" data-w-id="1f73dc94-06af-8056-e75e-858bffd26979" class="contact-profile w-inline-block">
+                                                        <img src="@user.User.CoverUrl" alt="" class="contacts-avatar">
+                                                        <div class="contact-profile-info">
+                                                            @if (string.IsNullOrEmpty(user.User.FirstName))
+                                                            {
+                                                                <h6 class="mb-0 customer-link">@user.User.Email</h6>
+                                                            }
+                                                            else
+                                                            {
+                                                                <h6 class="mb-0 customer-link">@user.User.FirstName @user.User.LastName</h6>
+                                                            }                                                            <div class="text-block-51">Role: @user.Role</div>
+                                                        </div>
+                                                    </a>
+                                                </div>
+                                                <div class="col table-col w-col w-col-2">
+
+                                                    <div class="label-item yellow">Orders: @user.Orders</div>
+                                                </div>
+                                                <div class="col table-col w-col w-col-2">
+                                                    <div class="status">Pages: @user.Pages</div>
+
+                                                </div>
+                                                <div class="col table-col w-col w-col-2">
+                                                    <div class="status">Taps: @user.Taps</div>
+                                                </div>
+                                                <div class="col table-col w-col w-col-2">
+                                                    <div class="contact-actions">
+                                                        <a data-w-id="25fc1321-2b83-1f55-02fb-65e7023ae774" href="#" class="show-purchase-order w-inline-block"></a>
+                                                        <a href="" class="print-contact-order w-inline-block"></a>
+
+                                                        <a data-w-id="1f73dc94-06af-8056-e75e-858bffd2698e" href="" class="show-customer-devices-manager w-inline-block"></a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+
+                                    </div>
+
+                                </div>
+                            </div>
+                        }
+
+                    </div>
+                </div>
+                <div data-w-tab="Tab 13" class="w-tab-pane">
+
+                    <div>
+                        @foreach (var user in Model.Users.Where(x => x.Role == "Invited"))
+                        {
+                            <div class="section-inner">
+                                <div class="card">
+                                    <div class="table-wrapper">
+                                        <div class="table extra-wide single">
+                                            <div class="row table-row flex-center single-row w-row">
+                                                <div class="col table-col left-padding w-col w-col-4">
+                                                    <a href="/admin/userprofile/@user.User.Id" data-w-id="1f73dc94-06af-8056-e75e-858bffd26979" class="contact-profile w-inline-block">
+                                                        <img src="@user.User.CoverUrl" alt="" class="contacts-avatar">
+                                                        <div class="contact-profile-info">
+                                                            <h6 class="mb-0 customer-link">@user.User.FirstName @user.User.LastName</h6>
+                                                            <div class="text-block-51">Role: @user.Role</div>
+                                                        </div>
+                                                    </a>
+                                                </div>
+                                                <div class="col table-col w-col w-col-2">
+
+                                                    <div class="label-item yellow">Orders: @user.Orders</div>
+                                                </div>
+                                                <div class="col table-col w-col w-col-2">
+                                                    <div class="status">Pages: @user.Pages</div>
+
+                                                </div>
+                                                <div class="col table-col w-col w-col-2">
+                                                    <div class="status">Taps: @user.Taps</div>
+                                                </div>
+                                                <div class="col table-col w-col w-col-2">
+                                                    <div class="contact-actions">
+                                                        <a data-w-id="25fc1321-2b83-1f55-02fb-65e7023ae774" href="#" class="show-purchase-order w-inline-block"></a>
+                                                        <a href="" class="print-contact-order w-inline-block"></a>
+
+                                                        <a data-w-id="1f73dc94-06af-8056-e75e-858bffd2698e" href="" class="show-customer-devices-manager w-inline-block"></a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+
+                                    </div>
+
+                                </div>
+                            </div>
+                        }
+                    </div>
+                </div>
+                <div data-w-tab="Tab 19" class="w-tab-pane">
+
+                    <div>
+                        @foreach (var user in Model.Users.Where(x => x.Role == "Lead"))
+                        {
+                            <div class="section-inner">
+                                <div class="card">
+                                    <div class="table-wrapper">
+                                        <div class="table extra-wide single">
+                                            <div class="row table-row flex-center single-row w-row">
+                                                <div class="col table-col left-padding w-col w-col-4">
+                                                    <a href="/admin/userprofile/@user.User.Id" data-w-id="1f73dc94-06af-8056-e75e-858bffd26979" class="contact-profile w-inline-block">
+                                                        <img src="@user.User.CoverUrl" alt="" class="contacts-avatar">
+                                                        <div class="contact-profile-info">
+                                                            <h6 class="mb-0 customer-link">@user.User.FirstName @user.User.LastName</h6>
+                                                            <div class="text-block-51">Role: @user.Role</div>
+                                                        </div>
+                                                    </a>
+                                                </div>
+                                                <div class="col table-col w-col w-col-2">
+
+                                                    <div class="label-item yellow">Orders: @user.Orders</div>
+                                                </div>
+                                                <div class="col table-col w-col w-col-2">
+                                                    <div class="status">Pages: @user.Pages</div>
+
+                                                </div>
+                                                <div class="col table-col w-col w-col-2">
+                                                    <div class="status">Taps: @user.Taps</div>
+                                                </div>
+                                                <div class="col table-col w-col w-col-2">
+                                                    <div class="contact-actions">
+                                                        <a data-w-id="25fc1321-2b83-1f55-02fb-65e7023ae774" href="#" class="show-purchase-order w-inline-block"></a>
+                                                        <a href="" class="print-contact-order w-inline-block"></a>
+
+                                                        <a data-w-id="1f73dc94-06af-8056-e75e-858bffd2698e" href="" class="show-customer-devices-manager w-inline-block"></a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+
+                                    </div>
+
+                                </div>
+                            </div>
+                        }
+                    </div>
+                </div>
+                <div data-w-tab="Tab 14" class="w-tab-pane">
+                    <div>
+                        @foreach (var user in Model.Users.Where(x => x.Role == "TryLater" || x.Role == "Deleted"))
+                        {
+                            <div class="section-inner">
+                                <div class="card">
+                                    <div class="table-wrapper">
+                                        <div class="table extra-wide single">
+                                            <div class="row table-row flex-center single-row w-row">
+                                                <div class="col table-col left-padding w-col w-col-4">
+                                                    <a href="/admin/userprofile/@user.User.Id" data-w-id="1f73dc94-06af-8056-e75e-858bffd26979" class="contact-profile w-inline-block">
+                                                        <img src="@user.User.CoverUrl" alt="" class="contacts-avatar">
+                                                        <div class="contact-profile-info">
+                                                            <h6 class="mb-0 customer-link">@user.User.FirstName @user.User.LastName</h6>
+                                                            <div class="text-block-51">Role: @user.Role</div>
+                                                        </div>
+                                                    </a>
+                                                </div>
+                                                <div class="col table-col w-col w-col-2">
+
+                                                    <div class="label-item yellow">Orders: @user.Orders</div>
+                                                </div>
+                                                <div class="col table-col w-col w-col-2">
+                                                    <div class="status">Pages: @user.Pages</div>
+
+                                                </div>
+                                                <div class="col table-col w-col w-col-2">
+                                                    <div class="status">Taps: @user.Taps</div>
+                                                </div>
+                                                <div class="col table-col w-col w-col-2">
+                                                    <div class="contact-actions">
+                                                        
+                                                        <a data-w-id="1f73dc94-06af-8056-e75e-858bffd2698e" href="/admin/users?handler=wipeuser&userid=@user.User.Id" class="">Wipe User</a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+
+                                    </div>
+
+                                </div>
+                            </div>
+                        }
+
+                    </div>
+                </div>
+                <div data-w-tab="Tab 15" class="w-tab-pane">
+                    <div>
+                        @foreach (var user in Model.Users.Where(x => x.Role == "Adminis" || x.Role == "Client"))
+                        {
+                            <div class="section-inner">
+                                <div class="card">
+                                    <div class="table-wrapper">
+                                        <div class="table extra-wide single">
+                                            <div class="row table-row flex-center single-row w-row">
+                                                <div class="col table-col left-padding w-col w-col-4">
+                                                    <a href="/admin/userprofile/@user.User.Id" data-w-id="1f73dc94-06af-8056-e75e-858bffd26979" class="contact-profile w-inline-block">
+                                                        <img src="@user.User.CoverUrl" alt="" class="contacts-avatar">
+                                                        <div class="contact-profile-info">
+                                                            <h6 class="mb-0 customer-link">@user.User.FirstName @user.User.LastName</h6>
+                                                            <div class="text-block-51">Role: @user.Role</div>
+                                                        </div>
+                                                    </a>
+                                                </div>
+                                                <div class="col table-col w-col w-col-2">
+
+                                                    <div class="label-item yellow">Orders: @user.Orders</div>
+                                                </div>
+                                                <div class="col table-col w-col w-col-2">
+                                                    <div class="status">Pages: @user.Pages</div>
+
+                                                </div>
+                                                <div class="col table-col w-col w-col-2">
+                                                    <div class="status">Taps: @user.Taps</div>
+                                                </div>
+                                                <div class="col table-col w-col w-col-2">
+                                                    <div class="contact-actions">
+                                                        <a data-w-id="25fc1321-2b83-1f55-02fb-65e7023ae774" href="#" class="show-purchase-order w-inline-block"></a>
+                                                        <a href="" class="print-contact-order w-inline-block"></a>
+
+                                                        <a data-w-id="1f73dc94-06af-8056-e75e-858bffd2698e" href="" class="show-customer-devices-manager w-inline-block"></a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+
+                                    </div>
+
+                                </div>
+                            </div>
+                        }
+
+                    </div>
+                </div>
+                <div data-w-tab="Tab 16" class="w-tab-pane">
+                    <div>
+                        @foreach (var user in Model.Users.Where(x => x.User.AboutMe !=null && x.Role != "Deleted" && x.User.AboutMe.Contains("Created for Beta Test")))
+                                    {
+                            <div class="section-inner">
+                                <div class="card">
+                                    <div class="table-wrapper">
+                                        <div class="table extra-wide single">
+                                            <div class="row table-row flex-center single-row w-row">
+                                                <div class="col table-col left-padding w-col w-col-4">
+                                                    <a href="/admin/userprofile/@user.User.Id" data-w-id="1f73dc94-06af-8056-e75e-858bffd26979" class="contact-profile w-inline-block">
+                                                        <img src="@user.User.CoverUrl" alt="" class="contacts-avatar">
+                                                        <div class="contact-profile-info">
+                                                            <h6 class="mb-0 customer-link">@user.User.FirstName @user.User.LastName</h6>
+                                                            <div class="text-block-51">Role: @user.Role</div>
+                                                            <div class="text-block-51"></div>
+                                                        </div>
+                                                    </a>
+                                                    <a href="/admin/users?handler=startbeta&userid=@user.User.Id">Start Beta Test</a>
+                                                </div>
+                                                <div class="col table-col w-col w-col-2">
+
+                                                    <div class="label-item yellow">Orders: @user.Orders</div>
+                                                </div>
+                                                <div class="col table-col w-col w-col-2">
+                                                    <div class="status">Pages: @user.Pages</div>
+
+                                                </div>
+                                                <div class="col table-col w-col w-col-2">
+                                                    <div class="status">Taps: @user.Taps</div>
+                                                </div>
+                                                <div class="col table-col w-col w-col-2">
+                                                    <div class="contact-actions">
+                                                        <a data-w-id="25fc1321-2b83-1f55-02fb-65e7023ae774" href="#" class="show-purchase-order w-inline-block"></a>
+                                                        <a href="" class="print-contact-order w-inline-block"></a>
+
+                                                        <a data-w-id="1f73dc94-06af-8056-e75e-858bffd2698e" href="" class="show-customer-devices-manager w-inline-block"></a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+
+                                    </div>
+
+                                </div>
+                            </div>
+                        }
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <div class="footer">
+        <span><a href="/admin/users?pageNo=@Model.LastPage">Last Page</a>   <a href="/admin/users?pageNo=@Model.NextPage">Next Page</a></span>
+        <div class="w-row">
+            <div class="w-col w-col-6">
+                <div class="hint">© Copyright Atlice LLC. All rights reserved</div>
+            </div>
+            <div class="footer-right w-col w-col-6">
+                <div class="hint">
+                    <a href="https://webflow.com/" class="footer-link">Empowered by Atlice</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

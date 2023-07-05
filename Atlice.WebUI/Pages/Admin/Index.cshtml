@@ -1,0 +1,288 @@
+﻿@page
+@model Atlice.WebUI.Pages.Admin.IndexModel
+@{
+    Layout = "_AdminLayout";
+    TimeZoneInfo Eastern_Standard_Time = TimeZoneInfo.FindSystemTimeZoneById("Eastern Standard Time");
+}
+<div class="app-main-layout-header">
+    <div class="app-main-layout-wrapper header">
+        <div class="page-heading">
+            <h2 class="heading-62">Administration</h2>
+            <p>Find your center with full site Analytics</p>
+        </div>
+        <div class="page-tabs-menu">
+            <a href="/admin/createuser" class="page-tab-link"><b>+</b> Create New User</a>
+            <a href="/admin/Index?hander=backupdatabase" class="page-tab-link revenue"> Backup Database</a>
+            <a href="/admin/adminnotes" class="page-tab-link"><img src="~/images/notes-png-1.png" height="20" width="20" /> Events</a>
+            <a href="/admin/errorfeedback" class="page-tab-link"><b style="color:red;">X</b> Error Feedback</a>
+            <a href="/admin/orderlist" class="page-tab-link"><img src="~/images/notes-png-1.png" height="20" width="20" /> Order List</a>
+            <a href="/admin/outstanding" class="page-tab-link"><img src="../images/Orion_men.svg" height="20" width="20" /> Outstanding Users</a>
+            <a href="/admin/tracker" class="page-tab-link"><img src="../icons/track.png" height="20" width="20" />User Tracker</a>
+        </div>
+    </div>
+</div>
+<div class="app-main-layout-wrapper">
+    <div class="app-main-layout-content">
+        <div class="page-tabs-content">
+            <div class="section">
+                <div class="col">
+                    <div class="card">
+                        <div class="card-heading small">
+                            <h4 class="mb-0">Page Visit Overview</h4>
+                        </div>
+                        <div data-duration-in="300" data-duration-out="100" class="w-tabs">
+                            <div class="align-right w-tab-menu">
+                                <a data-w-tab="Tab 1" class="switcher-tab left dashboard w-inline-block w-tab-link w--current">
+                                    <div>Monthly</div>
+                                </a>
+                                <a data-w-tab="Tab 5" class="switcher-tab right w-inline-block w-tab-link">
+                                    <div>Yearly</div>
+                                </a>
+                            </div>
+                            <div class="chart-tab-content w-tab-content">
+                                <div data-w-tab="Tab 1" class="w-tab-pane w--tab-active">
+                                    <canvas id="myChartMonth"></canvas>
+                                </div>
+                                <div data-w-tab="Tab 5" class="w-tab-pane">
+                                    <canvas id="myChartYear"></canvas>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="section">
+                <div class="flex row w-row">
+                    <div class="col w-col w-col-4">
+                        <div class="card">
+                            <div class="card-heading small">
+                                <h5 class="mb-0">New Orders</h5><img src="../AA1.3/images/icons8-shopping-cart-70_1icons8-shopping-cart-70.png" width="35" alt="" class="card-icon-header-image">
+                            </div>
+                            <div class="flex-center">
+                                <div class="revenue-value">@Model.NewOrders</div><img src="../AA1.3/images/icons8-low-priority-100-1_1icons8-low-priority-100-1.png" width="20" alt="" class="status-icon">
+                            </div>
+                            <div class="revenue-description hint"><span class="text-green">+3.3%</span> From Last Week</div>
+                        </div>
+                    </div>
+                    <div class="col w-col w-col-4">
+                        <div class="card">
+                            <div class="card-heading small">
+                                <h5 class="mb-0">Error Feedback</h5><span width="35" alt="" class="card-icon-header-image" style="color:red;"><b>X</b></span>
+                            </div>
+                            <div class="flex-center">
+                                <div class="revenue-value">@Model.Errors</div><img src="../AA1.3/images/icons8-low-priority-100_1icons8-low-priority-100.png" width="20" alt="" class="status-icon">
+                            </div>
+                            <div class="revenue-description hint"><span class="text-red">-1.2%</span> From Last Week</div>
+                        </div>
+                    </div>
+                    <div class="col w-col w-col-4">
+                        <div class="card">
+                            <div class="card-heading small">
+                                <h5 class="mb-0">Outstanding Users</h5><img src="../images/Orion_men.svg" width="35" alt="" class="card-icon-header-image"></span>
+                            </div>
+                            <div class="flex-center">
+                                <div class="revenue-value">@Model.Outstanding</div><img src="../AA1.3/images/icons8-low-priority-100-1_1icons8-low-priority-100-1.png" width="20" alt="" class="status-icon">
+                            </div>
+                            <div class="revenue-description hint"><span class="text-green">+23.12%</span> From Last Week</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="section">
+                <div class="col">
+                    <div class="card">
+                        <div class="card-heading">
+                            <h4 class="mb-0">Invited Waitlist</h4>
+                            <a href="/admin/index?handler=Upgrade">Upgrade all to Prospects</a>
+                        </div>
+                        <div class="table-wrapper">
+                            <div class="table wide">
+                                <div class="row table-row table-header w-row">
+                                    <div class="col table-col w-col w-col-4 w-col-small-4 w-col-tiny-4">
+                                        <div>Name</div>
+                                    </div>
+                                    <div class="col table-col w-col w-col-2 w-col-small-2 w-col-tiny-2">
+                                        <div>Id</div>
+                                    </div>
+                                    <div class="col table-col w-col w-col-3 w-col-small-3 w-col-tiny-3">
+                                        <div>Mobile</div>
+                                    </div>
+                                    <div class="w-col w-col-3 w-col-small-3 w-col-tiny-3">
+                                        <div>Email</div>
+                                    </div>
+                                </div>
+                                @foreach (var user in Model.Invitees)
+                                {
+                                    <div class="row table-row w-row">
+                                        <div class="col table-col w-col w-col-4 w-col-small-4 w-col-tiny-4">
+                                            <div>
+                                                <a href="#">@user.FirstName @user.LastName</a>
+                                            </div>
+                                        </div>
+                                        <div class="col table-col w-col w-col-2 w-col-small-2 w-col-tiny-2">
+                                            <div>@user.Id</div>
+                                        </div>
+                                        <div class="col table-col w-col w-col-3 w-col-small-3 w-col-tiny-3">
+                                            <div>@user.PhoneNumber</div>
+                                        </div>
+                                        <div class="w-col w-col-3 w-col-small-3 w-col-tiny-3">
+                                            <div class="inline">@user.Email</div>
+                                        </div>
+                                    </div>
+                                }
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="section">
+                <div class="col">
+                    <div class="card">
+                        <div class="card-heading">
+                            <h4 class="mb-0">Lead list(Submitted Contact/Note To Self)</h4>
+                        </div>
+                        <div class="table-wrapper">
+                            <div class="table wide">
+                                <div class="row table-row table-header w-row">
+                                    <div class="col table-col w-col w-col-4 w-col-small-4 w-col-tiny-4">
+                                        <div>Name</div>
+                                    </div>
+                                    <div class="col table-col w-col w-col-2 w-col-small-2 w-col-tiny-2">
+                                        <div>Id</div>
+                                    </div>
+                                    <div class="col table-col w-col w-col-3 w-col-small-3 w-col-tiny-3">
+                                        <div>Mobile</div>
+                                    </div>
+                                    <div class="w-col w-col-3 w-col-small-3 w-col-tiny-3">
+                                        <div>Email</div>
+                                    </div>
+                                </div>
+                                @foreach (var user in Model.Leads)
+                                {
+                                    <div class="row table-row w-row">
+                                        <div class="col table-col w-col w-col-4 w-col-small-4 w-col-tiny-4">
+                                            <div>
+                                                <a href="#">@user.FirstName @user.LastName</a>
+                                            </div>
+                                        </div>
+                                        <div class="col table-col w-col w-col-2 w-col-small-2 w-col-tiny-2">
+                                            <div>@user.Id</div>
+                                        </div>
+                                        <div class="col table-col w-col w-col-3 w-col-small-3 w-col-tiny-3">
+                                            <div>@user.PhoneNumber</div>
+                                        </div>
+                                        <div class="w-col w-col-3 w-col-small-3 w-col-tiny-3">
+                                            <div class="inline">@user.Email</div>
+                                        </div>
+                                    </div>
+                                }
+                                 <h1>Chat App</h1>
+@*    <p id="stateLabel">Ready to connect...</p>
+*@    <div>
+        <label for="userName">Username:</label>
+@*        <input id="userName" />
+*@        <button id="connectButton" type="submit">Connect</button>
+    </div>
+    <div>
+        <label for="sendMessage">Message to send:</label>
+        <input id="sendMessage" disabled />
+        <select name="usersList" id="usersList" disabled>
+            <option value="">Everybody</option>
+        </select>
+        <button id="sendButton" type="submit" disabled>Send</button>
+        <button id="closeButton" disabled>Disconnect</button>
+    </div>
+
+    <h2>Chat log</h2>
+    <div id="chatLog"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="footer">
+        <div class="w-row">
+            <div class="w-col w-col-6">
+                <div class="hint">© Copyright Atlice LLC. All rights reserved</div>
+            </div>
+            <div class="footer-right w-col w-col-6">
+                <div class="hint">
+                    <a href="https://webflow.com/" class="footer-link">Empowered by Atlice</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@section Scripts{
+  
+    <script>
+        
+        //const monthchart = document.getElementById('myChartMonth');
+        //const yearchart = document.getElementById('myChartYear');
+
+        //let dayOfTheMonth = '@TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, Eastern_Standard_Time).Day';
+        //let year = '@TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, Eastern_Standard_Time).Year';
+        //let month = '@TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, Eastern_Standard_Time).Month';
+        //let monthDays = [];
+        //for(i =1; i <= dayOfTheMonth;i++){
+        //    monthDays.push((i).toString());
+        //}
+        
+        //new Chart(monthchart, {
+        //    type: 'line',
+        //    data: {
+        //        labels: monthDays,
+        //        datasets: [{
+        //            label: '# of Contact Page Visits in @TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, Eastern_Standard_Time).ToString("MMMM")',
+        //            data: JSON.parse('@Html.Raw(Json.Serialize( Model.PageVisitsByDay))'),
+        //            borderWidth: 1,
+        //            spanGaps: true
+        //        },
+        //        {
+        //            label: '# of Contact Submissions in @TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, Eastern_Standard_Time).ToString("MMMM")',
+        //            data: JSON.parse('@Html.Raw(Json.Serialize( Model.ContactSubmissionsByDay))'),
+        //            borderWidth: 1,
+        //            spanGaps: true
+        //        }]
+        //    },
+        //    options: {
+        //        scales: {
+        //            y: {
+        //                beginAtZero: true
+        //            }
+        //        }
+        //    }
+        //});
+        //new Chart(yearchart , {
+        //    type: 'line',
+        //    data: {
+        //        labels: ['January', 'Februray', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
+        //        datasets: [{
+        //            label: '# of Yearly Page Visits',
+        //            data: JSON.parse('@Html.Raw(Json.Serialize(Model.PageVisitsByYear))'),
+        //            borderWidth: 1,
+        //            spanGaps: true
+        //        },
+        //        {
+        //            label: '# of Yearly Contact Submissions',
+        //            data: JSON.parse('@Html.Raw(Json.Serialize(Model.ContactSubmissionsByYear))'),
+        //            borderWidth: 1,
+        //            spanGaps: true
+        //        }
+        //        ]
+        //    },
+        //    options: {
+        //        scales: {
+        //            y: {
+        //                beginAtZero: true
+        //            }
+        //        }
+        //    }
+        //});
+    </script>
+}

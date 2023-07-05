@@ -1,0 +1,55 @@
+﻿@page
+@model Atlice.Areas.Identity.Pages.Account.VerifyPhoneNumberModel
+@{
+    ViewBag.Title = "Verify Phone Number";
+    Layout = "_Layout";
+}
+
+<div class="container-15 w-container">
+    <div class="form11">
+        <h5 class="form11_h5">Verify Phone Number. </h5>
+                <h6 style="color:red;">@TempData["ERROR"]</h6>
+
+        <div class="form11_line"></div>
+        <div class="form11_form_block w-form">
+            <form asp-page-handler="Verify" id="email-form-2" name="email-form-2" data-name="Email Form 2">
+                <input type="hidden" asp-for="Input.PhoneNumber" />
+                <input type="hidden" asp-for="Input.Tapid" />
+                <input type="hidden" asp-for="Input.ReturnUrl" />
+                <div class="form11_label_title">
+                    <strong>Verification Code:</strong>
+                </div>
+                <span asp-validation-for="Input.Code" class="text-danger"></span>
+                <input asp-for="Input.Code" type="text" class="form-box-link w-input" maxlength="256" data-name="Verification Code" placeholder="Enter verification code here" id="Verification-Code" required="">
+
+                <a style="width:100%;" class="atlice-tap-button w-button" onclick="fetch('/Identity/Account/verifyphonenumber?handler=submit&Code='+document.getElementById('Verification-Code').value+'&PhoneNumber='+'@Model.Input.PhoneNumber'+ '&tapid=' + '@Model.Input.Tapid' + '&returnurl='+'@Model.Input.ReturnUrl').then(x=>x.json()).then(y=> window.location = y.url)" href="#" >Verify</a>
+              </form>
+              <div class="hidden" id="connectholder"></div>
+            <div class="form09_success w-form-done">
+                <div class="form_alert">
+                    <div class="form_alert_wrap">
+                        <img src="https://uploads-ssl.webflow.com/5de5e999eee2054fa942a10b/5de5e999eee205041f42a33c_check-white.svg" width="14" alt="" class="form_alert_icon">
+                        <div class="form_alert_line"></div>
+                        <div class="form_alert_text white-text">Your information has been saved.</div>
+                    </div>
+                    <img src="https://uploads-ssl.webflow.com/5de5e999eee2054fa942a10b/5de5e999eee2056a2b42a336_x_white.svg" width="10" alt="">
+                </div>
+            </div>
+            <div class="form09_error w-form-fail">
+                <div class="form_error">
+                    <div class="form_error_wrap">
+                        <img src="https://uploads-ssl.webflow.com/5de5e999eee2054fa942a10b/5de5e999eee205e71a42a33a_alert-circle-white.svg" width="16" alt="" class="form_error_icon">
+                        <div class="form_error_line"></div>
+                        <div class="form_error_paragraph white-text">Looks like we&#x27;re having trouble</div>
+                    </div>
+                    <img src="https://uploads-ssl.webflow.com/5de5e999eee2054fa942a10b/5de5e999eee2056a2b42a336_x_white.svg" width="10" alt="">
+                </div>
+            </div>
+        </div>
+         <div class="section-5">
+            <img src="../images/Image-414.png" loading="lazy" sizes="100vw" srcset="/images/Image-414-p-500.png 500w, /images/Image-414-p-800.png 800w, /images/Image-414-p-1080.png 1080w, /images/Image-414.png 1316w" alt="" class="image-20 logo">
+        </div>
+
+        <img src="~/images/Atlice-Tap-NFC-Tag-3.png" sizes="60px" srcset="/images/Atlice-Tap-NFC-Tag-3-p-500.png 500w, /images/Atlice-Tap-NFC-Tag-3-p-800.png 800w, /images/Atlice-Tap-NFC-Tag-3-p-1080.png 1080w, /images/Atlice-Tap-NFC-Tag-3-p-1600.png 1600w, /images/Atlice-Tap-NFC-Tag-3.png 1800w" alt="" class="form11_image">
+    </div>
+</div>

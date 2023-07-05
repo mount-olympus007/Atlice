@@ -1,0 +1,239 @@
+﻿@page
+@model Atlice.WebUI.Pages.Admin.OrderListModel
+@{
+    Layout = "_AdminLayout";
+}
+<div class="app-main-layout-header-2 hidden">
+    <div class="app-main-layout-wrapper-2 header">
+        <div class="page-heading">
+            <h2 class="heading-62">Fullfillment Beta</h2>
+            <a href="/homeboard">Homeboard</a>
+        </div>
+
+    </div>
+</div>
+
+
+<div class="app-main-layout-wrapper">
+    <div class="app-main-layout-content">
+        <div class="section inventory">
+            <div class="section-inner">
+                <div class="card no-padding receipt-table">
+                    <div class="product-row">
+                        <div id="w-node-dd1f8cdf-78a6-786d-a1b0-68f62504f3a9-87935a25" class="filter-bar-form-block w-form">
+                            <form id="email-form-2" name="email-form-2" data-name="Email Form 2" class="fulfillment-filter-bar-form-item">
+                                <div id="w-node-dd1f8cdf-78a6-786d-a1b0-68f62504f3ab-87935a25" class="card-setting-text caption">#</div>
+                                <input type="submit" value="" data-wait="Please wait..." class="submit-button-2 filter-bar-form-button w-button">
+                            </form>
+                            <div class="w-form-done">
+                                <div class="text-block-52">Thank you! Your submission has been received!</div>
+                            </div>
+                            <div class="w-form-fail">
+                                <div class="text-block-53">Oops! Something went wrong while submitting the form.</div>
+                            </div>
+                        </div>
+
+                        <div id="w-node-a9835915-8bb6-3090-16df-a9775d9c6f17-87935a25" class="filter-bar-form-block w-form">
+                            <form id="email-form-2" name="email-form-2" data-name="Email Form 2" class="fulfillment-filter-bar-form-item">
+                                <div id="w-node-a9835915-8bb6-3090-16df-a9775d9c6f19-87935a25" class="card-setting-text caption">Device Creation</div>
+                                <input type="submit" value="" data-wait="Please wait..." class="submit-button-2 filter-bar-form-button w-button">
+                            </form>
+                            <div class="w-form-done">
+                                <div>Thank you! Your submission has been received!</div>
+                            </div>
+                            <div class="w-form-fail">
+                                <div>Oops! Something went wrong while submitting the form.</div>
+                            </div>
+                        </div>
+                        <div id="w-node-_03be10bc-f510-9b1a-db72-4133cf3a7c30-87935a25" class="filter-bar-form-block w-form">
+                            <form id="email-form-2" name="email-form-2" data-name="Email Form 2" class="fulfillment-filter-bar-form-item">
+                                <div id="w-node-_03be10bc-f510-9b1a-db72-4133cf3a7c32-87935a25" class="card-setting-text caption">Shipping</div>
+                                <input type="submit" value="" data-wait="Please wait..." class="submit-button-2 filter-bar-form-button w-button">
+                            </form>
+                            <div class="w-form-done">
+                                <div>Thank you! Your submission has been received!</div>
+                            </div>
+                            <div class="w-form-fail">
+                                <div>Oops! Something went wrong while submitting the form.</div>
+                            </div>
+                        </div>
+                        <div id="w-node-_83421015-f101-7b66-67cb-69837e9a56fd-87935a25" class="filter-bar-form-block w-form">
+                            <form id="email-form-2" name="email-form-2" data-name="Email Form 2" class="fulfillment-filter-bar-form-item">
+                                <div id="w-node-eb023710-730f-759a-d7e5-fb0c3b5d3130-87935a25" class="card-setting-text caption">Status</div>
+                                <input type="submit" value="" data-wait="Please wait..." class="submit-button-2 filter-bar-form-button w-button">
+                            </form>
+                            <div class="w-form-done">
+                                <div>Thank you! Your submission has been received!</div>
+                            </div>
+                            <div class="w-form-fail">
+                                <div>Oops! Something went wrong while submitting the form.</div>
+                            </div>
+                        </div>
+                        <div id="w-node-_83421015-f101-7b66-67cb-69837e9a56fd-87935a25" class="filter-bar-form-block w-form">
+                            <form id="email-form-2" name="email-form-2" data-name="Email Form 2" class="fulfillment-filter-bar-form-item">
+                                <div id="w-node-eb023710-730f-759a-d7e5-fb0c3b5d3130-87935a25" class="card-setting-text caption">Actions</div>
+                                <input type="submit" value="" data-wait="Please wait..." class="submit-button-2 filter-bar-form-button w-button">
+                            </form>
+                            <div class="w-form-done">
+                                <div>Thank you! Your submission has been received!</div>
+                            </div>
+                            <div class="w-form-fail">
+                                <div>Oops! Something went wrong while submitting the form.</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="deviceGrid">
+                        @foreach (var order in Model.orders)
+                        {
+                            if (order.order is not null)
+                            {
+                                <div class="product-row" id="@order.order.OrderNumber">
+                                    <div id="w-node-ab56874d-8e7b-18f1-732b-3df176a54fc8-87935a25" class="device-in-devices-block">
+
+                                        <div class="card-setting-text">
+                                            <p>Order No: <a href="/admin/orderdetails/@order.order.Id">@order.order.OrderNumber</a></p><br />
+                                            <p>Customer: <a href="/admin/customerprofile/@order.order.UserId">@order.order.Name</a></p><br />
+                                            <p>Received: @order.order.OrderRecieved</p>
+                                        </div>
+
+                                    </div>
+
+                                    <div id="w-node-ab56874d-8e7b-18f1-732b-3df176a54fc8-87935a25" class="device-in-devices-block">
+                                        @if (order.order.Status == Domain.Entities.OrderStatus.NewOrder || order.order.Status == Domain.Entities.OrderStatus.RecuritmentOrder || order.order.Status == Domain.Entities.OrderStatus.ManualOrder || order.order.Status == Domain.Entities.OrderStatus.PartiallyComplete || order.order.Status == Domain.Entities.OrderStatus.Incomplete)
+                                        {
+                                            <ol>
+                                                @foreach (var device in order.order.Taps)
+                                                {
+                                                    <li>
+                                                        @if (device.Note is not null && device.Note.Contains("Created on"))
+                                                        {
+                                                            <p>@device.GetOfficialName(device.Sku) has been Created</p>
+                                                        }
+                                                        else
+                                                        {
+                                                            <a href="#" onclick="fetch('/admin/orderlist?handler=createdevice&tapID=@device.Id').then(x=>x.json()).then(y=> document.getElementById('@order.order.OrderNumber').innerHTML == y.view)">Create @device.GetOfficialName(device.Sku)</a><br />
+                                                            <a href="#" onclick="fetch('/admin/orderlist?handler=removedevice&tapID=@device.Id').then(x=>x.json()).then(y=> document.getElementById('@order.order.OrderNumber').innerHTML == y.view)">Remove this Device</a>
+                                                        }
+                                                    </li>
+
+                                                }
+                                                <li>
+                                                    <form asp-page-handler="AddNewDevice">
+                                                        <input type="hidden" name="id" value="@order.order.Id" />
+                                                        <select name="sku">
+                                                            <option value="LGYCSTLGCD1">Legacy Card</option>
+                                                            <option value="CLSCDWHT">Classic Card</option>
+                                                            <option value="CLSTG25GRY1">Tag</option>
+
+                                                        </select>
+                                                        <input type="submit" value="Add New Device" />
+
+                                                    </form>
+                                                </li>
+                                            </ol>
+
+                                        }
+                                        else
+                                        {
+                                            <img src="/images/checkmarkok.png" height="15">
+                                        }
+
+                                    </div>
+                                    <div id="w-node-ab56874d-8e7b-18f1-732b-3df176a54fc8-87935a25" class="device-in-devices-block">
+                                        @if (order.order.Status == Domain.Entities.OrderStatus.Shipped || order.order.Status == Domain.Entities.OrderStatus.Activated || order.order.Status == Domain.Entities.OrderStatus.PartiallyActivated)
+                                        {
+                                            <img src="/images/checkmarkok.png" height="15">
+                                        }
+                                        else
+                                        {
+                                            @if (order.order.Taps.All(x =>x.Note != null && x.Note.Contains("Created on")))
+                                            {
+                                                <ol class="card-setting-text">
+                                                    <li>Label: <a onclick="fetch('/admin/orderlist?handler=createlabel&id=@order.order.Id').then(x=>x.json()).then(y=>window.open(y.url)).then(z=> document.getElementById('@order.order.OrderNumber').innerHTML == z.view)" href="#" target="_blank">Create Label</a></li>
+                                                    <li>
+                                                        @if (string.IsNullOrEmpty(order.order.Tracking))
+                                                        {
+                                                            <p>Packing Slip: Create Label First</p>
+                                                        }
+                                                        else
+                                                        {
+                                                            <p>Packing Slip: <a href="/admin/packingslip/@order.order.Id" target="_blank">Print</a></p>
+                                                        }
+                                                    </li>
+                                                    <li>
+                                                        Ship: @if (!string.IsNullOrEmpty(order.order.Tracking))
+                                                        {
+                                                            <a onclick="fetch('/admin/orderlist?handler=readytoship&id=@order.order.Id').then(x=>x.json()).then(y=> document.getElementById('@order.order.OrderNumber').innerHTML == y.view)" href="#">Confirm Delievery</a>
+                                                        }
+                                                        else
+                                                        {
+                                                            <p>Create Label First</p>
+                                                        }
+                                                    </li>
+                                                </ol>
+                                            }
+                                            else
+                                            {
+                                                <p style="color:red;">Create Devices First!</p>
+                                            }
+                                        }
+                                    </div>
+
+                                    <div id="w-node-ab56874d-8e7b-18f1-732b-3df176a54fc8-87935a25" class="device-in-devices-block">
+
+                                        @if (order.order.Status == Domain.Entities.OrderStatus.Activated)
+                                        {
+                                            <img src="/images/checkmarkok.png" height="15">
+                                        }
+                                        else
+                                        {
+                                            <div class="card-setting-text">@order.order.Status</div>
+                                        }
+
+                                    </div>
+                                    <div id="w-node-ab56874d-8e7b-18f1-732b-3df176a54fc8-87935a25" class="device-in-devices-block">
+                                        <ul>
+                                            <li>
+                                                @if (order.order.BookMarked)
+                                                {
+                                                    <p style="color:red;">Bookmarked</p>
+                                                    <form asp-page-handler="RemoveBookmark">
+                                                        <input type="hidden" name="orderid" value="@order.order.Id" />
+                                                        <input type="submit" value="Remove Bookmark" />
+                                                    </form>
+                                                }
+                                                <a href="/admin/orderlist?handler=deleteorder&id=@order.order.Id">Delete Order</a>
+                                            </li>
+                                        </ul>
+
+
+
+                                    </div>
+
+
+
+                                </div>
+                            }
+
+                        }
+                    </div>
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="footer">
+        <div class="w-row">
+            <div class="w-col w-col-6">
+                <div class="hint">© Copyright Atlice LLC. All rights reserved</div>
+            </div>
+            <div class="footer-right w-col w-col-6">
+                <div class="hint">
+                    <a href="https://webflow.com/" class="footer-link">Empowered by Atlice</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

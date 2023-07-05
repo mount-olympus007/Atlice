@@ -1,0 +1,894 @@
+﻿@page
+@model Atlice.WebUI.Pages.Admin.FullfillmentModel
+@{
+    var orders = Model.Orders.Where(x => x.Order.Status.ToString() == "PendingShipment").ToList();
+    Layout = "_AdminLayout";
+    TimeZoneInfo Eastern_Standard_Time = TimeZoneInfo.FindSystemTimeZoneById("Eastern Standard Time");
+}
+<div class="app-main-layout-header">
+    <div class="app-main-layout-wrapper header">
+        <div class="page-heading">
+            <h2 class="admin-title">Fulfillment</h2>
+            <p>Purchase Orders</p>
+            <p class="text-danger">@TempData["message"]</p>
+            <div class="page-title-button">
+                <a href="/admin/inventory" data-w-id="e309ac37-c13b-eff3-399b-9e7c634fdffd" class="button atlice-button-primary w-button">Inventory<br>‍</a>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="app-main-layout-wrapper">
+    <div class="app-main-layout-content">
+        <div class="filter-bar-form-dropdown-block">
+            <div class="app-navbar-menu-item">
+                <div data-delay="0" class="menu-dropdown-2 w-dropdown">
+                    <div class="menu-dropdown-toggle-2 dropdown-filter w-dropdown-toggle"></div>
+                    <nav class="menu-dropdown-list-2 filter-search filter-search-dropdown w-dropdown-list">
+                        <div class="fulfilment-search-form-block w-form">
+                            <form class="inventory-search-form" name="email-form-3" data-name="Email Form 3" asp-page-handler="OrderSearch" data-ajax="true" data-ajax-method="POST" data-ajax-mode="replace" data-ajax-update="#fullfillmentList">
+                                <label for="name-8" class="field-label-2">Name</label>
+                                <div class="div-block-4">
+                                    <input type="text" class="text-field-3 w-input" maxlength="256" name="name" data-name="Name 7" placeholder="" id="name-7">
+                                    <input type="submit" value="" data-wait="Please wait..." class="search-order-button w-button">
+                                </div>
+                                <label for="email-5" class="field-label-2">Order #</label>
+                                <div class="div-block-3">
+                                    <input type="text" class="text-field-2 w-input" maxlength="256" name="orderNO" data-name="Email 5" placeholder="" id="email-5">
+                                    <input type="submit" value="" data-wait="Please wait..." class="search-order-button w-button">
+                                </div>
+                            </form>
+                            <div class="w-form-done">
+                                <div>Thank you! Your submission has been received!</div>
+                            </div>
+                            <div class="w-form-fail">
+                                <div>Oops! Something went wrong while submitting the form.</div>
+                            </div>
+                        </div>
+                    </nav>
+                </div>
+            </div>
+        </div>
+        <div data-duration-in="300" data-duration-out="100" class="w-tabs">
+            <div class="align-right w-tab-menu">
+                <a data-w-tab="Tab 1" class="switcher-tab w-inline-block w-tab-link w--current">
+                    <div>New Orders</div>
+                </a>
+                <a data-w-tab="Tab 4" class="switcher-tab w-inline-block w-tab-link">
+                    <div>Pending Shipment</div>
+                </a>
+                <a data-w-tab="Tab 5" class="switcher-tab w-inline-block w-tab-link">
+                    <div>Shipped</div>
+                </a>
+                <a data-w-tab="Tab 6" class="switcher-tab right w-inline-block w-tab-link">
+                    <div>Activated</div>
+                </a>
+                <a data-w-tab="Tab 8" class="switcher-tab w-inline-block w-tab-link" id="bookmarktab">
+                    <div>Bookmarked</div>
+                </a>
+            </div>
+            <div class="chart-tab-content w-tab-content">
+                <div data-w-tab="Tab 1" class="w-tab-pane w--tab-active">
+                    <div id="fullfillmentList">
+                        @foreach (var order in Model.Orders.Where(x => x.Order.Status.ToString() == "NewOrder" || x.Order.Status.ToString() == "PartiallyComplete" || x.Order.Status.ToString() == "RecuritmentOrder" || x.Order.Status.ToString() == "ManualOrder").OrderByDescending(x => x.Order.OrderRecieved))
+                        {
+                            if (!order.Order.BookMarked)
+                            {
+                                <div class="section-inner">
+                                    <div class="card">
+                                        <div class="table-wrapper">
+                                            <div class="table extra-wide single">
+                                                <div class="row table-row flex-center single-row w-row">
+                                                    <div class="col table-col left-padding w-col w-col-4">
+                                                        <a href="/admin/customerprofile/@order.Order.UserId" data-w-id="1f73dc94-06af-8056-e75e-858bffd26979" class="contact-profile w-inline-block">
+                                                            <img src="../AA1.3/images/Artboard-20.png" alt="" class="contacts-avatar">
+                                                            <div class="contact-profile-info">
+                                                                <h6 class="mb-0 customer-link">@order.Order.Name</h6>
+                                                                <div class="text-block-51">Order# @order.Order.OrderNumber</div>
+                                                            </div>
+                                                        </a>
+                                                    </div>
+                                                    <div class="col table-col w-col w-col-2">
+                                                        <div class="label-item yellow">@order.Order.Status</div>
+                                                    </div>
+                                                    <div class="col table-col w-col w-col-2">
+                                                        <div class="device-images fulfillment">
+                                                            @foreach (var device in order.Order.Taps)
+                                                            {
+                                                                <div class="device-div-block fb">
+                                                                    <img src="@device.GetImage(device.Sku)" loading="lazy" sizes="100vw" srcset="@device.GetImage(device.Sku) 500w, @device.GetImage(device.Sku) 800w, @device.GetImage(device.Sku) 1013w" alt="">
+
+                                                                </div>
+                                                            }
+
+                                                        </div>
+                                                    </div>
+                                                    <div class="col table-col w-col w-col-2">
+                                                        <div class="status">@order.Order.OrderRecieved.ToShortDateString()</div>
+                                                    </div>
+                                                    <div class="col table-col w-col w-col-2">
+                                                        <div class="contact-actions">
+                                                            <a data-w-id="25fc1321-2b83-1f55-02fb-65e7023ae774" href="#" class="show-purchase-order w-inline-block"></a>
+                                                            <a target="_blank" href="/admin/orderdetails/@order.Order.Id" class="print-contact-order w-inline-block"></a>
+                                                            <form name="email-form-3" data-name="Email Form 3" asp-page-handler="ProcessOrder">
+                                                                <input type="hidden" name="id" value="@order.Order.Id" />
+                                                                <input type="submit" class="hidden" />
+                                                                <a onclick="($(this).prev().click())" data-w-id="1f73dc94-06af-8056-e75e-858bffd26990" class="send-to-devices w-inline-block"></a>
+
+                                                            </form>
+                                                            <a data-w-id="1f73dc94-06af-8056-e75e-858bffd2698e" style="background-image:url('../aa1.3/images/bookmark-bookmarks-favorite-favorite.png')" href="#" onclick="fetch('/admin/fullfillment?handler=bookmark&id='+'@order.Order.Id').then(x=>x.json()).then(z=> window.location = z.url)" class="show-customer-devices-manager w-inline-block"></a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                        <div class="purchase-details-block">
+                                            <div class="row w-row">
+                                                <div class="col w-col w-col-6">
+                                                    <div class="flex-center profile-about-row">
+                                                        <div class="profile-info-heading-2">
+                                                            <strong>Order #</strong>
+                                                        </div>
+                                                        <div>@order.Order.OrderNumber</div>
+                                                    </div>
+                                                    <div class="flex-center profile-about-row">
+                                                        <div class="profile-info-heading-2">
+                                                            <strong>Name</strong>
+                                                        </div>
+                                                        <div>@order.Order.Name</div>
+                                                    </div>
+                                                    <div class="flex-center profile-about-row">
+                                                        <div class="profile-info-heading-2">
+                                                            <strong>Phone</strong>
+                                                        </div>
+                                                        <div>@order.Order.Phone</div>
+                                                    </div>
+                                                    <div class="flex-center profile-about-row">
+                                                        <div class="profile-info-heading-2">
+                                                            <strong>Email</strong>
+                                                        </div>
+                                                        <div>@order.Order.Email</div>
+                                                    </div>
+                                                    <div class="flex-center profile-about-row">
+                                                        <div class="profile-info-heading-2">
+                                                            <strong>Shipping Address</strong>
+                                                        </div>
+                                                        <div>
+                                                            @order.Order.ShipAddressLine1.
+                                                            <br>@order.Order.ShipAddressLine2
+                                                            <br>@order.Order.ShipCity @order.Order.ShipCode
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col w-col w-col-6">
+                                                    <div class="flex-center profile-about-row">
+                                                        <div class="profile-info-heading-2">
+                                                            <strong>Payment</strong>
+                                                        </div>
+                                                        <p>
+                                                            <strong></strong>xxxx-xxxx-xxxx-@order.Order.Last4
+                                                            <strong> @order.Order.Brand</strong>
+                                                            <strong><br></strong>
+                                                        </p>
+                                                    </div>
+                                                    <div class="flex-center profile-about-row">
+                                                        <div class="profile-info-heading-2">
+                                                            <strong>Items Ordered</strong>
+                                                        </div>
+                                                        @foreach (var device in order.Order.Taps)
+                                                        {
+                                                            <div class="item-1-block">
+                                                                <div id="w-node-_25fc1321-2b83-1f55-02fb-65e7023ae7af-023ae6ec">
+                                                                    <img src="@device.GetImage(device.Sku)" loading="lazy" sizes="100vw" height="20" srcset="@device.GetImage(device.Sku) 500w, @device.GetImage(device.Sku) 800w, @device.GetImage(device.Sku) 1013w" alt="" class="item-photo">
+
+                                                                </div>
+                                                                <div class="div-block-11">
+                                                                    <div class="item-text-box">@device.GetOfficialName(device.Sku)</div>
+
+                                                                </div>
+                                                                <div>
+                                                                    <div class="quantity-text-box">1</div>
+                                                                    @if (device.GetOfficialName(device.Sku).ToString().Contains("Custom"))
+                                                                    {
+                                                                        <img src="@order.Order.LogoUrl" width="1000" height="500" />
+
+                                                                    }
+                                                                </div>
+
+                                                            </div>
+                                                        }
+
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+
+                        }
+
+                    </div>
+                    <div class="collection-list-wrapper w-dyn-list">
+                        <div role="list" class="w-dyn-items">
+                            <div role="listitem" class="w-dyn-item">
+                                <div class="section-inner">
+                                    <div class="card">
+                                        <div class="table-wrapper">
+                                            <div class="table extra-wide single">
+                                                <div class="row table-row flex-center single-row w-row">
+                                                    <div class="col table-col left-padding w-col w-col-4">
+                                                        <a href="#" class="contact-profile w-inline-block">
+                                                            <img src="" alt="" class="contacts-avatar">
+                                                            <div class="contact-profile-info">
+                                                                <h6 class="mb-0"></h6>
+                                                                <div></div>
+                                                            </div>
+                                                        </a>
+                                                    </div>
+                                                    <div class="col table-col w-col w-col-2">
+                                                        <div class="label-item"></div>
+                                                    </div>
+                                                    <div class="col table-col w-col w-col-2">
+                                                        <h6 class="mb-0"></h6>
+                                                    </div>
+                                                    <div class="col table-col w-col w-col-2">
+                                                        <div class="status green"></div>
+                                                    </div>
+                                                    <div class="col table-col w-col w-col-2">
+                                                        <div class="contact-actions">
+                                                            <a href="#" class="send-to-devices w-inline-block"></a>
+                                                            <a href="#" class="show-purchase-order w-inline-block"></a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="w-dyn-empty">
+                            <div>No items found.</div>
+                        </div>
+                    </div>
+                </div>
+                <div data-w-tab="Tab 4" class="w-tab-pane">
+                    <div>
+                        @foreach (var order in orders.Where(x => x.Order.Status == Atlice.Domain.Entities.OrderStatus.PendingShipment).OrderByDescending(x => x.Order.OrderRecieved))
+                        {
+                            string label = string.Empty;
+
+                            if (order.Order.Comments is not null && order.Order.Comments.Contains("Shipping URL: "))
+                            {
+                                int pFrom = order.Order.Comments.IndexOf("Shipping URL: ") + "Shipping URL: ".Length;
+                                int pTo = order.Order.Comments.LastIndexOf(" ;");
+                                label = order.Order.Comments.Substring(pFrom, pTo - pFrom);
+                            }
+                            <div class="section-inner">
+                                <div class="card">
+                                    <div class="table-wrapper">
+                                        <div class="table extra-wide single">
+                                            <div class="row table-row flex-center single-row w-row">
+                                                <div class="col table-col left-padding w-col w-col-3">
+                                                    <a href="/admin/customerprofile/@order.Order.UserId" class="contact-profile w-inline-block">
+                                                        <img src="../AA1.3/images/Artboard-20.png" alt="" class="contacts-avatar">
+                                                        <div class="contact-profile-info">
+                                                            <h6 class="mb-0 customer-link">@order.Order.Name</h6>
+                                                            @if (order.User != null)
+                                                            {
+                                                                <div class="text-block-51">@order.Role</div>
+
+                                                            }
+                                                        </div>
+                                                    </a>
+                                                </div>
+                                                <div class="col table-col w-col w-col-3">
+                                                    <div class="label-item orange">Pending Shipment</div>
+                                                    @if (!string.IsNullOrEmpty(label))
+                                                    {
+                                                        <div class="label-item orange"><a href="@label" target="_blank">Display Label</a></div>
+
+                                                    }
+                                                </div>
+                                                <div class="col table-col w-col w-col-2">
+                                                    <div class="device-images fulfillment">
+                                                        @foreach (var device in order.Order.Taps)
+                                                        {
+                                                            <div class="device-div-block fb">
+                                                                <img src="@device.GetImage(device.Sku)" loading="lazy" sizes="100vw" srcset="@device.GetImage(device.Sku) 500w, @device.GetImage(device.Sku) 800w, @device.GetImage(device.Sku) 1013w" alt="">
+
+                                                            </div>
+                                                        }
+
+                                                    </div>
+                                                </div>
+                                                <div class="col table-col w-col w-col-2">
+                                                    <div class="status">
+                                                        <form id="@order.Order.OrderNumber" class="" asp-page-handler="ReadyToShip">
+                                                            <input type="hidden" value="@order.Order.Id" name="id" />
+                                                            <input type="url" value="@order.Order.Tracking" name="tracking" required="" style="width:100px;" placeholder="Tracking URL required" />
+                                                        </form>
+                                                    </div>
+                                                </div>
+                                                <div class="col table-col w-col w-col-2">
+                                                    <div class="contact-actions">
+                                                        <a data-w-id="1f73dc94-06af-8056-e75e-858bffd2698e" style="background-image:url('../aa1.3/images/bookmark-bookmarks-favorite-favorite.png')" href="#" onclick="fetch('/admin/fullfillment?handler=bookmark&id='+'@order.Order.Id').then(x=>x.json()).then(z=> window.location = z.url)" class="show-customer-devices-manager w-inline-block"></a>
+
+                                                        <a data-w-id="25fc1321-2b83-1f55-02fb-65e7023ae774" href="#" class="show-purchase-order w-inline-block"></a>
+                                                        <a href="/admin/orderdetails/@order.Order.Id" class="print-contact-order w-inline-block"></a>
+                                                        @if (order.User != null)
+                                                        {
+
+                                                            <a onclick="($('#@order.Order.OrderNumber').submit())" href="#" data-w-id="65c651b6-1187-a93f-897c-825db0b370c6" class="send-to-pending-shipment w-inline-block"></a>
+                                                        }
+                                                        else
+                                                        {
+                                                            <a href="#" class="delete-message w-inline-block">Deleted Order</a>
+
+                                                        }
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+
+                                    <div class="purchase-details-block">
+                                        <div class="row w-row">
+                                            <div class="col w-col w-col-6">
+                                                <div class="flex-center profile-about-row">
+                                                    <div class="profile-info-heading-2">
+                                                        <strong>Order #</strong>
+                                                    </div>
+                                                    <div>@order.Order.OrderNumber</div>
+                                                </div>
+                                                <div class="flex-center profile-about-row">
+                                                    <div class="profile-info-heading-2">
+                                                        <strong>Name</strong>
+                                                    </div>
+                                                    <div>@order.Order.Name</div>
+                                                </div>
+                                                <div class="flex-center profile-about-row">
+                                                    <div class="profile-info-heading-2">
+                                                        <strong>Phone</strong>
+                                                    </div>
+                                                    <div>@order.Order.Phone</div>
+                                                </div>
+                                                <div class="flex-center profile-about-row">
+                                                    <div class="profile-info-heading-2">
+                                                        <strong>Email</strong>
+                                                    </div>
+                                                    <div>@order.Order.Email</div>
+                                                </div>
+                                                <div class="flex-center profile-about-row">
+                                                    <div class="profile-info-heading-2">
+                                                        <strong>Shipping Address</strong>
+                                                    </div>
+                                                    <div>
+                                                        @order.Order.ShipAddressLine1.
+                                                        <br>@order.Order.ShipAddressLine2
+                                                        <br>@order.Order.ShipCity @order.Order.ShipCode
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col w-col w-col-6">
+                                                <div class="flex-center profile-about-row">
+                                                    <div class="profile-info-heading-2">
+                                                        <strong>Payment</strong>
+                                                    </div>
+                                                    <p>
+                                                        <strong></strong>xxxx-xxxx-xxxx-@order.Order.Last4
+                                                        <strong> @order.Order.Brand</strong>
+                                                        <strong><br></strong>
+                                                    </p>
+                                                </div>
+                                                <div class="flex-center profile-about-row">
+                                                    <div class="profile-info-heading-2">
+                                                        <strong>Items Ordered</strong>
+                                                    </div>
+                                                    @foreach (var device in order.Order.Taps)
+                                                    {
+                                                        <div class="item-1-block">
+                                                            <div id="w-node-_25fc1321-2b83-1f55-02fb-65e7023ae7af-023ae6ec">
+                                                                <img src="@device.GetImage(device.Sku)" loading="lazy" sizes="100vw" height="20" srcset="@device.GetImage(device.Sku) 500w, @device.GetImage(device.Sku) 800w, @device.GetImage(device.Sku) 1013w" alt="" class="item-photo">
+
+                                                            </div>
+                                                            <div class="div-block-11">
+                                                                <div class="item-text-box">@device.GetOfficialName(device.Sku)</div>
+
+                                                            </div>
+                                                            <div>
+                                                                <div class="quantity-text-box">1</div>
+                                                            </div>
+                                                        </div>
+                                                    }
+
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+
+                    </div>
+                </div>
+                <div data-w-tab="Tab 5" class="w-tab-pane">
+                    <div>
+                        @foreach (var order in Model.Orders.Where(x => x.Order.Status.ToString() == "Shipped").OrderByDescending(x => x.Order.OrderRecieved))
+                        {
+                            <div class="section-inner">
+                                <div class="card">
+                                    <div class="table-wrapper">
+                                        <div class="table extra-wide single">
+                                            <div class="row table-row flex-center single-row w-row">
+                                                <div class="col table-col left-padding w-col w-col-3">
+                                                    <a href="/admin/customerprofile/@order.Order.UserId" class="contact-profile w-inline-block">
+                                                        <img src="../AA1.3/images/Artboard-20.png" alt="" class="contacts-avatar">
+                                                        <div class="contact-profile-info">
+                                                            <h6 class="mb-0 customer-link">@order.Order.Name</h6>
+                                                            <div class="text-block-51">@order.Role</div>
+
+
+                                                        </div>
+                                                    </a>
+                                                </div>
+                                                <div class="col table-col w-col w-col-3">
+                                                    <div class="label-item green">@order.Order.Status</div>
+                                                </div>
+                                                <div class="col table-col w-col w-col-2">
+                                                    <div class="device-images fulfillment">
+                                                        @foreach (var device in order.Order.Taps)
+                                                        {
+                                                            <div class="device-div-block fb">
+                                                                <img src="@device.GetImage(device.Sku)" loading="lazy" sizes="100vw" srcset="@device.GetImage(device.Sku) 500w, @device.GetImage(device.Sku) 800w, @device.GetImage(device.Sku) 1013w" alt="">
+
+                                                            </div>
+
+                                                        }
+                                                    </div>
+
+
+                                                </div>
+                                                <div class="col table-col w-col w-col-2">
+                                                    <div class="status">@TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, Eastern_Standard_Time).ToLocalTime().ToLocalTime()</div>
+                                                </div>
+                                                <div class="col table-col w-col w-col-2">
+                                                    <div class="contact-actions">
+                                                        <a data-w-id="25fc1321-2b83-1f55-02fb-65e7023ae774" href="#" class="show-purchase-order w-inline-block"></a>
+                                                        <a href="/admin/orderdetails/@order.Order.Id" class="print-contact-order w-inline-block"></a>
+                                                        <a href="/admin/customerprofile/@order.Order.UserId" class="send-to-devices w-inline-block"></a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="purchase-details-block">
+                                        <div class="row w-row">
+                                            <div class="col w-col w-col-6">
+                                                <div class="flex-center profile-about-row">
+                                                    <div class="profile-info-heading-2">
+                                                        <strong>Order #</strong>
+                                                    </div>
+                                                    <div>@order.Order.OrderNumber</div>
+                                                </div>
+                                                <div class="flex-center profile-about-row">
+                                                    <div class="profile-info-heading-2">
+                                                        <strong>Name</strong>
+                                                    </div>
+                                                    <div>@order.Order.Name</div>
+                                                </div>
+                                                <div class="flex-center profile-about-row">
+                                                    <div class="profile-info-heading-2">
+                                                        <strong>Phone</strong>
+                                                    </div>
+                                                    <div>@order.Order.Phone</div>
+                                                </div>
+                                                <div class="flex-center profile-about-row">
+                                                    <div class="profile-info-heading-2">
+                                                        <strong>Email</strong>
+                                                    </div>
+                                                    <div>@order.Order.Email</div>
+                                                </div>
+                                                <div class="flex-center profile-about-row">
+                                                    <div class="profile-info-heading-2">
+                                                        <strong>Shipping Address</strong>
+                                                    </div>
+                                                    <div>
+                                                        @order.Order.ShipAddressLine1.
+                                                        <br>@order.Order.ShipAddressLine2
+                                                        <br>@order.Order.ShipCity @order.Order.ShipCode
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col w-col w-col-6">
+                                                <div class="flex-center profile-about-row">
+                                                    <div class="profile-info-heading-2">
+                                                        <strong>Payment</strong>
+                                                    </div>
+                                                    <p>
+                                                        <strong></strong>xxxx-xxxx-xxxx-@order.Order.Last4
+                                                        <strong> @order.Order.Brand</strong>
+                                                        <strong><br></strong>
+                                                    </p>
+                                                </div>
+                                                <div class="flex-center profile-about-row">
+                                                    <div class="profile-info-heading-2">
+                                                        <strong>Items Ordered</strong>
+                                                    </div>
+                                                    @foreach (var device in order.Order.Taps)
+                                                    {
+
+                                                        <div class="item-1-block">
+                                                            <div id="w-node-_25fc1321-2b83-1f55-02fb-65e7023ae7af-023ae6ec">
+                                                                <img src="@device.GetImage(device.Sku)" sizes="100vw" height="20" alt="" class="item-photo" loading="lazy" srcset="@device.GetImage(device.Sku) 500w, @device.GetImage(device.Sku) 800w, @device.GetImage(device.Sku) 1013w">
+
+                                                            </div>
+                                                            <div class="div-block-11">
+                                                                <div class="item-text-box">@device.GetOfficialName(device.Sku)</div>
+
+                                                            </div>
+                                                            <div>
+                                                                <div class="quantity-text-box">1</div>
+                                                            </div>
+                                                        </div>
+                                                    }
+
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+
+                    </div>
+                    <div class="collection-list-wrapper-2 w-dyn-list">
+                        <div role="list" class="w-dyn-items">
+                            <div role="listitem" class="w-dyn-item">
+                                <div class="section-inner">
+                                    <div class="card">
+                                        <div class="table-wrapper">
+                                            <div class="table extra-wide single">
+                                                <div class="row table-row flex-center single-row w-row">
+                                                    <div class="col table-col left-padding w-col w-col-4">
+                                                        <a href="#" class="contact-profile w-inline-block">
+                                                            <img src="" alt="" class="contacts-avatar">
+                                                            <div class="contact-profile-info">
+                                                                <h6 class="mb-0"></h6>
+                                                                <div></div>
+                                                            </div>
+                                                        </a>
+                                                    </div>
+                                                    <div class="col table-col w-col w-col-2">
+                                                        <div class="label-item"></div>
+                                                    </div>
+                                                    <div class="col table-col w-col w-col-2">
+                                                        <h6 class="mb-0"></h6>
+                                                    </div>
+                                                    <div class="col table-col w-col w-col-2">
+                                                        <div class="status green"></div>
+                                                    </div>
+                                                    <div class="col table-col w-col w-col-2">
+                                                        <div class="contact-actions">
+                                                            <a href="#" class="send-to-devices w-inline-block"></a>
+                                                            <a href="#" class="show-purchase-order w-inline-block"></a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="w-dyn-empty">
+                            <div>No items found.</div>
+                        </div>
+                    </div>
+                </div>
+                <div data-w-tab="Tab 6" class="w-tab-pane">
+
+                    <div>
+                        @foreach (var order in Model.Orders.Where(x => x.Order.Status.ToString() == "Activated" || x.Order.Status.ToString() == "PartiallyActivated").OrderByDescending(x => x.Order.OrderRecieved))
+                        {
+                            <div class="section-inner">
+                                <div class="card">
+                                    <div class="table-wrapper">
+                                        <div class="table extra-wide single">
+                                            <div class="row table-row flex-center single-row w-row">
+                                                <div class="col table-col left-padding w-col w-col-3">
+                                                    <a href="/admin/customerprofile/@order.Order.UserId" class="contact-profile w-inline-block">
+                                                        <img src="../AA1.3/images/Artboard-20.png" alt="" class="contacts-avatar">
+                                                        <div class="contact-profile-info">
+                                                            <h6 class="mb-0 customer-link">@order.Order.Name</h6>
+                                                            <div class="text-block-51">@order.Role</div>
+
+                                                        </div>
+                                                    </a>
+                                                </div>
+                                                <div class="col table-col w-col w-col-3">
+                                                    <div class="label-item atlice-blue">@order.Order.Status</div>
+                                                </div>
+                                                <div class="col table-col w-col w-col-2">
+                                                    <div class="device-images fulfillment">
+                                                        @if (order.Order.Taps != null)
+                                                        {
+                                                            @foreach (var device in order.Order.Taps)
+                                                            {
+                                                                <div class="device-div-block fb">
+                                                                    <img src="@device.GetImage(device.Sku)" loading="lazy" sizes="100vw" srcset="@device.GetImage(device.Sku) 500w, @device.GetImage(device.Sku) 800w, @device.GetImage(device.Sku) 1013w" alt="">
+
+                                                                </div>
+                                                            }
+                                                        }
+
+                                                    </div>
+                                                </div>
+                                                <div class="col table-col w-col w-col-2">
+                                                    @if (order.User != null && order.Order.Taps is not null)
+                                                    {
+                                                        var t = order.Order.Taps.FirstOrDefault();
+                                                        if (t is not null)
+                                                        {
+                                                            <div class="status">@t.LastEdited</div>
+                                                        }
+
+
+                                                    }
+                                                </div>
+                                                <div class="col table-col w-col w-col-2">
+                                                    <div class="contact-actions">
+                                                        <a data-w-id="25fc1321-2b83-1f55-02fb-65e7023ae774" href="#" class="show-purchase-order w-inline-block"></a>
+                                                        <a href="/admin/orderdetails/@order.Order.Id" class="print-contact-order w-inline-block"></a>
+                                                        @if (order.User != null)
+                                                        {
+                                                            <a href="/admin/customerprofile/@order.Order.UserId" class="send-to-devices w-inline-block"></a>
+
+                                                        }
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="purchase-details-block">
+                                        <div class="row w-row">
+                                            <div class="col w-col w-col-6">
+                                                <div class="flex-center profile-about-row">
+                                                    <div class="profile-info-heading-2">
+                                                        <strong>Order #</strong>
+                                                    </div>
+                                                    <div>@order.Order.OrderNumber</div>
+                                                </div>
+                                                <div class="flex-center profile-about-row">
+                                                    <div class="profile-info-heading-2">
+                                                        <strong>Name</strong>
+                                                    </div>
+                                                    <div>@order.Order.Name</div>
+                                                </div>
+                                                <div class="flex-center profile-about-row">
+                                                    <div class="profile-info-heading-2">
+                                                        <strong>Phone</strong>
+                                                    </div>
+                                                    <div>@order.Order.Phone</div>
+                                                </div>
+                                                <div class="flex-center profile-about-row">
+                                                    <div class="profile-info-heading-2">
+                                                        <strong>Email</strong>
+                                                    </div>
+                                                    <div>@order.Order.Email</div>
+                                                </div>
+                                                <div class="flex-center profile-about-row">
+                                                    <div class="profile-info-heading-2">
+                                                        <strong>Shipping Address</strong>
+                                                    </div>
+                                                    <div>
+                                                        @order.Order.ShipAddressLine1.
+                                                        <br>@order.Order.ShipAddressLine2
+                                                        <br>@order.Order.ShipCity @order.Order.ShipCode
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col w-col w-col-6">
+                                                <div class="flex-center profile-about-row">
+                                                    <div class="profile-info-heading-2">
+                                                        <strong>Payment</strong>
+                                                    </div>
+                                                    <p>
+                                                        <strong></strong>xxxx-xxxx-xxxx-@order.Order.Last4
+                                                        <strong> @order.Order.Brand</strong>
+                                                        <strong><br></strong>
+                                                    </p>
+                                                </div>
+                                                <div class="flex-center profile-about-row">
+                                                    <div class="profile-info-heading-2">
+                                                        <strong>Items Ordered</strong>
+                                                    </div>
+                                                    @if (order.Order.Taps is not null)
+                                                    {
+                                                        foreach (var device in order.Order.Taps)
+                                                        {
+                                                            <div class="item-1-block">
+                                                                <div id="w-node-_25fc1321-2b83-1f55-02fb-65e7023ae7af-023ae6ec">
+
+                                                                    <img src="@device.GetImage(device.Sku)" sizes="100vw" height="20" alt="" class="item-photo" loading="lazy" srcset="@device.GetImage(device.Sku) 500w, @device.GetImage(device.Sku) 800w, @device.GetImage(device.Sku) 1013w">
+
+                                                                </div>
+                                                                <div class="div-block-11">
+                                                                    <div class="item-text-box">@device.GetOfficialName(device.Sku)</div>
+
+                                                                </div>
+                                                                <div>
+                                                                    <div class="quantity-text-box">1</div>
+                                                                </div>
+                                                            </div>
+                                                        }
+                                                    }
+
+
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+
+
+                    </div>
+                </div>
+                <div data-w-tab="Tab 8" class="w-tab-pane">
+                    <div>
+                        @foreach (var order in Model.Orders.Where(x => x.Order.BookMarked).OrderByDescending(x => x.Order.OrderRecieved))
+                        {
+                            var d = new Dictionary<string, string> { { "id", order.Order.Id.ToString() } };
+                            <div class="section-inner">
+                                <div class="card">
+                                    <div class="table-wrapper">
+                                        <div class="table extra-wide single">
+                                            <div class="row table-row flex-center single-row w-row">
+                                                <div class="col table-col left-padding w-col w-col-3">
+                                                    <a href="/admin/userprofile/@order.Order.UserId" class="contact-profile w-inline-block">
+                                                        <img src="../AA1.3/images/Artboard-20.png" alt="" class="contacts-avatar">
+                                                        <div class="contact-profile-info">
+                                                            <h6 class="mb-0 customer-link">@order.Order.Name</h6>
+                                                            <div class="text-block-51">@order.Role</div>
+
+                                                        </div>
+                                                    </a>
+                                                </div>
+                                                <div class="col table-col w-col w-col-3">
+                                                    <div class="label-item atlice-blue">@order.Order.WebflowStatus</div>
+                                                </div>
+                                                <div class="col table-col w-col w-col-2">
+                                                    <div class="device-images fulfillment">
+                                                        @foreach (var device in order.Order.Taps)
+                                                        {
+                                                            <div class="device-div-block fb">
+                                                                <img src="@device.GetImage(device.Sku)" loading="lazy" sizes="100vw" srcset="@device.GetImage(device.Sku) 500w, @device.GetImage(device.Sku) 800w, @device.GetImage(device.Sku) 1013w" alt="">
+
+                                                            </div>
+                                                        }
+                                                    </div>
+                                                </div>
+                                                <div class="col table-col w-col w-col-2">
+                                                    <div class="status">5/10/21</div>
+                                                </div>
+                                                <div class="col table-col w-col w-col-2">
+                                                    <div class="contact-actions">
+                                                        <a data-w-id="25fc1321-2b83-1f55-02fb-65e7023ae774" href="#" class="show-purchase-order w-inline-block"></a>
+                                                        <a href="/admin/orderdetails/@order.Order.Id" class="print-contact-order w-inline-block"></a>
+                                                        <hr>
+                                                        <a asp-page-handler="DeleteOrder" asp-all-route-data="@d" class="w-inline-block atlice-button">Delete</a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="purchase-details-block">
+                                        <div class="row w-row">
+                                            <div class="col w-col w-col-6">
+                                                <div class="flex-center profile-about-row">
+                                                    <div class="profile-info-heading-2">
+                                                        <strong>Order #</strong>
+                                                    </div>
+                                                    <div>@order.Order.OrderNumber</div>
+                                                </div>
+                                                <div class="flex-center profile-about-row">
+                                                    <div class="profile-info-heading-2">
+                                                        <strong>Name</strong>
+                                                    </div>
+                                                    <div>@order.Order.Name</div>
+                                                </div>
+                                                <div class="flex-center profile-about-row">
+                                                    <div class="profile-info-heading-2">
+                                                        <strong>Phone</strong>
+                                                    </div>
+                                                    <div>@order.Order.Phone</div>
+                                                </div>
+                                                <div class="flex-center profile-about-row">
+                                                    <div class="profile-info-heading-2">
+                                                        <strong>Email</strong>
+                                                    </div>
+                                                    <div>@order.Order.Email</div>
+                                                </div>
+                                                <div class="flex-center profile-about-row">
+                                                    <div class="profile-info-heading-2">
+                                                        <strong>Shipping Address</strong>
+                                                    </div>
+                                                    <div>
+                                                        @order.Order.ShipAddressLine1.
+                                                        <br>@order.Order.ShipAddressLine2
+                                                        <br>@order.Order.ShipCity @order.Order.ShipCode
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col w-col w-col-6">
+                                                <div class="flex-center profile-about-row">
+                                                    <div class="profile-info-heading-2">
+                                                        <strong>Payment</strong>
+                                                    </div>
+                                                    <p>
+                                                        <strong></strong>xxxx-xxxx-xxxx-@order.Order.Last4
+                                                        <strong> @order.Order.Brand</strong>
+                                                        <strong><br></strong>
+                                                    </p>
+                                                </div>
+                                                <div class="flex-center profile-about-row">
+                                                    <div class="profile-info-heading-2">
+                                                        <strong>Items Ordered</strong>
+                                                    </div>
+                                                    @foreach (var device in order.Order.Taps)
+                                                    {
+                                                        <div class="item-1-block">
+                                                            <div id="w-node-_25fc1321-2b83-1f55-02fb-65e7023ae7af-023ae6ec">
+
+                                                                <img src="@device.GetImage(device.Sku)" sizes="100vw" height="20" alt="" class="item-photo" loading="lazy" srcset="@device.GetImage(device.Sku) 500w, @device.GetImage(device.Sku) 800w, @device.GetImage(device.Sku) 1013w">
+
+                                                            </div>
+                                                            <div class="div-block-11">
+                                                                <div class="item-text-box">@device.GetOfficialName(device.Sku)</div>
+
+                                                            </div>
+                                                            <div>
+                                                                <div class="quantity-text-box">1</div>
+                                                            </div>
+                                                        </div>
+                                                    }
+
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="footer">
+        <div class="w-row">
+            <div class="w-col w-col-6">
+                <div class="hint">© Copyright Atlice LLC. All rights reserved</div>
+            </div>
+            <div class="footer-right w-col w-col-6">
+                <div class="hint">
+                    <a href="https://webflow.com/" class="footer-link">Empowered by Atlice</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

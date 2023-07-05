@@ -1,0 +1,60 @@
+﻿@model IEnumerable<Atlice.Domain.Entities.ContactPage>
+@{
+    Layout = null;
+}
+<div data-w-id="56f3c208-3740-90bd-f700-19796324fa3d" style="display:none;opacity:0;-webkit-transform:translate3d(0, 100vh, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);-moz-transform:translate3d(0, 100vh, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);-ms-transform:translate3d(0, 100vh, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);transform:translate3d(0, 100vh, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0)" class="modal link-to pages-manager">
+    <div class="modal-mask pages-intro"></div>
+    <div class="modal-container-2 pages-manager">
+        <div class="single-layout-right pages-manager">
+            <div class="single-layout-right-content pages-manager">
+                <h3 class="text-center mb-40 hidden">Manage Pages</h3>
+                <div class="single-layout-logo-right pages-manager">
+                    <a href="#" class="w-inline-block"><img src="../images/Image-427.png" width="100" sizes="100vw" srcset="../images/Image-427-p-500.png 500w, ../images/Image-427-p-800.png 800w, ../images/Image-427-p-1080.png 1080w, ../images/Image-427.png 1316w" alt=""></a>
+                    <a style="background-color:black;" data-w-id="" href="#" onclick="javascript:{ document.getElementById('homeButton').click(); setTimeout(function(){document.getElementById('devicesButton').click();},1000); }" class="tap-glow-link pages-manager w-inline-block"><img src="../icons/devicesWhite.png" loading="lazy" alt="" class="image-56"></a>
+
+                    <a id="homeButton" style="background-color:black;" data-w-id="31b9bedc-33c6-6b45-919c-87d6aab96ad9" href="#" class="tap-glow-link pages-manager w-inline-block"><img src="../images/Artboard-11white.png" loading="lazy" alt="" class="image-56"></a>
+                </div>
+                @foreach (var cpage in Model)
+                {
+                    <div class="section-inner pages-manager">
+                        <div class="account-item pages-manager">
+                            <div class="account">
+                                <a href="#" data-w-id="a0645753-8b9e-2919-997c-3ef00d891ef0" class="hidden editorTrigger" style="display:none;" id="@cpage.Id"></a>
+                                <img onclick="this.previousElementSibling.click()" src="@cpage.ProImage" alt="" class="account-user-icon editorTrigger" id="@cpage.Id">
+                                <div class="account-user-datails">
+                                    <h6 class="mb-0 card-title"><strong class="bold-text-104 card-title">@cpage.Name</strong></h6>
+                                    @if (cpage.BusinessName != null)
+                                    {
+                                        <div class="hint-3">@cpage.BusinessName</div>
+
+                                    }
+                                </div>
+                            </div>
+                            <div class="container-19 pages-manager w-container">
+                                <div class="w-layout-grid grid-4 pages-manager">
+                                    <div style="border: white solid 2px;" data-w-id="" class="business-profile-card-col right icon-only"><a href="#" data-w-id="a0645753-8b9e-2919-997c-3ef00d891ef0" class="w-inline-block editorTrigger" id="@cpage.Id"><img style="padding:5px;" src="../icons/pencilWhite.png" loading="lazy" alt="" class="image-58 menu-icon business-contact"></a></div>
+
+
+
+                                    <form data-ajax="true" data-ajax-method="POST" data-ajax-loading="#spinner" data-ajax-mode="replace" data-ajax-update="#editor" asp-page-handler="Editor" class="hidden"><input type="hidden" name="pageId" value="@cpage.Id" /></form>
+                                    <div style="border: white solid 2px;" data-w-id="" class="business-profile-card-col right icon-only"><a href="#" data-w-id="a0645753-8b9e-2919-997c-3ef00d891eec" class="w-inline-block qrTrigger" id="@cpage.Id"><img style="padding:5px;" src="../images/QRwhite.png" loading="lazy" alt="" class="image-58 menu-icon business-contact"></a></div>
+
+
+                                </div>
+                                <div class="label-item pages-manager">@cpage.PageType<br></div>
+                            </div>
+                        </div>
+                    </div>
+                }
+
+
+
+                <div class="single-layout-logo-right pages-manager home">
+                    <a href="#" class="w-inline-block"><img src="../images/Artboard-11.png" width="40" alt=""></a>
+                </div>
+        
+            </div>
+        </div>
+        <a data-w-id="56f3c208-3740-90bd-f700-19796324fa6b" href="#" class="modal-close hidden w-inline-block"></a>
+    </div>
+</div>

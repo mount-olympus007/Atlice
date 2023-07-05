@@ -1,0 +1,91 @@
+﻿@page
+@model Atlice.WebUI.Pages.Admin.CreateUserModel
+@{
+    Layout = "_AdminLayout";
+
+}
+<div class="app-main-layout-header-2 hidden">
+    <div class="app-main-layout-wrapper-2 header">
+        <div class="page-heading">
+            <h2 class="heading-62">Create User</h2>
+            <h6 style="color:red" id="emailType">@TempData["ERROR"]</h6>
+        </div>
+  
+    </div>
+</div>
+<div class="app-main-layout-wrapper">
+    <div class="app-main-layout-content">
+    
+
+
+
+        <div data-duration-in="300" data-duration-out="100" class="w-tabs">
+           
+            <div class="chart-tab-content w-tab-content">
+                <div data-w-tab="Tab 1" class="w-tab-pane w--tab-active">
+                    <div id="fullfillmentList">
+                        <form asp-page-handler="Create">
+                            <div class="form-group">
+                                <label class="control-label">User Role</label>
+                                <select class="form-control" name="type">
+                                    <option value="Adminis">Administrator</option>
+                                    <option value="Client">Client</option>
+                                    <option value="Citizen">Citizen</option>
+                                    <option value="Tourist">Tourist</option>
+                                    <option value="Invited">Invited</option>
+                                    <option value="Prospect">Prospect</option>
+                                    <option value="TryLater">Try Later</option>
+                                </select>
+                            </div>
+                          <div class="form-group">
+                                <label class="control-label">First Name</label>
+                                <input class="form-control" type="text" name="fname" placeholder="First Name" />
+                               
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label">Last Name</label>
+                                <input class="form-control" type="text" name="lname" placeholder="Last Name" />
+                               
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label">Email</label>
+                                <input class="form-control" type="email" name="email" placeholder="Email" />
+                               
+                            </div>
+
+                            <div class="form-group">
+                                <label class="control-label">Mobile</label>
+                                <input class="form-control" type="tel" name="mobile" placeholder="Mobile" />
+                               
+                            </div>
+
+
+
+
+                            <div class="form-group">
+                                <input class="form-control" type="submit" value="Submit" />
+                            </div>
+                        </form>
+                        
+
+                    </div>
+                 
+                </div>
+              
+                
+            </div>
+        </div>
+    </div>
+    <div class="footer">
+        <div class="w-row">
+            <div class="w-col w-col-6">
+                <div class="hint">© Copyright Atlice LLC. All rights reserved</div>
+            </div>
+            <div class="footer-right w-col w-col-6">
+                <div class="hint">
+                    <a href="https://webflow.com/" class="footer-link">Empowered by Atlice</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

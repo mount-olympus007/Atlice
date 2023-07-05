@@ -1,0 +1,17 @@
+﻿@model Atlice.WebUI.Pages.Homeboard.IndexModel.OpenTapLinkModel
+@{
+    string update = Model.LinkType.ToString().ToLower() + "list";
+}
+<a href="#" onclick="fetch('/homeboard/Index?handler=addtaplink&linktype=@Model.LinkType&socialProvider=@Model.SocialProvider&pageId=@Model.PageId').then(x => x.json()).then(y=> document.getElementById('@update').insertAdjacentHTML('beforeend',y.view)).then(a => this.parentElement.removeAttribute('style')).then(z=> this.remove())" class="friend-item tap-link-dropdown w-inline-block">
+    <div class="friend-photo-container">
+        <img width="50" src="@Model.ImageUrl" alt="" class="friend-photo">
+        <div class="online-status off"></div>
+    </div>
+    <div class="item-text-block">
+        <div class="card no-padding">
+            <div class="card-setting-container">
+                <div class="card-setting-text">@Model.SocialProvider</div>
+            </div>
+        </div>
+    </div>
+</a>

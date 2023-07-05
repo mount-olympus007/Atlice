@@ -1,0 +1,620 @@
+﻿@page "{id}"
+@model Atlice.WebUI.Pages.Admin.CustomerProfileModel
+@{
+    Layout = "_AdminLayout";
+    var order1 = Model.Customer.Orders.FirstOrDefault();
+}
+
+<div id="crea" class="modal" style="display:none;">
+    <div class="modal-container-2" style="padding-top:50px;">
+        <div class="single-layout-right">
+            <div class="single-layout-right-content">
+                <div class="single-layout-logo-right">
+                    <a href="#" class="w-inline-block"><img src="../av3.4/images/Image-414.png" width="100" sizes="100vw" srcset="../av3.4/images/Image-414-p-500.png 500w, ../av3.4/images/Image-414-p-800.png 800w, ../av3.4/images/Image-414-p-1080.png 1080w, ../av3.4/images/Image-414.png 1316w" alt=""></a>
+                </div>
+                <div class="section-inner">
+                    <div class="account-item">
+                        <div class="account" id="qrResult" style="text-align:center;">
+                        </div>
+                    </div>
+                </div>
+                <span><a class="modal-close" href="#"></a></span>
+            </div>
+        </div>
+    </div>
+</div>
+<header id="1" class="app-main-layout-header-2">
+    <div class="app-main-layout-wrapper header">
+        <div class="page-heading">
+            <h2 class="heading-62">Customer Profile</h2>
+            <p>Components for editing profile, friends list, public profile and post view.</p>
+            <div class="page-title-button">
+                <a href="/admin/userprofile/@Model.Customer.User.Id" data-w-id="cdabbefe-d2df-9dda-d6b2-fee88b5dce05" class="button atlice-button-primary w-button"><strong>User Profile</strong></a>
+            </div>
+            <div class="page-title-button">
+                <a href="/admin/fullfillment" data-w-id="cdabbefe-d2df-9dda-d6b2-fee88b5dce05" class="button atlice-button-primary w-button"><strong>Fulfillment</strong></a>
+            </div>
+        </div>
+    </div>
+</header>
+<div class="app-main-layout-wrapper">
+    <div class="app-main-layout-content">
+        <div class="section">
+            <div class="card-5">
+                <div class="profile-bg customer">
+                    <a href="#" class="edit-profile-bg-2 hidden w-inline-block"></a>
+                </div>
+                <div class="profile-info">
+                    <div class="avatar order-graphic"></div>
+                    <div class="profile-details">
+                        <h5 class="profile-name">@Model.Customer.User.FirstName @Model.Customer.User.LastName</h5>
+                        @if (order1 is not null)
+                        {
+                            <div class="location-text-box">@order1.ShipCity @order1.ShipState</div>
+
+                        }
+                        else
+                        {
+                            <div class="location-text-box">No Order Found</div>
+
+                        }
+                    </div>
+                    <div class="profile-follow hidden"><img src="~/AA1.3/images/Image-414.png" loading="lazy" width="100" sizes="100vw" srcset="~/AA1.3/images/Image-414-p-500.png 500w, ~/AA1.3/images/Image-414-p-800.png 800w, ~/AA1.3/images/Image-414-p-1080.png 1080w, ~/AA1.3/images/Image-414.png 1316w" alt=""></div>
+                </div>
+                <div data-duration-in="300" data-duration-out="100" class="w-tabs">
+                    <div class="customer-profile-tabs-menu w-tab-menu">
+                        <a data-w-tab="Info" class="tab-link-3 w-inline-block w-tab-link">
+                            <div>Info</div>
+                        </a>
+                        <a data-w-tab="Orders" id="Orders" class="tab-link-3 w-inline-block w-tab-link">
+                            <div>Orders</div>
+                        </a>
+                        <a data-w-tab="Devices" id="Devices" class="tab-link-3 w-inline-block w-tab-link w--current">
+                            <div>Devices</div>
+                        </a>
+                        <a data-w-tab="Linked" class="tab-link-3 w-inline-block w-tab-link">
+                            <div>Linked </div>
+                        </a>
+                    </div>
+                    <div class="tabs-content w-tab-content">
+                        <div data-w-tab="Info" class="w-tab-pane">
+                            <div class="row w-row">
+                                <div class="col w-col w-col-6">
+                                    <div class="flex-center profile-about-row">
+                                        <div class="profile-info-heading-2"><strong>Phone</strong></div>
+                                        @if (order1 is not null)
+                                        {
+                                            <div>@order1.Phone</div>
+                                        }
+                                        else
+                                        {
+                                            <div>No Order Phone Number</div>
+                                        }
+
+                                    </div>
+                                    <div class="flex-center profile-about-row">
+                                        <div class="profile-info-heading-2"><strong>Email</strong></div>
+                                        @if (order1 is not null)
+                                        {
+                                            <div>@order1.Email</div>
+                                        }
+                                        else
+                                        {
+                                            <div>No Order Email</div>
+                                        }
+
+                                    </div>
+                                </div>
+                                <div class="col w-col w-col-6">
+                                    <div class="flex-center profile-about-row">
+                                        <div class="profile-info-heading-2"><strong>Date of Birth</strong></div>
+                                        <div></div>
+                                    </div>
+                                    <div class="flex-center profile-about-row">
+                                        <div class="profile-info-heading-2"><strong>Shipping Address</strong></div>
+                                        @if (order1 is not null)
+                                        {
+                                            <div>@order1.ShipAddressLine1 <br>@order1.ShipAddressLine2<br>@order1.ShipCity, @order1.ShipState @order1.ShipCity</div>
+                                        }
+                                        else
+                                        {
+                                            <div>No Order Address</div>
+                                        }
+
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="devider-2 transparent"></div>
+                            <div class="profile-info-heading-2"><strong>Payment</strong></div>
+                            <ul>
+                                @foreach (var order in Model.Customer.Orders)
+                                {
+                                    <li>
+                                        <strong>@order.Brand<br></strong>@order.Last4
+                                    </li>
+
+                                }
+
+                            </ul>
+                            <div class="devider-2 transparent"></div>
+                            <div class="profile-info-heading-2"><strong>Activity</strong></div>
+                            <ul>
+                                @foreach (var note in Model.Customer.Notes)
+                                {
+                                    <li>
+                                        -@note.What;
+
+                                    </li>
+
+
+
+
+                                }
+                                <li id="noteDiv"></li>
+                            </ul>
+
+                            <div class="post-form">
+                                <div class="w-form">
+                                    <form asp-page-handler="CustomerNote" id="wf-form-profile" name="wf-form-profile" data-name="profile" data-ajax="true" data-ajax-method="POST" data-ajax-mode="replace" data-ajax-update="#noteDiv">
+                                        <input type="hidden" value="@Model.Customer.User.Id.ToString()" name="UserId" />
+                                        <textarea placeholder="Enter new note" maxlength="5000" id="Note" name="Note" data-name="Note" class="textarea-3 w-input"></textarea>
+                                        <input type="submit" value="Add" data-wait="Please wait..." class="button-5 atlice-button-primary button-small w-button">
+                                    </form>
+                                    <div class="success-message-3 w-form-done">
+                                        <div>Saved!</div>
+                                    </div>
+                                    <div class="error-message-3 w-form-fail">
+                                        <div>Oops! Something went wrong while submitting the form.</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div data-w-tab="Orders" class="w-tab-pane">
+                            <div>
+                                @foreach (var order in Model.Customer.Orders.OrderByDescending(x => x.OrderRecieved))
+                                {
+                                    <div class="section-inner">
+                                        <div class="card">
+                                            <div class="table-wrapper">
+                                                <div class="table extra-wide single">
+                                                    <div class="row table-row flex-center single-row w-row">
+                                                        <div class="col table-col left-padding w-col w-col-4">
+                                                            <a href="/admin/customerprofile/@order.UserId" class="contact-profile w-inline-block">
+                                                                <img src="~/AA1.3/images/Artboard-20.png" alt="" class="contacts-avatar">
+                                                                <div class="contact-profile-info">
+                                                                    <h6 class="mb-0 customer-link">@order.Name</h6>
+                                                                    <div class="text-block-51">Order# @order.OrderNumber</div>
+                                                                </div>
+                                                            </a>
+                                                        </div>
+                                                        <div class="col table-col w-col w-col-2">
+                                                            <div class="label-item atlice-blue">@order.Status</div>
+                                                        </div>
+                                                        <div class="col table-col w-col w-col-2">
+                                                            <div class="device-images fulfillment">
+                                                                @foreach (var device in order.Taps)
+                                                                {
+                                                                    <div class="device-div-block fb"><img src="@device.GetImage(device.Sku)" loading="lazy" sizes="100vw" srcset="@device.GetImage(device.Sku) 500w, @device.GetImage(device.Sku) 800w, @device.GetImage(device.Sku) 1013w" alt=""></div>
+                                                                }
+                                                            </div>
+                                                        </div>
+                                                        <div class="col table-col w-col w-col-2">
+                                                            <div class="status">@order.OrderRecieved.ToShortDateString()</div>
+                                                        </div>
+                                                        <div class="col table-col w-col w-col-2">
+                                                            <div class="contact-actions">
+                                                                <a data-w-id="25fc1321-2b83-1f55-02fb-65e7023ae70c" href="#" class="show-full-purchase-order w-inline-block"></a>
+                                                                <a target="_blank" href="/admin/orderdetails/@order.Id" class="print-contact-order w-inline-block"></a>
+                                                                <a href="/admin/customerprofile/@order.UserId" class="send-to-devices w-inline-block"></a>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="purchase-details-block">
+                                                <div class="row w-row">
+                                                    <div class="col w-col w-col-6">
+                                                        <div class="flex-center profile-about-row">
+                                                            <div class="profile-info-heading-2">
+                                                                <strong>Order #</strong>
+                                                            </div>
+                                                            <div>@order.OrderNumber</div>
+                                                        </div>
+                                                        <div class="flex-center profile-about-row">
+                                                            <div class="profile-info-heading-2">
+                                                                <strong>Name</strong>
+                                                            </div>
+                                                            <div>@order.Name</div>
+                                                        </div>
+                                                        @if (!string.IsNullOrEmpty(order.Phone) || !string.IsNullOrEmpty(order.Email) || !string.IsNullOrEmpty(order.ShipAddressLine1) || !string.IsNullOrEmpty(order.ShipCity) || !string.IsNullOrEmpty(order.ShipState) || !string.IsNullOrEmpty(order.ShipCode))
+                                                        {
+                                                            <div class="flex-center profile-about-row">
+                                                                <form asp-page-handler="UpdateInfo">
+                                                                    <input type="hidden" value="@order.Id" name="orderid" />
+                                                                    <div class="form-group">
+                                                                        <label class="">Phone</label>
+                                                                        <input value="@order.Phone" type="tel" name="phone" placeholder="Mobile Number" required="" />
+                                                                    </div>
+                                                                    <div class="form-group">
+                                                                        <label class="">Email</label>
+                                                                        <input value="@order.Email" type="email" name="email" placeholder="Email" required="" />
+                                                                    </div>
+                                                                    <div class="form-group">
+                                                                        <label class="">Shipping Address</label>
+                                                                        <div class="form-group">
+                                                                            <label class="">Address Line 1</label>
+                                                                            <input value="@order.ShipAddressLine1" type="tel" name="address1" placeholder="Address Line 1" required="" />
+                                                                        </div>
+                                                                        <div class="form-group">
+                                                                            <label class="">Address Line 2</label>
+                                                                            <input value="@order.ShipAddressLine2" type="tel" name="address2" placeholder="Address Line 2" />
+                                                                        </div>
+
+                                                                        <div class="form-group">
+                                                                            <label class="">City</label>
+                                                                            <input value="@order.ShipCity" type="tel" name="city" placeholder="City" required="" />
+                                                                        </div>
+                                                                        <div class="form-group">
+                                                                            <label class="">State</label>
+                                                                            <input value="@order.ShipState" type="tel" name="state" placeholder="State" required="" />
+                                                                        </div>
+                                                                        <div class="form-group">
+                                                                            <label class="">Zip</label>
+                                                                            <input value="@order.ShipCode" type="tel" name="zip" placeholder="Zip Code" required="" />
+                                                                        </div>
+                                                                        <div class="form-group">
+                                                                            <input type="submit" value="Submit" class="btn btn-success" />
+                                                                        </div>
+                                                                    </div>
+                                                                </form>
+                                                                <div class="profile-info-heading-2">
+                                                                    <strong>Phone</strong>
+                                                                </div>
+                                                                <div>@order.Phone</div>
+                                                            </div>
+                                                        }
+                                                        else
+                                                        {
+                                                            <div class="flex-center profile-about-row">
+                                                                <div class="profile-info-heading-2">
+                                                                    <strong>Phone</strong>
+                                                                </div>
+                                                                <div>@order.Phone</div>
+                                                            </div>
+                                                            <div class="flex-center profile-about-row">
+                                                                <div class="profile-info-heading-2">
+                                                                    <strong>Email</strong>
+                                                                </div>
+                                                                <div>@order.Email</div>
+                                                            </div>
+                                                            <div class="flex-center profile-about-row">
+                                                                <div class="profile-info-heading-2">
+                                                                    <strong>Shipping Address</strong>
+                                                                </div>
+                                                                <div>
+                                                                    @order.ShipAddressLine1.
+                                                                    <br>@order.ShipAddressLine2
+                                                                    <br>@order.ShipCity @order.ShipCode
+                                                                </div>
+                                                            </div>
+                                                        }
+
+                                                    </div>
+                                                    <div class="col w-col w-col-6">
+                                                        <div class="flex-center profile-about-row">
+                                                            <div class="profile-info-heading-2">
+                                                                <strong>Payment</strong>
+                                                            </div>
+                                                            <p>
+                                                                <strong></strong>xxxx-xxxx-xxxx-@order.Last4
+                                                                <strong> @order.Brand</strong>
+                                                                <strong><br></strong>
+                                                            </p>
+                                                        </div>
+                                                        <div class="flex-center profile-about-row">
+                                                            <div class="profile-info-heading-2">
+                                                                <strong>Items Ordered</strong>
+                                                            </div>
+                                                            @foreach (var device in order.Taps)
+                                                            {
+                                                                <div class="item-1-block">
+                                                                    <div id="w-node-_25fc1321-2b83-1f55-02fb-65e7023ae7af-023ae6ec">
+                                                                        <img src="@device.GetImage(device.Sku)" loading="lazy" sizes="100vw" height="20" srcset="@device.GetImage(device.Sku) 500w, @device.GetImage(device.Sku) 800w, @device.GetImage(device.Sku) 1013w" alt="" class="item-photo">
+                                                                    </div>
+                                                                    <div class="div-block-11">
+                                                                        <div class="item-text-box">@device.GetOfficialName(device.Sku)</div>
+                                                                    </div>
+                                                                    <div>
+                                                                        <div class="quantity-text-box">1</div>
+                                                                    </div>
+                                                                </div>
+                                                                @if (device.GetOfficialName(device.Sku).ToString().Contains("Custom"))
+                                                                {
+                                                                    <div style="text-align:center;">
+                                                                        <img height="100" width="50" src="@order.LogoUrl" style="padding:2px 2px 2px 2px;" />
+                                                                        <p>@order.Comments</p>
+                                                                    </div>
+
+                                                                }
+                                                            }
+
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="section-inner"></div>
+                                }
+
+
+                            </div>
+                        </div>
+                        <main data-w-tab="Devices" id="Devices-Tab" class="w-tab-pane w--tab-active">
+                            <div>
+                                <div class="app-main-layout-content">
+                                    <div class="section">
+                                        <div class="section-inner">
+                                            <div class="card no-padding receipt-table">
+                                                <div class="product-row">
+                                                    <div id="w-node-_65c651b6-1187-a93f-897c-825db0b37064-b0b3705e" class="filter-bar-form-block w-form">
+                                                        <form id="email-form-2" name="email-form-2" data-name="Email Form 2" class="fulfillment-filter-bar-form-item">
+                                                            <div id="w-node-_65c651b6-1187-a93f-897c-825db0b37066-b0b3705e" class="card-setting-text caption">Item</div><input type="submit" value="" data-wait="Please wait..." class="submit-button-2 filter-bar-form-button hidden w-button">
+                                                        </form>
+                                                        <div class="w-form-done">
+                                                            <div>Thank you! Your submission has been received!</div>
+                                                        </div>
+                                                        <div class="w-form-fail">
+                                                            <div>Oops! Something went wrong while submitting the form.</div>
+                                                        </div>
+                                                    </div>
+                                                    <div id="w-node-_65c651b6-1187-a93f-897c-825db0b3706f-b0b3705e" class="filter-bar-form-block w-form">
+                                                        <form id="email-form-2" name="email-form-2" data-name="Email Form 2" class="fulfillment-filter-bar-form-item">
+                                                            <div id="w-node-_65c651b6-1187-a93f-897c-825db0b37071-b0b3705e" class="card-setting-text caption">Tap ID</div><input type="submit" value="" data-wait="Please wait..." class="submit-button-2 filter-bar-form-button hidden w-button">
+                                                        </form>
+                                                        <div class="w-form-done">
+                                                            <div>Thank you! Your submission has been received!</div>
+                                                        </div>
+                                                        <div class="w-form-fail">
+                                                            <div>Oops! Something went wrong while submitting the form.</div>
+                                                        </div>
+                                                    </div>
+                                                    <div id="w-node-_65c651b6-1187-a93f-897c-825db0b3707a-b0b3705e" class="filter-bar-form-block w-form">
+                                                        <form id="email-form-2" name="email-form-2" data-name="Email Form 2" class="fulfillment-filter-bar-form-item">
+                                                            <div id="w-node-_65c651b6-1187-a93f-897c-825db0b3707c-b0b3705e" class="card-setting-text caption">Activated</div><input type="submit" value="" data-wait="Please wait..." class="submit-button-2 filter-bar-form-button hidden w-button">
+                                                        </form>
+                                                        <div class="w-form-done">
+                                                            <div>Thank you! Your submission has been received!</div>
+                                                        </div>
+                                                        <div class="w-form-fail">
+                                                            <div>Oops! Something went wrong while submitting the form.</div>
+                                                        </div>
+                                                    </div>
+                                                    <div id="w-node-_65c651b6-1187-a93f-897c-825db0b37085-b0b3705e" class="filter-bar-form-block w-form">
+                                                        <form id="email-form-2" name="email-form-2" data-name="Email Form 2" class="fulfillment-filter-bar-form-item">
+                                                            <div id="w-node-_65c651b6-1187-a93f-897c-825db0b37087-b0b3705e" class="card-setting-text caption">Assigned</div><input type="submit" value="" data-wait="Please wait..." class="submit-button-2 filter-bar-form-button hidden w-button">
+                                                        </form>
+                                                        <div class="w-form-done">
+                                                            <div>Thank you! Your submission has been received!</div>
+                                                        </div>
+                                                        <div class="w-form-fail">
+                                                            <div>Oops! Something went wrong while submitting the form.</div>
+                                                        </div>
+                                                    </div>
+                                                    <div id="w-node-_65c651b6-1187-a93f-897c-825db0b37090-b0b3705e" class="section-9">
+                                                        <a data-w-id="65c651b6-1187-a93f-897c-825db0b37091" href="#" class="add-button w-inline-block"></a>
+                                                        <a href="#" class="print-download-button w-inline-block"></a>
+                                                    </div>
+                                                </div>
+
+                                                <div data-w-id="65c651b6-1187-a93f-897c-825db0b37093" class="product-row hidden">
+                                                    <div class="card-setting-text primary-text not-generated">Not Generated</div>
+                                                    <div class="card-setting-text primary-text not-activated">Not Activated</div>
+                                                    <div class="input-form-block w-form">
+                                                        <form name="email-form-3" data-name="Email Form 3" class="form-3" asp-page-handler="AddProduct" method="post">
+                                                            <input type="hidden" id="devid" name="devid" value="">
+                                                            <input type="hidden" name="UserId" value="@Model.Customer.User.Id">
+                                                            <select name="note" class="select-field-2 w-select">
+                                                                @foreach (var user in Model.Customer.Linked)
+                                                                {
+                                                                    <option value="@user.Id">@user.FirstName @user.LastName</option>
+
+                                                                }
+                                                            </select>
+                                                            <input type="submit" value="" data-wait="Please wait..." class="submit-button-2 w-button">
+                                                        </form>
+                                                        <div class="w-form-done">
+                                                            <div>Thank you! Your submission has been received!</div>
+                                                        </div>
+                                                        <div class="w-form-fail">
+                                                            <div>Oops! Something went wrong while submitting the form.</div>
+                                                        </div>
+                                                    </div>
+                                                    <div id="w-node-_65c651b6-1187-a93f-897c-825db0b37098-b0b3705e" class="card-setting-switcher">
+                                                        <a href="#" class="qr-download inactive w-inline-block"></a>
+                                                        <a href="#" class="print-product inactive w-inline-block"></a>
+                                                        <a href="#" class="product-download inactive w-inline-block"></a>
+                                                    </div>
+                                                    <div id="w-node-_65c651b6-1187-a93f-897c-825db0b3709c-b0b3705e" class="form-block-2 w-form">
+                                                        <form class="form-4" name="email-form-3" data-name="Email Form 3" asp-page-handler="CreateDevice" data-ajax="true" data-ajax-method="POST" data-ajax-mode="replace" data-ajax-update="#generateResult">
+                                                            <select onchange="selectDevice();" id="DevSelect" name="DeviceSelection2" data-name="Device Selection 2" class="select-field-2 w-select">
+                                                                <option value="">Select Device...</option>
+                                                                <option value="CLSTG25GRY1">Classic Tap Tag 25mm</option>
+                                                                <option value="CLSTG30GRY1">Classic Tap Tag 30mm</option>
+                                                                <option value="LGYCSTLGCD1">Legacy Custom Tap Card w/ Logo</option>
+                                                                <option value="Classic">Classic Tap Card</option>
+                                                            </select>
+                                                        </form>
+                                                        <div class="w-form-done">
+                                                            <div>Thank you! Your submission has been received!</div>
+                                                        </div>
+                                                        <div class="w-form-fail">
+                                                            <div>Oops! Something went wrong while submitting the form.</div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                @foreach (var order in Model.Customer.Orders)
+                                                {
+                                                    <div style="border: solid red 2px;"><span>Order Number: @order.OrderNumber</span>
+                                                        @if(order.Status == Domain.Entities.OrderStatus.PendingShipment)
+                                                        {
+                                                            <form asp-page-handler="CreateLabel">
+                                                                <input type="hidden" name="orderid" value="@order.Id" />
+
+                                                                <input type="submit" value="Create Label" />
+                                                            </form>
+                                                            <a href="/admin/packingslip/@order.Id" target="_blank">Go to Packing Slip</a>
+                                                        }
+                                                        
+                                                        @foreach(var device in order.Taps)
+                                                        {
+                                                            string id = device.Id + "result";
+                                                            string ajaxid = "#" + device.Id + "result";
+                                                            string color = "product-row yellow";
+                                                            var thisOrder = Model.Customer.Orders.FirstOrDefault(x => x.Taps.Contains(device));
+                                                            if (thisOrder is not null)
+                                                            {
+                                                                if (thisOrder.Status == Atlice.Domain.Entities.OrderStatus.PendingShipment)
+                                                                {
+                                                                    color = "product-row orange";
+
+                                                                }
+                                                                if (thisOrder.Status == Atlice.Domain.Entities.OrderStatus.Shipped)
+                                                                {
+                                                                    color = "product-row green";
+
+                                                                }
+                                                                if (thisOrder.Status == Atlice.Domain.Entities.OrderStatus.PartiallyComplete)
+                                                                {
+                                                                    color = "product-row yellow";
+
+                                                                }
+                                                            }
+
+                                                            if (device.UserId != null)
+                                                            {
+                                                                color = "product-row green";
+                                                            }
+                                                            <div class="@color">
+                                                                <div id="w-node-_65c651b6-1187-a93f-897c-825db0b370b8-b0b3705e" class="device-in-devices-block">
+                                                                    <img src="@device.GetImage(device.Sku)" loading="lazy" height="40" sizes="100vw" srcset="@device.GetImage(device.Sku) 500w, @device.GetImage(device.Sku) 800w, @device.GetImage(device.Sku) 1013w" alt="" class="device-in-devices-image">
+                                                                    <div class="card-setting-text">@device.GetOfficialName(device.Sku)</div>
+                                                                </div>
+                                                                @if (thisOrder is not null)
+                                                                {
+                                                                    <div class="card-setting-text">@device.Sku-@device.SNumber.Substring(0, 8)<br />Order No: @thisOrder.OrderNumber</div>
+
+                                                                }
+                                                                else
+                                                                {
+                                                                    <div class="card-setting-text">@device.Sku-@device.SNumber.Substring(0, 8)<br />Order No: No Order</div>
+
+                                                                }
+                                                                @if (thisOrder is not null && thisOrder.Status != Atlice.Domain.Entities.OrderStatus.Shipped)
+                                                                {
+
+                                                                    <div class="card-setting-text primary-text not-activated" id="@id">@device.Note</div>
+
+                                                                }
+                                                                else
+                                                                {
+                                                                    <div class="card-setting-text primary-text not-activated"><a href="/admin/userprofile/@device.UserId">To User</a> </div>
+
+                                                                }
+
+                                                                @if (thisOrder is not null)
+                                                                {
+
+                                                                    <div class="card-setting-text">@thisOrder.Name</div>
+                                                                    <div id="w-node-_65c651b6-1187-a93f-897c-825db0b370c2-b0b3705e" class="card-setting-switcher">
+                                                                        <a target="_blank" href="/admin/orderdetails/@thisOrder.Id" class="print-contact-order w-inline-block"></a>
+
+                                                                        <form asp-page-handler="GetQR" data-ajax="true" data-ajax-method="POST" data-ajax-mode="replace" data-ajax-update="#qrResult">
+                                                                            <input type="hidden" name="deviceID" value="@device.Id" />
+                                                                        </form>
+                                                                        <a onclick="javascript: { $(this).prev().submit(); $('#crea').attr('style', 'display:block;') }" href="#" class="qr-download w-inline-block"></a>
+                                                                        <form asp-page-handler="ReadyShip" data-ajax="true" data-ajax-method="POST" data-ajax-mode="replace" data-ajax-update="@ajaxid">
+                                                                            <input type="hidden" name="tapID" value="@device.Id" />
+                                                                        </form>
+                                                                        <a onclick="($(this).prev().submit())" href="#Orders" data-w-id="65c651b6-1187-a93f-897c-825db0b370c6" class="send-to-pending-shipment w-inline-block"></a>
+
+                                                                        <form asp-page-handler="HandDeliver">
+                                                                            <input type="hidden" name="tapID" value="@device.Id" />
+
+                                                                        </form>
+                                                                        <a onclick="($(this).prev().submit())" href="#" data-w-id="" style="" class="w-inline-block"><img src="~/icons/inpersondelivery.png" height="25" width="25" /></a>
+                                                                    </div>
+                                                                }
+
+                                                            </div>
+                                                        }
+                                                    </div>
+                                                   
+                                                }
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </main>
+                        <div data-w-tab="Linked" class="w-tab-pane">
+                            <div class="w-row">
+                                @foreach (var z in Model.Customer.Linked)
+                                {
+                                    <div class="w-col w-col-6">
+                                        <div class="friend-item">
+                                            <div class="friend-photo-container">
+                                                <img src="~/AA1.3/images/5d2cf75cb1d7895f054ae7f7_JPEG-image-B994F52B6E8A-1-p-800.jpeg" width="50" sizes="100vw" srcset="~/AA1.3/images/5d2cf75cb1d7895f054ae7f7_JPEG-image-B994F52B6E8A-1-p-800-p-500.jpeg 500w, ~/AA1.3/images/5d2cf75cb1d7895f054ae7f7_JPEG-image-B994F52B6E8A-1-p-800.jpeg 800w" alt="" class="friend-photo">
+                                                <div onload="checkStatus('@z.Id')" id="@z.Id" class="online-status-2 off"></div>
+                                            </div>
+                                            <div>
+                                                <div><a href="/admin/userprofile/@z.Id">@z.FirstName @z.LastName</a></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                }
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="footer-3">
+        <div class="w-row">
+            <div class="w-col w-col-6">
+                <div class="hint-4">© Copyright Atlice LLC. All rights reserved</div>
+            </div>
+            <div class="footer-right w-col w-col-6">
+                <div class="hint-4">
+                    <a href="https://webflow.com/" class="footer-link-5">Empowered by Atlice</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@section Scripts{
+    <script>
+        var connection = new signalR.HubConnectionBuilder().withUrl("/chatHub").build();
+
+        function checkStatus(z) {
+            connection.start().then(function () {
+                connection.invoke("CheckConnection", z).catch(function (err) {
+                    return console.error(err.toString());
+
+                }).then(function (x) {
+                    if (x == true) {
+                        document.getElementById(z).setAttribute('class', 'online-status on');
+                    }
+                });
+
+            }).catch(function (err) {
+                return console.error(err.toString());
+            });
+        }
+
+
+    </script>
+}

@@ -1,0 +1,36 @@
+﻿@{
+    Layout = null;
+}
+ <div style="display:none;opacity:0" class="modal link-to image-cropper">
+    <div class="modal-mask"></div>
+    <div class="modal-container-2 image-cropper">
+      <div class="single-layout-right">
+        <div class="single-layout-right-content">
+          <div class="single-layout-logo-right hidden">
+            <a href="#" class="w-inline-block"><img src="../images/Atlice-Tap-NFC-Tag--256px.png" width="40" alt=""></a>
+          </div>
+          <h3 class="text-center mb-40 hidden">Manage Pages</h3>
+          <div class="div-block-87"><img src="../images/atlice-tap-nfc-tag-4.png" loading="lazy" sizes="100vw" height="50" srcset="../images/atlice-tap-nfc-tag-4-p-500.png 500w, ../images/atlice-tap-nfc-tag-4-p-800.png 800w, ../images/atlice-tap-nfc-tag-4-p-1080.png 1080w, ../images/atlice-tap-nfc-tag-4-p-1600.png 1600w, ../images/atlice-tap-nfc-tag-4.png 1800w" alt="" class="image-84"></div>
+          <div class="section-inner cropper">
+            <div class="div-block-72 photo-upload">
+              <a data-w-id="f04ef4a3-6844-a7a7-68ab-763c284f9e27" href="#" class="modal-close photo-upload w-inline-block"></a>
+            </div>
+            <div class="choose-photo-button-block">
+                <input onchange="readFile(this)" type="file" class="hidden" />
+              <a onclick="this.previousElementSibling.click()" href="#" class="button-5 upload-button w-button">CHOOSE Photo</a>
+            </div>
+            <div id="main-cropper"></div>
+            <div class="page-editor-top-bar image-save-button">
+                        <form id="changeImageForm" enctype="multipart/form-data" asp-page-handler="UpdateImage" data-ajax="true" data-ajax-method="POST" data-ajax-mode="replace" data-ajax-update="#picUpdate">
+                            <input type="hidden" id="imageidholder" name="pid" />
+                            <input type="hidden" id="imagedataholder" name="data" />
+                        </form>
+                        
+                        <a id="imageChangeButton" onclick="updateImage()" href="#" data-w-id="f04ef4a3-6844-a7a7-68ab-763c284f9e1a" class="button-5 atlice-button-primary w-button">SAVE</a>
+            </div>
+          </div>
+    
+        </div>
+      </div>
+    </div>
+  </div>

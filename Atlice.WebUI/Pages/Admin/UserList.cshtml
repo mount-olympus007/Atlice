@@ -1,0 +1,55 @@
+﻿@model IEnumerable<Atlice.WebUI.Pages.Admin.UsersModel.UserModel>
+@{
+    Layout = null;
+}
+@foreach (var user in Model)
+{
+    <div class="section-inner">
+        <div class="card">
+            <div class="table-wrapper">
+                <div class="table extra-wide single">
+                    <div class="row table-row flex-center single-row w-row">
+                        <div class="col table-col left-padding w-col w-col-4">
+                            <a href="/admin/userprofile/@user.User.Id" data-w-id="1f73dc94-06af-8056-e75e-858bffd26979" class="contact-profile w-inline-block">
+                                <img src="@user.User.CoverUrl" alt="" class="contacts-avatar">
+                                <div class="contact-profile-info">
+                                    @if (string.IsNullOrEmpty(user.User.FirstName))
+                                    {
+                                        <h6 class="mb-0 customer-link">@user.User.Email</h6>
+                                    }
+                                    else
+                                    {
+                                        <h6 class="mb-0 customer-link">@user.User.FirstName @user.User.LastName</h6>
+                                    }
+                                    <div class="text-block-51">Role: @user.Role</div>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="col table-col w-col w-col-2">
+
+                            <div class="label-item yellow">Orders: @user.Orders</div>
+                        </div>
+                        <div class="col table-col w-col w-col-2">
+                            <div class="status">Pages: @user.Pages</div>
+
+                        </div>
+                        <div class="col table-col w-col w-col-2">
+                            <div class="status">Taps: @user.Taps</div>
+                        </div>
+                        <div class="col table-col w-col w-col-2">
+                            <div class="contact-actions">
+                                <a data-w-id="25fc1321-2b83-1f55-02fb-65e7023ae774" href="#" class="show-purchase-order w-inline-block"></a>
+                                <a href="" class="print-contact-order w-inline-block"></a>
+
+                                <a data-w-id="1f73dc94-06af-8056-e75e-858bffd2698e" href="" class="show-customer-devices-manager w-inline-block"></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+
+        </div>
+    </div>
+}

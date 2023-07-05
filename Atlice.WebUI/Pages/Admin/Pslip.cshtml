@@ -1,0 +1,113 @@
+﻿@model Atlice.Domain.Entities.Order
+@{
+    Layout = null;
+    double total = Model.Taps.Count() * 20;
+    if (Model.Taps.Any(x => x.Sku == Domain.Entities.SKU.LGYCSTLGCD1))
+    {
+        total = total + 10.00;
+    }
+    else
+    {
+        total = total + 00.00;
+    }
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Packing Slip</title>
+    <link href="~/lib/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" />
+
+</head>
+<body class="row">
+    <div class="col align-self-start"></div>
+    <div class="card col-6 align-self-center">
+        <div class="card-header">
+            Packing Slip for Order @Model.OrderNumber
+        </div>
+        <div class="card-body row">
+            <div class="col"></div>
+            <p class="col-4 card-text"><b>SOSKYHIGH Media</b><br />580 Flatbush Ave<br />17L<br />Brooklyn, NY 11225<br />US</p>
+
+            <div class="col"></div>
+
+        </div>
+        <div class="card-body row">
+            <p class="col-4 card-text">
+                <b>Ship To:</b><br />
+                @Model.Name<br />
+                @Model.ShipAddressLine1<br />
+                @if (!string.IsNullOrEmpty(Model.ShipAddressLine2))
+                {
+                    @Model.ShipAddressLine2
+
+                    <br />
+                }
+                @Model.ShipCity , @Model.ShipState @Model.ShipCode
+            </p>
+            <div class="col"></div>
+
+            <p class="col-4 card-text">
+                <b>Order Date:</b> @Model.OrderRecieved.ToShortDateString()<br />
+                <b>Shipped Via:</b> USPS<br />
+                <b>Tracking Number:</b> @Model.Tracking
+            </p>
+
+        </div>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">ITEMS</th>
+                    <th scope="col">QTY</th>
+                    <th scope="col">PRICE</th>
+                    <th scope="col">TOTAL</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.Taps)
+                {
+                    <tr>
+                        <th scope="row">@item.GetOfficialName(item.Sku)<br />@item.SNumber[..8]-@item.TapType</th>
+                        <th>1</th>
+                        <th>
+                            @if (@item.Sku == Domain.Entities.SKU.LGYCSTLGCD1)
+                            {
+                                <p>$30.00</p>
+                            }
+                            else
+                            {
+                                <p>$20.00</p>
+                            }
+                        </th>
+                        <th>
+                            @if (@item.Sku == Domain.Entities.SKU.LGYCSTLGCD1)
+                            {
+                                <p>$30.00</p>
+                            }
+                            else
+                            {
+                                <p>$20.00</p>
+                            }
+                        </th>
+                    </tr>
+                }
+
+            </tbody>
+            <tfoot>
+                <tr>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                    <th>Subtotal: $@total<br />Total: $@total</th>
+
+                </tr>
+            </tfoot>
+        </table>
+    </div>
+    <div class="col align-self-end"></div>
+</body>
+
+<script src="~/lib/bootstrap/dist/js/bootstrap.min.js"></script>
+<script>
+    window.open('@TempData["pdfurl"]');
+</script>
+</html>

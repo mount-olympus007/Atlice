@@ -1,0 +1,59 @@
+﻿@page
+@model LoginModel
+@{
+    ViewData["Title"] = "Log in";
+        Layout = "_Layout";
+}
+
+<div class="container-15 w-container">
+    <div class="form11">
+        <h5 class="form11_h5">Sign in. </h5>
+        <h6 style="color:red;">@TempData["ERROR"]</h6>
+        <div asp-validation-summary="All" class="text-danger"></div>
+
+        <div class="form11_line"></div>
+        <div class="form11_form_block w-form">
+           
+            <form asp-page-handler="LogIn" method="post" class="form11_form" id="account" name="email-form-2" data-name="">
+                <input type="hidden" asp-for="Input.TapID" />
+                <div class="form11_label_title">
+                    <strong>Mobile Number:</strong>
+                </div>
+                <input type="tel" asp-for="Input.PhoneNumber" class="form-box-link w-input" maxlength="256" data-name="Meet You Registration Phone Number" id="Meet-You-Registration-Phone-Number" required="" />
+
+                <span asp-validation-for="Input.PhoneNumber" class="text-danger"></span>
+                <input type="submit" value="Sign In" data-wait="Please wait..." class="atlice-tap-button w-button">
+            </form>
+
+            <div class="form09_success w-form-done">
+                <div class="form_alert">
+                    <div class="form_alert_wrap">
+                        <img src="https://uploads-ssl.webflow.com/5de5e999eee2054fa942a10b/5de5e999eee205041f42a33c_check-white.svg" width="14" alt="" class="form_alert_icon">
+                        <div class="form_alert_line"></div>
+                        <div class="form_alert_text white-text">Your information has been saved.</div>
+                    </div>
+                    <img src="https://uploads-ssl.webflow.com/5de5e999eee2054fa942a10b/5de5e999eee2056a2b42a336_x_white.svg" width="10" alt="">
+                </div>
+            </div>
+            <div class="form09_error w-form-fail">
+                <div class="form_error">
+                    <div class="form_error_wrap">
+                        <img src="https://uploads-ssl.webflow.com/5de5e999eee2054fa942a10b/5de5e999eee205e71a42a33a_alert-circle-white.svg" width="16" alt="" class="form_error_icon">
+                        <div class="form_error_line"></div>
+                        <div class="form_error_paragraph white-text">Looks like we&#x27;re having trouble</div>
+                    </div>
+                    <img src="https://uploads-ssl.webflow.com/5de5e999eee2054fa942a10b/5de5e999eee2056a2b42a336_x_white.svg" width="10" alt="">
+                </div>
+            </div>
+        </div>
+
+        <div class="section-5">
+            <img src="../images/Image-414.png" loading="lazy" sizes="100vw" srcset="/images/Image-414-p-500.png 500w, /images/Image-414-p-800.png 800w, /images/Image-414-p-1080.png 1080w, /images/Image-414.png 1316w" alt="" class="image-20 logo">
+        </div>
+        <img src="~/images/Atlice-Tap-NFC-Tag-3.png" sizes="60px" srcset="/images/Atlice-Tap-NFC-Tag-3-p-500.png 500w, /images/Atlice-Tap-NFC-Tag-3-p-800.png 800w, /images/Atlice-Tap-NFC-Tag-3-p-1080.png 1080w, /images/Atlice-Tap-NFC-Tag-3-p-1600.png 1600w, /images/Atlice-Tap-NFC-Tag-3.png 1800w" alt="" class="form11_image">
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

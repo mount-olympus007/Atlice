@@ -1,0 +1,12 @@
+﻿@model Atlice.Domain.Entities.ContactPage
+
+@{
+    Layout = null;
+
+   
+}
+<div class="div-block-90">
+    <a id="removeBypassButton" onclick="fetch('/homeboard/index?handler=bypass&linkid=0&deviceid=@TempData["deviceid"]').then(x=> x.json()).then(y=> document.getElementById('deviceinfo'+'@TempData["deviceid"]').innerHTML=y.view)" data-w-id="ffa53457-9640-7eb7-b5a5-4a4b9f32d23a" href="#" class="button-large atlice-tap w-button">No Bypass</a>
+</div>
+<div id="bypassPayHolder"></div>
+<div id="bypassConnectHolder"></div>

@@ -1,0 +1,52 @@
+﻿@model Atlice.Domain.Entities.TapLink
+@{
+    Layout = null;
+   
+}
+<div class="friend-item">
+    <div class="friend-photo-container">
+        <img width="50" src="@Model.GetLogo(Model.SocialProvider)" alt="" class="friend-photo">
+        @if (Model.ContactPage)
+        {
+            <div class="online-status on"></div>
+
+        }
+        else
+        {
+            <div class="online-status off"></div>
+
+        }
+    </div>
+    <div class="tap-links-form w-form">
+        <form id="email-form-2" name="email-form-2" data-name="Email Form 2" method="get" class="url-form-w-toggle">
+            <input onblur="javascript:{var string = this.value;if (!~string.indexOf('http') && string != '') {string = 'https://' + string;} this.value=string; fetch('/homeboard/Index?handler=savetaplinkstate&value='+string+'&id='+this.id+'&name='+this.getAttribute('name')).then(x => x.json()).then(y=> document.getElementById('PayStatus').innerHTML = y.status).then(z=> showTooltip())}" type="url" class="tap-links-input w-input" maxlength="256" name="SocialProviderMainUrl" data-name="Pay Pal 2" asp-for="SocialProviderMainUrl" placeholder="@Model.SocialProvider URL" id="@Model.Id">
+            <div style="display:none;" class="socialProvider">@Model.SocialProvider</div>
+            <div class="card-setting-switcher">
+                <label class="w-checkbox switcher-wrapper-checkbox">
+                    @if (Model.ShowPreview)
+                    {
+                        <div class="w-checkbox-input w-checkbox-input--inputType-custom switcher-button-checkbox w--redirected-checked"></div>
+                        <input onclick="fetch('/homeboard/Index?handler=savetaplinkstate&value='+this.previousElementSibling.getAttribute('class')+'&id='+this.id+'&name='+this.getAttribute('name')).then(x => x.json()).then(y=> document.getElementById('PayStatus').innerHTML = y.status).then(z=> showTooltip())" type="checkbox" name="ShowPreview" asp-for="ShowPreview" id="@Model.Id" data-name="Checkbox 15" checked="" style="opacity:0;position:absolute;z-index:-1">
+                        <span class="checkbox-label-8 w-form-label" for="checkbox-15"></span>
+
+                    }
+                    else
+                    {
+                        <div class="w-checkbox-input w-checkbox-input--inputType-custom switcher-button-checkbox"></div>
+                        <input onclick="fetch('/homeboard/Index?handler=savetaplinkstate&value='+this.previousElementSibling.getAttribute('class')+'&id='+this.id+'&name='+this.getAttribute('name')).then(x => x.json()).then(y=> document.getElementById('PayStatus').innerHTML = y.status).then(z=> showTooltip())" type="checkbox" name="ShowPreview" asp-for="ShowPreview" id="@Model.Id" data-name="Checkbox 15" style="opacity:0;position:absolute;z-index:-1">
+                        <span class="checkbox-label-8 w-form-label" for="checkbox-15"></span>
+
+                    }
+                </label>
+            </div>
+        </form>
+        <div class="w-form-done">
+            <div>Thank you! Your submission has been received!</div>
+        </div>
+        <div class="w-form-fail">
+            <div>Oops! Something went wrong while submitting the form.</div>
+        </div>
+    </div>
+    <div class="remove-tap-link-button-div">
+        <img onclick="javascript:{ this.parentElement.parentElement.remove(); fetch('/homeboard/Index?handler=deletetaplink&id=@Model.Id').then(x=> x.json()).then(y=> document.getElementById('OpenPayList').insertAdjacentHTML('beforeend', y.view)).then(z=> showTooltip()) }" src="../images/close-x-delete-reject-decline.png" loading="lazy" alt="" class="image-86"></div>
+</div>

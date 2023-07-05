@@ -1,0 +1,69 @@
+﻿@page
+@model Atlice.WebUI.Pages.Admin.TapUsageModel
+@{
+    Layout = "_AdminLayout";
+
+}
+<div class="app-main-layout-header-2 hidden">
+    <div class="app-main-layout-wrapper-2 header">
+        <div class="page-heading">
+            <h2 class="heading-62">Bypass Data</h2>
+        </div>
+
+    </div>
+</div>
+<div class="app-main-layout-wrapper">
+    <div class="app-main-layout-content">
+
+
+
+
+
+
+        <div data-duration-in="300" data-duration-out="100" class="w-tabs">
+            <div class="align-right w-tab-menu">
+                <a data-w-tab="Tab 1" class="switcher-tab w-inline-block w-tab-link w--current">
+                    <div>Current Active Bypass Users</div>
+                </a>
+
+
+            </div>
+            <div class="chart-tab-content w-tab-content">
+                <div data-w-tab="Tab 1" class="w-tab-pane w--tab-active">
+                    <div id="fullfillmentList" class="row">
+                        @foreach (var tap in Model.Taps)
+                        {
+                            var link = tap.ContactPage.TapLinks.FirstOrDefault(x => x.SocialProviderMainUrl == tap.AtliceTap.BypassURL);
+                            if(link is not null){
+                                <div class="col-md-3" style="border:red solid 2px;">
+                                    <p>@tap.ApplicationUser.FirstName @tap.ApplicationUser.LastName</p>
+                                    <hr />
+                                    <p>@link.SocialProvider</p>
+                                    <hr />
+                                    <p>
+                                        @tap.AtliceTap.BypassURL
+                                    </p>
+                                </div>
+                            }
+                            
+                        }
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <div class="footer">
+        <div class="w-row">
+            <div class="w-col w-col-6">
+                <div class="hint">© Copyright Atlice LLC. All rights reserved</div>
+            </div>
+            <div class="footer-right w-col w-col-6">
+                <div class="hint">
+                    <a href="https://webflow.com/" class="footer-link">Empowered by Atlice</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

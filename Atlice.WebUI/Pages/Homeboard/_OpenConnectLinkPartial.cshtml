@@ -1,0 +1,35 @@
+﻿@model Atlice.Domain.Entities.ContactPage
+@{
+    Layout = null;
+    List<Atlice.Domain.Entities.TapLink> newLinks = new List<Atlice.Domain.Entities.TapLink>();
+    List<Atlice.Domain.Entities.Connects> userTypes = Enum.GetValues(typeof(Atlice.Domain.Entities.Connects)).Cast<Atlice.Domain.Entities.Connects>().ToList();
+    foreach (var userType in userTypes)
+    {
+        if (Model.TapLinks.FirstOrDefault(x => x.SocialProvider.ToString() == userType.ToString()) == null)
+        {
+            Atlice.Domain.Entities.SocialProvider choice;
+            if (Enum.TryParse(userType.ToString(), out choice))
+            {
+                newLinks.Add(new Atlice.Domain.Entities.TapLink { LinkType = Domain.Entities.LinkType.Connect, SocialProvider = choice});
+            }
+
+        }
+    }
+}
+@foreach (var link in newLinks)
+{
+    <a href="#" onclick="fetch('/homeboard/Index?handler=addtaplink&linktype=@Atlice.Domain.Entities.LinkType.Connect&socialProvider=@link.SocialProvider&pageId=@Model.Id').then(x => x.json()).then(y=> document.getElementById('connectlist').insertAdjacentHTML('beforeend',y.view)).then(z=> this.remove()).then(a => document.getElementById('OpenConnectList').removeAttribute('style'))" class="friend-item tap-link-dropdown w-inline-block">
+        <div class="friend-photo-container">
+            <img width="50" src="@link.GetLogo(link.SocialProvider)" alt="" class="friend-photo">
+            <div class="online-status off"></div>
+        </div>
+        <div class="item-text-block">
+            <div class="card no-padding">
+                <div class="card-setting-container">
+                    <div class="card-setting-text">@link.SocialProvider</div>
+                </div>
+            </div>
+        </div>
+    </a>
+  
+}

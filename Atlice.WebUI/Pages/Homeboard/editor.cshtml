@@ -1,0 +1,1207 @@
+﻿@model Atlice.Domain.Entities.ContactPage
+@{
+    Layout = null;
+}
+
+
+
+<div id="contacttab" data-w-tab="Contact Card" class="tab-pane-contact-card w-tab-pane w--tab-active">
+
+    <div class="contact-page-editor-title business-page-editor wf-section">
+        <div class="text-block-49 page-editor">@Model.PageType</div>
+        @if (Model.PageType == Domain.Entities.PageType.Personal)
+        {
+            <div class="subheading-text-block page-editor">For fun</div>
+
+
+        }
+        @if (Model.PageType == Domain.Entities.PageType.Business)
+        {
+            <div class="subheading-text-block page-editor">For your own business or brand</div>
+
+
+        }
+        @if (Model.PageType == Domain.Entities.PageType.Professional)
+        {
+            <div class="subheading-text-block page-editor">For your job or a team</div>
+
+
+        }
+    </div>
+    <a onclick="javascript:{$('.image-cropper').attr('style','display:block;'); document.getElementById('imageidholder').setAttribute('value','@Model.Id');}" data-w-id="8dd5b4d7-9985-b9a4-6871-3b44fa2f6f59" href="#" style="display:none;" class="edit-profile-bg w-inline-block hidden"></a>
+    <div class="profile-info" onclick="this.previousElementSibling.click()">
+        <p id="picUpdate" style="color:green;"></p>
+        <div id="previewImage" class="avatar big" style="background-image: url('@Model.PreImage')">
+            <a onclick="javascript:{$('.image-cropper').attr('style','display:block;'); document.getElementById('imageidholder').setAttribute('value','@Model.Id');}" data-w-id="8dd5b4d7-9985-b9a4-6871-3b44fa2f6f59" href="#" class="edit-profile-bg w-inline-block"></a>
+        </div>
+
+    </div>
+    <div class="contact-card-section wf-section">
+        <div class="w-form">
+            <div class="div-block-18">
+                <div class="page-editor-heading-block">
+                    <div class="page-editor-title-block">
+                        <div class="profile-info-heading"><strong>Contact Card</strong></div>
+                        <img onclick="javascript:{if(document.getElementById('contactCardInfo').getAttribute('style') == null){document.getElementById('contactCardInfo').setAttribute('style','display:none;')}else{document.getElementById('contactCardInfo').removeAttribute('style')}}" src="../images/info-information-detail-learn-more.png" loading="lazy" data-w-id="f516ef20-ea7e-1fec-0d52-e1cb670e042f" alt="" class="image-72">
+                    </div><img src="../images/Orion_men.svg" loading="lazy" alt="" class="friend-photo menu-item reference">
+                </div>
+                <div class="information-block" style="display:none;" id="contactCardInfo">
+                    <p class="paragraph-33">Enter contact information, status and website for display on your contact page. </p>
+                </div>
+                <p style="color:green;" id="cardStatus"></p>
+            </div>
+            <form id="contactCardForm" name="wf-form-profile" data-name="profile" method="get" class="form-5 contact-page">
+                <input style="text-align:center;" onblur="fetch('/homeboard/Index?handler=savepreviewstate&value='+this.value+'&id='+this.id+'&name='+this.getAttribute('name')).then(x => x.json()).then(y=> document.getElementById('cardStatus').innerHTML = y.status)" type="text" class="input-2 w-input" maxlength="256" asp-for="Name" name="Name" data-name="Name" placeholder="Full Name / Alias" id="@Model.Id">
+                @if (Model.PageType == Domain.Entities.PageType.Business || Model.PageType == Domain.Entities.PageType.Professional)
+                {
+
+                    <input style="text-align:center;" onblur="fetch('/homeboard/Index?handler=savepreviewstate&value='+this.value+'&id='+this.id+'&name='+this.getAttribute('name')).then(x => x.json()).then(y=>document.getElementById('cardStatus').innerHTML = y.status)" type="text" class="input-2 w-input" maxlength="256" asp-for="BusinessName" name="BusinessName" data-name="BusinessName" placeholder="Business Name / Brand" id="@Model.Id">
+                }
+                <textarea asp-for="ProfileLead" onblur="fetch('/homeboard/Index?handler=savepreviewstate&value='+this.value+'&id='+this.id+'&name='+this.getAttribute('name')).then(x => x.json()).then(y=>document.getElementById('cardStatus').innerHTML = y.status)" id="@Model.Id" name="ProfileLead" maxlength="5000" data-name="Caption" placeholder="Title / Brief Bio or Caption" class="textarea-2 w-input"></textarea>
+                <div class="friend-item contact-phone-block">
+                    <div class="div-block-42">
+                        <div class="friend-photo-container">
+                            <img width="50" src="../images/call-phone-calling.png" alt="" class="friend-photo">
+                            @if (Model.PhonePublished)
+                            {
+                                <div class="online-status on"></div>
+
+                            }
+                            else
+                            {
+                                <div class="online-status off"></div>
+
+                            }
+                        </div>
+                        <input onblur="fetch('/homeboard/Index?handler=savepreviewstate&value='+this.value+'&id='+this.id+'&name='+this.getAttribute('name')).then(x => x.json()).then(y=> document.getElementById('cardStatus').innerHTML = y.status)" type="tel" class="input-2 contact w-input" maxlength="256" asp-for="PhoneNumber" name="PhoneNumber" data-name="Phone" placeholder="Phone" id="@Model.Id">
+                        <div class="card-setting-switcher">
+                            <label class="w-checkbox switcher-wrapper-checkbox">
+                                @if (Model.PhonePreview)
+                                {
+                                    <div class="w-checkbox-input w-checkbox-input--inputType-custom switcher-button-checkbox w--redirected-checked"></div>
+                                    <input onclick="fetch('/homeboard/Index?handler=savepreviewstate&value='+this.previousElementSibling.getAttribute('class')+'&id='+this.id+'&name='+this.getAttribute('name')).then(x => x.json()).then(y=> document.getElementById('cardStatus').innerHTML = y.status)" type="checkbox" asp-for="PhonePreview" name="PhonePreview" id="@Model.Id" checked="checked" style="opacity:0;position:absolute;z-index:-1">
+                                    <span class="checkbox-label-8 w-form-label" for="checkbox-15"></span>
+                                }
+                                else
+                                {
+                                    <div class="w-checkbox-input w-checkbox-input--inputType-custom switcher-button-checkbox"></div>
+                                    <input onclick="fetch('/homeboard/Index?handler=savepreviewstate&value='+this.previousElementSibling.getAttribute('class')+'&id='+this.id+'&name='+this.getAttribute('name')).then(x => x.json()).then(y=> document.getElementById('cardStatus').innerHTML = y.status)" type="checkbox" asp-for="PhonePreview" name="PhonePreview" id="@Model.Id" style="opacity:0;position:absolute;z-index:-1">
+                                    <span class="checkbox-label-8 w-form-label" for="checkbox-15"></span>
+                                }
+
+                            </label>
+                        </div>
+                    </div>
+                    <div class="div-block-41 contact-edit">
+                        <div class="friend-photo-container">
+                            <img width="50" src="../images/chat-conversation-message-bubble.png" alt="" class="friend-photo contact-icon">
+                            @if (Model.SmsAlerts)
+                            {
+                                <div class="online-status on"></div>
+
+                            }
+                            else
+                            {
+                                <div class="online-status off"></div>
+
+                            }
+                        </div>
+                        <div class="card-setting-container contact-edit">
+                            <div class="card-setting-text contact-edit">Text Messaging</div>
+                            <div class="card-setting-switcher">
+                                <label class="w-checkbox switcher-wrapper-checkbox">
+                                    @if (Model.SmsPreview)
+                                    {
+                                        <div class="w-checkbox-input w-checkbox-input--inputType-custom switcher-button-checkbox w--redirected-checked"></div>
+                                        <input onclick="fetch('/homeboard/Index?handler=savepreviewstate&value='+this.previousElementSibling.getAttribute('class')+'&id='+this.id+'&name='+this.getAttribute('name')).then(x => x.json()).then(y=> document.getElementById('cardStatus').innerHTML = y.status)" type="checkbox" asp-for="SmsPreview" name="SmsPreview" id="@Model.Id" checked="checked" style="opacity:0;position:absolute;z-index:-1">
+                                        <span class="checkbox-label-8 w-form-label" for="checkbox-15"></span>
+                                    }
+                                    else
+                                    {
+                                        <div class="w-checkbox-input w-checkbox-input--inputType-custom switcher-button-checkbox"></div>
+                                        <input onclick="fetch('/homeboard/Index?handler=savepreviewstate&value='+this.previousElementSibling.getAttribute('class')+'&id='+this.id+'&name='+this.getAttribute('name')).then(x => x.json()).then(y=> document.getElementById('cardStatus').innerHTML = y.status)" type="checkbox" asp-for="SmsPreview" name="SmsPreview" id="@Model.Id" style="opacity:0;position:absolute;z-index:-1">
+                                        <span class="checkbox-label-8 w-form-label" for="checkbox-15"></span>
+                                    }
+
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="friend-item contact">
+                    <div class="friend-photo-container">
+                        <img width="50" src="../images/email-mail-inbox-message.png" alt="" class="friend-photo">
+                        @if (Model.EmailPublished)
+                        {
+                            <div class="online-status on"></div>
+
+                        }
+                        else
+                        {
+                            <div class="online-status off"></div>
+
+                        }
+                    </div><input onblur="fetch('/homeboard/Index?handler=savepreviewstate&value='+this.value+'&id='+this.id+'&name='+this.getAttribute('name')).then(x => x.json()).then(y=> document.getElementById('cardStatus').innerHTML = y.status)" type="email" class="input-2 contact w-input" maxlength="256" asp-for="Email" name="Email" data-name="Email" placeholder="Email" id="@Model.Id">
+                    <div class="card-setting-switcher">
+                        <label class="w-checkbox switcher-wrapper-checkbox">
+                            @if (Model.EmailPreview)
+                            {
+                                <div class="w-checkbox-input w-checkbox-input--inputType-custom switcher-button-checkbox w--redirected-checked"></div>
+                                <input onclick="fetch('/homeboard/Index?handler=savepreviewstate&value='+this.previousElementSibling.getAttribute('class')+'&id='+this.id+'&name='+this.getAttribute('name')).then(x => x.json()).then(y=> document.getElementById('cardStatus').innerHTML = y.status)" type="checkbox" asp-for="EmailPreview" name="EmailPreview" id="@Model.Id" checked="checked" style="opacity:0;position:absolute;z-index:-1">
+                                <span class="checkbox-label-8 w-form-label" for="checkbox-15"></span>
+                            }
+                            else
+                            {
+                                <div class="w-checkbox-input w-checkbox-input--inputType-custom switcher-button-checkbox"></div>
+                                <input onclick="fetch('/homeboard/Index?handler=savepreviewstate&value='+this.previousElementSibling.getAttribute('class')+'&id='+this.id+'&name='+this.getAttribute('name')).then(x => x.json()).then(y=> document.getElementById('cardStatus').innerHTML = y.status)" type="checkbox" asp-for="EmailPreview" name="EmailPreview" id="@Model.Id" style="opacity:0;position:absolute;z-index:-1">
+                                <span class="checkbox-label-8 w-form-label" for="checkbox-15"></span>
+                            }
+                        </label>
+                    </div>
+                </div>
+                <div class="friend-item contact">
+                    <div class="friend-photo-container">
+                        <img width="50" sizes="100vw" src="../images/c5305453-fe7a-49eb-8cc6-8f1b9f7a2ea6.png" srcset="../images/c5305453-fe7a-49eb-8cc6-8f1b9f7a2ea6-p-500.png 500w, ../images/c5305453-fe7a-49eb-8cc6-8f1b9f7a2ea6.png 501w" alt="" class="friend-photo">
+                        @if (Model.WebsitePublished)
+                        {
+                            <div class="online-status on"></div>
+
+                        }
+                        else
+                        {
+                            <div class="online-status off"></div>
+
+                        }
+                    </div><input onblur="javascript:{var string = this.value;if (!~string.indexOf('http') && string != '') {string = 'https://' + string;} this.value=string; fetch('/homeboard/Index?handler=savepreviewstate&value='+string+'&id='+this.id+'&name='+this.getAttribute('name')).then(x => x.json()).then(y=> document.getElementById('cardStatus').innerHTML = y.status)}" type="url" class="input-2 contact w-input" maxlength="256" asp-for="Website" name="Website" data-name="Website Link 2" placeholder="Website Link (Use Https://…)" id="@Model.Id">
+                    <div class="card-setting-switcher">
+                        <label class="w-checkbox switcher-wrapper-checkbox">
+                            @if (Model.WebsitePreview)
+                            {
+                                <div class="w-checkbox-input w-checkbox-input--inputType-custom switcher-button-checkbox w--redirected-checked"></div>
+                                <input onclick="fetch('/homeboard/Index?handler=savepreviewstate&value='+this.previousElementSibling.getAttribute('class')+'&id='+this.id+'&name='+this.getAttribute('name')).then(x => x.json()).then(y=> document.getElementById('cardStatus').innerHTML = y.status)" type="checkbox" asp-for="WebsitePreview" name="WebsitePreview" id="@Model.Id" checked="checked" style="opacity:0;position:absolute;z-index:-1">
+                                <span class="checkbox-label-8 w-form-label" for="checkbox-15"></span>
+                            }
+                            else
+                            {
+                                <div class="w-checkbox-input w-checkbox-input--inputType-custom switcher-button-checkbox"></div>
+                                <input onclick="fetch('/homeboard/Index?handler=savepreviewstate&value='+this.previousElementSibling.getAttribute('class')+'&id='+this.id+'&name='+this.getAttribute('name')).then(x => x.json()).then(y=> document.getElementById('cardStatus').innerHTML = y.status)" type="checkbox" asp-for="WebsitePreview" name="WebsitePreview" id="@Model.Id" style="opacity:0;position:absolute;z-index:-1">
+                                <span class="checkbox-label-8 w-form-label" for="checkbox-15"></span>
+                            }
+                        </label>
+                    </div>
+                </div>
+                <div class="friend-item contact">
+                    <div class="friend-photo-container">
+                        <img width="50" src="../images/location.png" alt="" class="friend-photo">
+                        @if (Model.LocationPublished)
+                        {
+                            <div class="online-status on"></div>
+
+                        }
+                        else
+                        {
+                            <div class="online-status off"></div>
+
+                        }
+                    </div><input onblur="fetch('/homeboard/Index?handler=savepreviewstate&value='+this.value+'&id='+this.id+'&name='+this.getAttribute('name')).then(x => x.json()).then(y=> document.getElementById('cardStatus').innerHTML = y.status)" type="text" class="input-2 contact w-input" maxlength="256" asp-for="Location" name="Location" data-name="" placeholder="Location" id="@Model.Id">
+                    <div class="card-setting-switcher">
+                        <label class="w-checkbox switcher-wrapper-checkbox">
+                            @if (Model.LocationPreview)
+                            {
+                                <div class="w-checkbox-input w-checkbox-input--inputType-custom switcher-button-checkbox w--redirected-checked"></div>
+                                <input onclick="fetch('/homeboard/Index?handler=savepreviewstate&value='+this.previousElementSibling.getAttribute('class')+'&id='+this.id+'&name='+this.getAttribute('name')).then(x => x.json()).then(y=> document.getElementById('cardStatus').innerHTML = y.status)" type="checkbox" asp-for="LocationPreview" name="LocationPreview" id="@Model.Id" checked="checked" style="opacity:0;position:absolute;z-index:-1">
+                                <span class="checkbox-label-8 w-form-label" for="checkbox-15"></span>
+                            }
+                            else
+                            {
+                                <div class="w-checkbox-input w-checkbox-input--inputType-custom switcher-button-checkbox"></div>
+                                <input onclick="fetch('/homeboard/Index?handler=savepreviewstate&value='+this.previousElementSibling.getAttribute('class')+'&id='+this.id+'&name='+this.getAttribute('name')).then(x => x.json()).then(y=> document.getElementById('cardStatus').innerHTML = y.status)" type="checkbox" asp-for="LocationPreview" name="LocationPreview" id="@Model.Id" style="opacity:0;position:absolute;z-index:-1">
+                                <span class="checkbox-label-8 w-form-label" for="checkbox-15"></span>
+                            }
+                        </label>
+                    </div>
+                </div>
+                <div class="form-group-2"><label for="Location-4" class="label hidden">Location</label></div>
+            </form>
+            <div class="success-message-3 w-form-done">
+                <div>Saved!</div>
+            </div>
+            <div class="error-message-3 w-form-fail">
+                <div>Oops! Something went wrong while submitting the form.</div>
+            </div>
+        </div>
+        <div class="key-block">
+            <div class="friend-item key-2">
+                <div class="friend-photo-container">
+                    <div class="switcher-button-checkbox green"></div>
+                </div>
+                <p class="paragraph-33 key-green">= Stage and Preview</p>
+            </div>
+            <div class="friend-item key">
+                <div class="friend-photo-container"><img src="../images/online-status-dot.png" width="50" alt="" class="friend-photo key"></div>
+                <p class="paragraph-33 key-green">= Published to Page</p>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="linktab" data-w-tab="Tap Links" class="w-tab-pane">
+    <div class="tap-links-section wf-section">
+        <div class="div-block-18 hidden">
+            <div class="page-editor-heading-block">
+                <div class="page-editor-title-block">
+                    <div class="profile-info-heading"><strong>Flex</strong></div>
+                    <img onclick="javascript:{if(document.getElementById('flexInfo').getAttribute('style') == null){document.getElementById('flexInfo').setAttribute('style','display:none;')}else{document.getElementById('flexInfo').removeAttribute('style')}}" src="../images/info-information-detail-learn-more.png" loading="lazy" data-w-id="dbcda0fa-eb38-4443-285f-9ce7de6ca552" alt="" class="image-72">
+                </div><img loading="lazy" src="../images/black-tap-link.png" alt="" class="friend-photo menu-item reference">
+            </div>
+            <div class="information-block" style="display:none;" id="flexInfo">
+                <p class="paragraph-33">Use drop-down menu to add links. Toggle to SHOW or HIDE on Preview of contact page. Publish to show on live contact page. <span>on</span> contact page.</p>
+                <p style="color:red;" class="paragraph-33">* Link Required</p>
+                <p style="color:red;" class="paragraph-33">* Call to Action Required</p>
+            </div>
+        </div>
+
+        <div class="connect-list-input-block">
+            <div class="friend-item">
+                <div class="friend-photo-container">
+                    <img width="50" src="../images/tap-links-icon.png" alt="" class="friend-photo">
+                    @if (Model.TapLinks.Any(x => x.LinkType == Atlice.Domain.Entities.LinkType.Flex && x.ContactPage))
+                    {
+
+                        <div class="online-status on"></div>
+                    }
+                    else
+                    {
+                        <div class="online-status off"></div>
+
+                    }
+                </div>
+                <div class="tap-links-form w-form">
+                    <form id="email-form-2" name="email-form-2" data-name="Email Form 2" method="get">
+                        <div onclick="javascript:{if(document.getElementById('flexInfo').getAttribute('style') == null){document.getElementById('flexInfo').setAttribute('style','display:none;')}else{document.getElementById('flexInfo').removeAttribute('style')}}">
+                            <div class="card no-padding">
+                                <div class="card-setting-container">
+                                    <div class="card-setting-text">Flex Links</div>
+                                </div>
+                                <div id="FlexStatus"></div>
+                            </div>
+                        </div>
+                    </form>
+                    <div class="w-form-done">
+                        <div>Thank you! Your submission has been received!</div>
+                    </div>
+                    <div class="w-form-fail">
+                        <div>Oops! Something went wrong while submitting the form.</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="tap-links-dropdown-block">
+            <div data-delay="0" data-hover="false" class="dropdown w-dropdown" style="z-index:99999;">
+                <div onclick="javascript:{if(this.nextElementSibling.getAttribute('style') == null){this.nextElementSibling.setAttribute('style','display:block; background-color:white;')}else{this.nextElementSibling.removeAttribute('style');}}" class="dropdown-toggle w-dropdown-toggle">
+                    <div class="div-block-40">
+                        <div class="item-text-block">
+                            <div class="card no-padding button">
+                                <div class="card-setting-container grey">
+                                    <div class="card-setting-text dropdown">ADD TAP LINKS</div><img src="../images/add-plus-circle-round.png" loading="lazy" alt="" class="image-88">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="icon-2 w-icon-dropdown-toggle"></div>
+                    </div>
+                </div>
+                <nav class="dropdown-list w-dropdown-list" id="OpenFlexList">
+                    @if (Model.TapLinks.FirstOrDefault(x => x.SocialProvider == Atlice.Domain.Entities.SocialProvider.Announcement) == null)
+                    {
+                        <a href="#" onclick="fetch('/homeboard/Index?handler=addtaplink&linktype=@Atlice.Domain.Entities.LinkType.Flex&socialProvider=@Atlice.Domain.Entities.SocialProvider.Announcement&pageId=@Model.Id').then(x => x.json()).then(y=> document.getElementById('flexlist').insertAdjacentHTML('beforeend',y.view)).then(z=> this.remove()).then(a => document.getElementById('OpenFlexList').removeAttribute('style'))" class="friend-item tap-link-dropdown w-inline-block">
+                            <div class="friend-photo-container">
+                                <img width="50" src="../images/announcement-tap-link.png" alt="" class="friend-photo">
+                                <div class="online-status off"></div>
+                            </div>
+                            <div class="item-text-block">
+                                <div class="card no-padding">
+                                    <div class="card-setting-container">
+                                        <div class="card-setting-text">Announcement</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                    }
+                    @if (Model.TapLinks.FirstOrDefault(x => x.SocialProvider == Atlice.Domain.Entities.SocialProvider.File) == null)
+                    {
+                        <a href="#" onclick="fetch('/homeboard/Index?handler=addtaplink&linktype=@Atlice.Domain.Entities.LinkType.Flex&socialProvider=@Atlice.Domain.Entities.SocialProvider.File&pageId=@Model.Id').then(x => x.json()).then(y=> document.getElementById('flexlist').insertAdjacentHTML('beforeend',y.view)).then(z=> this.remove()).then(a => document.getElementById('OpenFlexList').removeAttribute('style'))" class="friend-item tap-link-dropdown w-inline-block">
+                            <div class="friend-photo-container">
+                                <img width="50" src="../images/file-tap-link.png" alt="" class="friend-photo">
+                                <div class="online-status off"></div>
+                            </div>
+                            <div class="item-text-block">
+                                <div class="card no-padding">
+                                    <div class="card-setting-container">
+                                        <div class="card-setting-text">File</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                    }
+                    @if (Model.TapLinks.FirstOrDefault(x => x.SocialProvider == Atlice.Domain.Entities.SocialProvider.Calendar) == null)
+                    {
+
+
+                        <a href="#" onclick="fetch('/homeboard/Index?handler=addtaplink&linktype=@Atlice.Domain.Entities.LinkType.Flex&socialProvider=@Atlice.Domain.Entities.SocialProvider.Calendar&pageId=@Model.Id').then(x => x.json()).then(y=> document.getElementById('flexlist').insertAdjacentHTML('beforeend',y.view)).then(z=> this.remove()).then(a => document.getElementById('OpenFlexList').removeAttribute('style'))" class="friend-item tap-link-dropdown w-inline-block">
+                            <div class="friend-photo-container">
+                                <img width="50" src="../images/calendar-tap-link.png" alt="" class="friend-photo">
+                                <div class="online-status off"></div>
+                            </div>
+                            <div class="item-text-block">
+                                <div class="card no-padding">
+                                    <div class="card-setting-container">
+                                        <div class="card-setting-text">Calendar</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                    }
+
+
+                </nav>
+            </div>
+        </div>
+        <div class="flex-list-form-items-block w-container" id="flexlist">
+            @foreach (var link in Model.TapLinks.Where(x => x.LinkType == Domain.Entities.LinkType.Flex))
+            {
+                await Html.RenderPartialAsync("/pages/homeboard/flex_link_partial.cshtml", link);
+            }
+
+        </div>
+        <div class="div-block-18">
+            <div class="page-editor-heading-block">
+                <div class="page-editor-title-block">
+                    <div class="profile-info-heading"><strong>Pay</strong></div>
+                    <img onclick="javascript:{if(document.getElementById('payInfo').getAttribute('style') == null){document.getElementById('payInfo').setAttribute('style','display:none;')}else{document.getElementById('payInfo').removeAttribute('style')}}" src="../images/info-information-detail-learn-more.png" loading="lazy" data-w-id="e0a06ae8-3495-cb24-8a8b-bb40788c9fe8" alt="" class="image-72">
+                </div><img loading="lazy" src="../images/money-dollar.png" alt="" class="friend-photo menu-item reference">
+            </div>
+            <div class="information-block" style="display:none;" id="payInfo">
+                <p class="paragraph-33">Use drop-down menu to add links. Toggle to SHOW or HIDE on Preview of contact page. Publish to show on live contact page. <span>on</span> contact page.</p>
+            </div>
+        </div>
+        <div class="connect-list-input-block">
+            <div class="friend-item">
+                <div class="friend-photo-container">
+                    <img width="50" src="../images/money-dollar.png" alt="" class="friend-photo">
+                    @if (Model.TapLinks.Any(x => x.LinkType == Atlice.Domain.Entities.LinkType.Pay && x.ContactPage))
+                    {
+                        <div class="online-status on"></div>
+
+                    }
+                    else
+                    {
+                        <div class="online-status off"></div>
+
+
+                    }
+                </div>
+                <div class="tap-links-form w-form">
+                    <form id="email-form-2" name="email-form-2" data-name="Email Form 2" method="get">
+                        <div onclick="javascript:{if(document.getElementById('payInfo').getAttribute('style') == null){document.getElementById('payInfo').setAttribute('style','display:none;')}else{document.getElementById('payInfo').removeAttribute('style')}}">
+                            <div class="card no-padding">
+                                <div class="card-setting-container">
+                                    <div class="card-setting-text">Payment Links</div>
+
+                                </div>
+                                <div id="PayStatus"></div>
+
+                            </div>
+                        </div>
+                    </form>
+                    <div class="w-form-done">
+                        <div>Thank you! Your submission has been received!</div>
+                    </div>
+                    <div class="w-form-fail">
+                        <div>Oops! Something went wrong while submitting the form.</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="tap-links-dropdown-block">
+            <div data-delay="0" data-hover="false" class="dropdown w-dropdown" style="z-index:9999;">
+                <div onclick="javascript:{if(this.nextElementSibling.getAttribute('style') == null){this.nextElementSibling.setAttribute('style','display:block; background-color:white;')}else{this.nextElementSibling.removeAttribute('style');}}" class="dropdown-toggle w-dropdown-toggle">
+                    <div class="div-block-40">
+                        <div class="item-text-block">
+                            <div class="card no-padding button">
+                                <div class="card-setting-container grey">
+                                    <img src="../images/add-plus-circle-round.png" loading="lazy" alt="" class="image-88">
+                                    <div class="card-setting-text dropdown">ADD TAP LINKS</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="icon-2 w-icon-dropdown-toggle"></div>
+                    </div>
+                </div>
+                <nav class="dropdown-list w-dropdown-list" id="OpenPayList">
+                    @if (Model.TapLinks.FirstOrDefault(x => x.SocialProvider == Atlice.Domain.Entities.SocialProvider.PayPal) == null)
+                    {
+                        <a href="#" onclick="fetch('/homeboard/Index?handler=addtaplink&linktype=@Atlice.Domain.Entities.LinkType.Pay&socialProvider=@Atlice.Domain.Entities.SocialProvider.PayPal&pageId=@Model.Id').then(x => x.json()).then(y=> document.getElementById('paylist').insertAdjacentHTML('beforeend',y.view)).then(z=> this.remove()).then(a => document.getElementById('OpenPayList').removeAttribute('style'))" class="friend-item tap-link-dropdown w-inline-block">
+                            <div class="friend-photo-container">
+                                <img width="50" src="../images/Image-433.png" alt="" class="friend-photo">
+                                <div class="online-status off"></div>
+                            </div>
+                            <div class="item-text-block">
+                                <div class="card no-padding">
+                                    <div class="card-setting-container">
+                                        <div class="card-setting-text">Paypal</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                    }
+                    @if (Model.TapLinks.FirstOrDefault(x => x.SocialProvider == Atlice.Domain.Entities.SocialProvider.CashApp) == null)
+                    {
+                        <a href="#" onclick="fetch('/homeboard/Index?handler=addtaplink&linktype=@Atlice.Domain.Entities.LinkType.Pay&socialProvider=@Atlice.Domain.Entities.SocialProvider.CashApp&pageId=@Model.Id').then(x => x.json()).then(y=> document.getElementById('paylist').insertAdjacentHTML('beforeend',y.view)).then(z=> this.remove()).then(a => document.getElementById('OpenPayList').removeAttribute('style'))" class="friend-item tap-link-dropdown w-inline-block">
+                            <div class="friend-photo-container">
+                                <img width="50" src="../images/SquareCash.png" alt="" class="friend-photo">
+                                <div class="online-status off"></div>
+                            </div>
+                            <div class="item-text-block">
+                                <div class="card no-padding">
+                                    <div class="card-setting-container">
+                                        <div class="card-setting-text">Cash App</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                    }
+                    @if (Model.TapLinks.FirstOrDefault(x => x.SocialProvider == Atlice.Domain.Entities.SocialProvider.Venmo) == null)
+                    {
+
+                        <a href="#" onclick="fetch('/homeboard/Index?handler=addtaplink&linktype=@Atlice.Domain.Entities.LinkType.Pay&socialProvider=@Atlice.Domain.Entities.SocialProvider.Venmo&pageId=@Model.Id').then(x => x.json()).then(y=> document.getElementById('paylist').insertAdjacentHTML('beforeend',y.view)).then(z=> this.remove()).then(a => document.getElementById('OpenPayList').removeAttribute('style'))" class="friend-item tap-link-dropdown w-inline-block">
+                            <div class="friend-photo-container">
+                                <img width="50" src="../images/VenmoHex.png" alt="" class="friend-photo">
+                                <div class="online-status off"></div>
+                            </div>
+                            <div class="item-text-block">
+                                <div class="card no-padding">
+                                    <div class="card-setting-container">
+                                        <div class="card-setting-text">Venmo</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                    }
+
+
+
+                </nav>
+            </div>
+        </div>
+        <ul role="list" class="list-3">
+            <li class="list-item-4" id="paylist">
+                @foreach (var link in Model.TapLinks.Where(x => x.LinkType == Domain.Entities.LinkType.Pay))
+                {
+                    await Html.RenderPartialAsync("/pages/homeboard/pay_link_partial.cshtml", link);
+                }
+
+
+            </li>
+        </ul>
+        @if (!User.IsInRole("Tourist"))
+        {
+            <div class="div-block-18">
+                <div class="page-editor-heading-block">
+                    <div class="page-editor-title-block">
+                        <div class="profile-info-heading"><strong>Blockchain</strong></div>
+                        <img onclick="javascript:{if(document.getElementById('chainInfo').getAttribute('style') == null){document.getElementById('chainInfo').setAttribute('style','display:none;')}else{document.getElementById('chainInfo').removeAttribute('style')}}" src="../images/info-information-detail-learn-more.png" loading="lazy" data-w-id="8094e670-cc45-d0ca-87a2-aea2fdb9d94c" alt="" class="image-72">
+                    </div><img loading="lazy" src="../images/artboard-23.png" alt="" class="friend-photo menu-item reference">
+                </div>
+                <div class="information-block" style="display:none;" id="chainInfo">
+                    <p class="paragraph-33">Use drop-down menu to add links. Toggle to SHOW or HIDE on Preview of contact page. Publish to show on live contact page. <span>on</span> contact page.</p>
+                </div>
+            </div>
+            <div class="connect-list-input-block">
+                <div class="friend-item">
+                    <div class="friend-photo-container">
+                        <img width="50" src="../images/artboard-23.png" alt="" class="friend-photo">
+                        @if (Model.TapLinks.Any(x => x.LinkType == Atlice.Domain.Entities.LinkType.Blockchain && x.ContactPage))
+                        {
+                            <div class="online-status on"></div>
+
+                        }
+                        else
+                        {
+                            <div class="online-status off"></div>
+
+
+                        }
+                    </div>
+                    <div class="tap-links-form w-form">
+                        <form id="email-form-2" name="email-form-2" data-name="Email Form 2" method="get">
+                            <div onclick="javascript:{if(document.getElementById('chainInfo').getAttribute('style') == null){document.getElementById('chainInfo').setAttribute('style','display:none;')}else{document.getElementById('chainInfo').removeAttribute('style')}}">
+                                <div class="card no-padding">
+                                    <div class="card-setting-container">
+                                        <div class="card-setting-text">Public Addresses</div>
+
+                                    </div>
+                                    <div id="BlockchainStatus"></div>
+
+                                </div>
+                            </div>
+                        </form>
+                        <div class="w-form-done">
+                            <div>Thank you! Your submission has been received!</div>
+                        </div>
+                        <div class="w-form-fail">
+                            <div>Oops! Something went wrong while submitting the form.</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="tap-links-dropdown-block">
+                <div data-delay="0" data-hover="false" class="dropdown w-dropdown" style="z-index:999;">
+                    <div onclick="javascript:{if(this.nextElementSibling.getAttribute('style') == null){this.nextElementSibling.setAttribute('style','display:block; background-color:white;')}else{this.nextElementSibling.removeAttribute('style');}}" class="dropdown-toggle w-dropdown-toggle">
+                        <div class="div-block-40">
+                            <div class="item-text-block">
+                                <div class="card no-padding button">
+                                    <div class="card-setting-container grey">
+                                        <div class="card-setting-text dropdown">ADD TAP LINKS</div><img src="../images/add-plus-circle-round.png" loading="lazy" alt="" class="image-88">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="icon-2 w-icon-dropdown-toggle"></div>
+                        </div>
+                    </div>
+                    <nav class="dropdown-list w-dropdown-list" id="OpenBlockchainList">
+                        @if (Model.TapLinks.FirstOrDefault(x => x.SocialProvider == Atlice.Domain.Entities.SocialProvider.Ethereum) == null)
+                        {
+                            <a href="#" onclick="fetch('/homeboard/Index?handler=addtaplink&linktype=@Atlice.Domain.Entities.LinkType.Blockchain&socialProvider=@Atlice.Domain.Entities.SocialProvider.Ethereum&pageId=@Model.Id').then(x => x.json()).then(y=> document.getElementById('blockchainlist').insertAdjacentHTML('beforeend',y.view)).then(z=> this.remove()).then(a => document.getElementById('OpenBlockchainList').removeAttribute('style'))" class="friend-item tap-link-dropdown w-inline-block">
+                                <div class="friend-photo-container">
+                                    <img width="50" src="../images/ethereum-tap-link.png" alt="" class="friend-photo">
+                                    <div class="online-status off"></div>
+                                </div>
+                                <div class="item-text-block">
+                                    <div class="card no-padding">
+                                        <div class="card-setting-container">
+                                            <div class="card-setting-text">Ethereum</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </a>
+                        }
+                        @if (Model.TapLinks.FirstOrDefault(x => x.SocialProvider == Atlice.Domain.Entities.SocialProvider.Solana) == null)
+                        {
+                            <a href="#" onclick="fetch('/homeboard/Index?handler=addtaplink&linktype=@Atlice.Domain.Entities.LinkType.Blockchain&socialProvider=@Atlice.Domain.Entities.SocialProvider.Solana&pageId=@Model.Id').then(x => x.json()).then(y=> document.getElementById('blockchainlist').insertAdjacentHTML('beforeend',y.view)).then(z=> this.remove()).then(a => document.getElementById('OpenBlockchainList').removeAttribute('style'))" class="friend-item tap-link-dropdown w-inline-block">
+                                <div class="friend-photo-container">
+                                    <img width="50" src="../images/solana-tap-link.png" alt="" class="friend-photo">
+                                    <div class="online-status off"></div>
+                                </div>
+                                <div class="item-text-block">
+                                    <div class="card no-padding">
+                                        <div class="card-setting-container">
+                                            <div class="card-setting-text">Solana</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </a>
+                        }
+                        @if (Model.TapLinks.FirstOrDefault(x => x.SocialProvider == Atlice.Domain.Entities.SocialProvider.Cardano) == null)
+                        {
+
+                            <a href="#" onclick="fetch('/homeboard/Index?handler=addtaplink&linktype=@Atlice.Domain.Entities.LinkType.Blockchain&socialProvider=@Atlice.Domain.Entities.SocialProvider.Cardano&pageId=@Model.Id').then(x => x.json()).then(y=> document.getElementById('blockchainlist').insertAdjacentHTML('beforeend',y.view)).then(z=> this.remove()).then(a => document.getElementById('OpenBlockchainList').removeAttribute('style'))" class="friend-item tap-link-dropdown w-inline-block">
+                                <div class="friend-photo-container">
+                                    <img width="50" src="../images/cardano-tap-link.png" alt="" class="friend-photo">
+                                    <div class="online-status off"></div>
+                                </div>
+                                <div class="item-text-block">
+                                    <div class="card no-padding">
+                                        <div class="card-setting-container">
+                                            <div class="card-setting-text">Cardano</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </a>
+                        }
+                        @if (Model.TapLinks.FirstOrDefault(x => x.SocialProvider == Atlice.Domain.Entities.SocialProvider.Tezos) == null)
+                        {
+                            <a href="#" onclick="fetch('/homeboard/Index?handler=addtaplink&linktype=@Atlice.Domain.Entities.LinkType.Blockchain&socialProvider=@Atlice.Domain.Entities.SocialProvider.Tezos&pageId=@Model.Id').then(x => x.json()).then(y=> document.getElementById('blockchainlist').insertAdjacentHTML('beforeend',y.view)).then(z=> this.remove()).then(a => document.getElementById('OpenBlockchainList').removeAttribute('style'))" class="friend-item tap-link-dropdown w-inline-block">
+                                <div class="friend-photo-container">
+                                    <img width="50" src="../images/tezoz-tap-link.png" alt="" class="friend-photo">
+                                    <div class="online-status off"></div>
+                                </div>
+                                <div class="item-text-block">
+                                    <div class="card no-padding">
+                                        <div class="card-setting-container">
+                                            <div class="card-setting-text">Tezos</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </a>
+                        }
+
+
+
+
+                    </nav>
+                </div>
+            </div>
+            <ul role="list" class="list-3">
+                <li class="list-item-4" id="blockchainlist">
+                    @foreach (var link in Model.TapLinks.Where(x => x.LinkType == Domain.Entities.LinkType.Blockchain))
+                    {
+                        await Html.RenderPartialAsync("/pages/homeboard/chain_link_partial.cshtml", link);
+                    }
+
+
+                </li>
+            </ul>
+        }
+
+
+        <div id="Connect1" class="div-block-18">
+            <div class="page-editor-heading-block">
+                <div class="page-editor-title-block">
+                    <div class="profile-info-heading"><strong>Connect</strong></div><img src="../images/info-information-detail-learn-more.png" loading="lazy" data-w-id="69432f6d-9d45-f13a-9b12-d8f69490f160" alt="" class="image-72">
+                </div><img loading="lazy" src="../images/artboard-4.png" alt="" class="friend-photo menu-item reference">
+            </div>
+            <div class="information-block" style="display:none;" id="connectInfo">
+                <p class="paragraph-33">Add Tap Links and toggle to SHOW or HIDE on contact page. If you toggle to SHOW List Layout it will REPLACE Grid Layout on contact page. </p>
+                <p style="color:red;" class="paragraph-33">* Call to Action Required for List Layout</p>
+            </div>
+        </div>
+        <div class="connect-list-input-block">
+            <div class="connect-list-input-block">
+                <div class="friend-item">
+                    <div class="friend-photo-container">
+                        <img width="50" src="../images/tap-links-icon.png" alt="" class="friend-photo">
+                        @if (Model.TapLinks.Any(x => x.LinkType == Atlice.Domain.Entities.LinkType.Connect && x.ContactPage))
+                        {
+
+                            <div class="online-status on"></div>
+                        }
+                        else
+                        {
+                            <div class="online-status off"></div>
+
+                        }
+                    </div>
+                    <div class="tap-links-form w-form">
+                        <form id="email-form-2" name="email-form-2" data-name="Email Form 2" method="get">
+                            <div onclick="javascript:{if(document.getElementById('connectInfo').getAttribute('style') == null){document.getElementById('connectInfo').setAttribute('style','display:none;')}else{document.getElementById('connectInfo').removeAttribute('style')}}">
+                                <div class="card no-padding">
+                                    <div class="card-setting-container">
+                                        <div class="card-setting-text">Connect/Social Links</div>
+                                    </div>
+                                    <div id="FlexStatus"></div>
+                                </div>
+                            </div>
+                        </form>
+                        <div class="w-form-done">
+                            <div>Thank you! Your submission has been received!</div>
+                        </div>
+                        <div class="w-form-fail">
+                            <div>Oops! Something went wrong while submitting the form.</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="div-block-101">
+                <div id="Grid" class="friend-item">
+                    <a onclick="document.getElementById('leftGrid').click()" href="#" class="friend-photo-container" id="@Model.Id">
+                        <img width="50" src="../images/artboard-4.png" alt="" class="friend-photo">
+                        @if (Model.Grid)
+                        {
+                            <div class="online-status on"></div>
+
+                        }
+                        else
+                        {
+                            <div class="online-status off"></div>
+
+                        }
+                    </a>
+                    <div class="tap-links-form w-form">
+                        <form name="email-form-2" data-name="Email Form 2" method="get">
+                            <div>
+                                <div class="card no-padding">
+                                    <div class="card-setting-container radio">
+                                        <a onclick="document.getElementById('leftGrid').click()" href="#" id="@Model.Id">
+                                            <div id="w-node-_5145b14f-d71b-73f2-b158-64cf4a885ee4-bca33c40" class="card-setting-text left-layout">Grid Layout</div>
+                                        </a>
+                                        <div class="connect-layout-switcher connect">
+                                            <div class="card-setting-switcher connect">
+                                                <label class="w-checkbox switcher-wrapper-checkbox connect">
+                                                    <div class="w-checkbox-input w-checkbox-input--inputType-custom switcher-button-checkbox-connect connect"></div>
+                                                    <input type="checkbox" name="checkbox-15" id="checkbox-15" data-name="Checkbox 15" style="opacity:0;position:absolute;z-index:-1">
+                                                    <span class="checkbox-label-8 w-form-label" for="checkbox-15"></span>
+                                                </label>
+                                            </div>
+                                        </div>
+                                        <div id="gridSwitcher" class="div-block-103">
+
+                                            @if (Model.Grid)
+                                            {
+                                                <label class="radio-button-field-2 w-radio" id="leftGrid">
+                                                    <div class="w-form-formradioinput w-form-formradioinput--inputType-custom radio-button-toggle-on connect w-radio-input w--redirected-checked" data-w-id="ee2503b7-ed16-03a5-8b9b-a4a8649d87a5"></div>
+
+                                                    <input onclick="fetch('/homeboard/Index?handler=layoutswap&choice=true&id='+this.id).then(x => x.json()).then(y=> document.getElementById('connectlist').innerHTML = y.view)" type="radio" data-name="Layout" id="@Model.Id" name="Layout" value="Grid" style="opacity:0;position:absolute;z-index:-1">
+
+                                                    <span class="radio-button-label w-form-label" for="Grid-2"></span>
+                                                </label>
+                                                <label class="radio-button-field w-radio" id="rightList">
+                                                    <div class="w-form-formradioinput w-form-formradioinput--inputType-custom radio-button-toggle-on connect w-radio-input" data-w-id="701035c1-02f0-7bfe-40b7-fef791c06111"></div>
+                                                    <input onclick="fetch('/homeboard/Index?handler=layoutswap&choice=false&id='+this.id).then(x => x.json()).then(y=> document.getElementById('connectlist').innerHTML = y.view)" type="radio" data-name="Layout" id="@Model.Id" name="Layout" value="List" style="opacity:0;position:absolute;z-index:-1">
+                                                    <span class="radio-button-label w-form-label" for="List-2">Radio 6</span>
+                                                </label>
+                                            }
+                                            else
+                                            {
+                                                <label class="radio-button-field-2 w-radio" id="leftGrid">
+                                                    <div class="w-form-formradioinput w-form-formradioinput--inputType-custom radio-button-toggle-on connect w-radio-input" data-w-id="ee2503b7-ed16-03a5-8b9b-a4a8649d87a5"></div>
+
+                                                    <input onclick="fetch('/homeboard/Index?handler=layoutswap&choice=true&id='+this.id).then(x => x.json()).then(y=> document.getElementById('connectlist').innerHTML = y.view)" type="radio" data-name="Layout" id="@Model.Id" name="Layout" value="Grid" style="opacity:0;position:absolute;z-index:-1">
+
+                                                    <span class="radio-button-label w-form-label" for="Grid-2"></span>
+                                                </label>
+                                                <label class="radio-button-field w-radio" id="rightList">
+                                                    <div class="w-form-formradioinput w-form-formradioinput--inputType-custom radio-button-toggle-on connect w-radio-input w--redirected-checked" data-w-id="701035c1-02f0-7bfe-40b7-fef791c06111"></div>
+                                                    <input onclick="fetch('/homeboard/Index?handler=layoutswap&choice=false&id='+this.id).then(x => x.json()).then(y=> document.getElementById('connectlist').innerHTML = y.view).then(z=> showTooltip())" type="radio" data-name="Layout" id="@Model.Id" name="Layout" value="List" style="opacity:0;position:absolute;z-index:-1">
+                                                    <span class="radio-button-label w-form-label" for="List-2">Radio 6</span>
+                                                </label>
+                                            }
+
+                                        </div>
+
+                                        <a onclick="document.getElementById('rightList').click()" href="#" id="@Model.Id">
+                                            <div id="w-node-da4f5934-0d40-6b7c-1a48-d8192679ccb7-bca33c40" class="card-setting-text right-layout">List Layout</div>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                        <div class="w-form-done">
+                            <div>Thank you! Your submission has been received!</div>
+                        </div>
+                        <div class="w-form-fail">
+                            <div>Oops! Something went wrong while submitting the form.</div>
+                        </div>
+                    </div>
+                    <a onclick="document.getElementById('rightList').click()" href="#" class="friend-photo-container right" id="@Model.Id">
+                        <img width="50" src="../images/list-to-do-checkmark-option.png" alt="" class="friend-photo">
+                        @if (!Model.Grid)
+                        {
+                            <div class="online-status on"></div>
+                        }
+                        else
+                        {
+                            <div class="online-status off"></div>
+                        }
+
+                    </a>
+                </div>
+                <div id="ConnectStatus"></div>
+
+            </div>
+           
+            <div id="Connect" class="tap-links-dropdown-block">
+                <div data-delay="0" data-hover="false" class="dropdown w-dropdown" style="z-index:99;">
+                    <div onclick="javascript:{if(this.nextElementSibling.getAttribute('style') == null){this.nextElementSibling.setAttribute('style','display:block;z-index:99; background-color:white;')}else{this.nextElementSibling.removeAttribute('style');}}" class="dropdown-toggle w-dropdown-toggle">
+                        <div class="div-block-40">
+                            <div class="item-text-block">
+                                <div class="card no-padding button">
+                                    <div class="card-setting-container grey">
+                                        <div class="card-setting-text dropdown">ADD TAP LINKS</div><img src="../images/add-plus-circle-round.png" loading="lazy" alt="" class="image-88">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="icon-2 w-icon-dropdown-toggle"></div>
+                        </div>
+                    </div>
+                    <nav class="dropdown-list w-dropdown-list" id="OpenConnectList">
+                        @await Html.PartialAsync("/pages/homeboard/_OpenConnectLinkPartial.cshtml", Model);
+                    </nav>
+                </div>
+            </div>
+            <ul data-w-id="b3bad71c-17c7-f26e-0e15-85e0c6cc8ecd" style="display:block;" role="list" class="list-3-copy">
+                <li class="list-item-4" id="connectlist">
+                    @if (Model.Grid)
+                    {
+                        @await Html.PartialAsync("/pages/homeboard/grid_partial.cshtml", Model)
+                        ;
+                    }
+                    else
+                    {
+                        @await Html.PartialAsync("/pages/homeboard/list_partial.cshtml", Model)
+                        ;
+                    }
+
+                </li>
+            </ul>
+
+        </div>
+        <div class="connect-list-form-items-block w-container">
+        </div>
+        @if (!User.IsInRole("Tourist"))
+        {
+            <div class="div-block-18">
+                <div class="page-editor-heading-block">
+                    <div class="page-editor-title-block">
+                        <div class="profile-info-heading"><strong>Shop</strong></div>
+                        <img onclick="javascript:{if(document.getElementById('shopInfo').getAttribute('style') == null){document.getElementById('shopInfo').setAttribute('style','display:none;')}else{document.getElementById('shopInfo').removeAttribute('style')}}" src="../images/info-information-detail-learn-more.png" loading="lazy" data-w-id="08fcbb92-2101-d56d-a581-9fc9d7e3a552" alt="" class="image-72">
+                    </div><img loading="lazy" src="../images/market-store-ecommerce-building.png" alt="" class="friend-photo menu-item reference">
+                </div>
+                <div class="information-block" id="shopInfo" style="display:none;">
+                    <p class="paragraph-33">Use drop-down menu to add links. Toggle to SHOW or HIDE on Preview of contact page. Publish to show on live contact page.</p>
+                </div>
+            </div>
+            <div class="connect-list-input-block">
+                <div class="friend-item">
+                    <div class="friend-photo-container">
+                        <img width="50" src="../images/market-store-ecommerce-building.png" alt="" class="friend-photo">
+                        @if (Model.TapLinks.Any(x => x.LinkType == Atlice.Domain.Entities.LinkType.Shop && x.ContactPage))
+                        {
+
+                            <div class="online-status on"></div>
+                        }
+                        else
+                        {
+                            <div class="online-status off"></div>
+
+                        }
+                    </div>
+                    <div class="tap-links-form w-form">
+                        <form id="email-form-2" name="email-form-2" data-name="Email Form 2" method="get">
+                            <div onclick="javascript:{if(document.getElementById('shopInfo').getAttribute('style') == null){document.getElementById('shopInfo').setAttribute('style','display:none;')}else{document.getElementById('shopInfo').removeAttribute('style')}}">
+                                <div class="card no-padding">
+                                    <div class="card-setting-container">
+                                        <div class="card-setting-text">Shop Links</div>
+
+                                    </div>
+                                    <div id="ShopStatus"></div>
+
+                                </div>
+                            </div>
+                        </form>
+                        <div class="w-form-done">
+                            <div>Thank you! Your submission has been received!</div>
+                        </div>
+                        <div class="w-form-fail">
+                            <div>Oops! Something went wrong while submitting the form.</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="tap-links-dropdown-block">
+                <div data-delay="0" data-hover="false" class="dropdown w-dropdown">
+                    <div onclick="javascript:{if(this.nextElementSibling.getAttribute('style') == null){this.nextElementSibling.setAttribute('style','display:block; background-color:white;')}else{this.nextElementSibling.removeAttribute('style');}}" class="dropdown-toggle w-dropdown-toggle">
+                        <div class="div-block-40">
+                            <div class="item-text-block">
+                                <div class="card no-padding button">
+                                    <div class="card-setting-container grey">
+                                        <div class="card-setting-text dropdown">ADD TAP LINKS</div><img src="../images/add-plus-circle-round.png" loading="lazy" alt="" class="image-88">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="icon-2 w-icon-dropdown-toggle"></div>
+                        </div>
+                    </div>
+                    <nav class="dropdown-list w-dropdown-list" id="OpenShopList">
+                        @for (int i = 0; i < (3 - Model.TapLinks.Where(x => x.LinkType == Domain.Entities.LinkType.Shop).Count()); i++)
+                        {
+                            <a onclick="fetch('/homeboard/Index?handler=addtaplink&linktype=@Atlice.Domain.Entities.LinkType.Shop&socialProvider=@Atlice.Domain.Entities.SocialProvider.Shop&pageId=@Model.Id').then(x => x.json()).then(y=> document.getElementById('shoplist').insertAdjacentHTML('beforeend',y.view)).then(z=> $(this).remove()).then(a => document.getElementById('OpenShopList').removeAttribute('style'))" href="#" class="friend-item tap-link-dropdown w-inline-block">
+                                <div class="friend-photo-container">
+                                    <img width="50" src="../images/BA80C18C-AA4A-4EC0-9A83-E7C9A998A127.png" alt="" class="friend-photo">
+                                    <div class="online-status off"></div>
+                                </div>
+                                <div class="item-text-block">
+                                    <div class="card no-padding">
+                                        <div class="card-setting-container">
+                                            <div class="card-setting-text">Shop/Item</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </a>
+                        }
+
+
+                    </nav>
+                </div>
+            </div>
+            <div class="store-list-form-items-block w-container" id="shoplist">
+                @foreach (var link in Model.TapLinks.Where(x => x.LinkType == Domain.Entities.LinkType.Shop))
+                {
+                    await Html.RenderPartialAsync("/pages/homeboard/shop_link_partial.cshtml", link);
+
+                }
+
+
+            </div>
+        }
+
+
+        <div class="key-block">
+            <div class="friend-item key-2">
+                <div class="friend-photo-container">
+                    <div class="switcher-button-checkbox green"></div>
+                </div>
+                <p class="paragraph-33 key-green">= Stage and Preview</p>
+            </div>
+            <div class="friend-item key">
+                <div class="friend-photo-container"><img src="../images/online-status-dot.png" width="50" alt="" class="friend-photo key"></div>
+                <p class="paragraph-33 key-green">= Published to Page</p>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="vcardtab" data-w-tab="Contact Menu" class="tab-pane-contact-menu w-tab-pane">
+    <div class="save-to-contacts-menu-block wf-section">
+        <div class="div-block-44">
+            <div class="page-editor-heading-block">
+                <div class="page-editor-title-block">
+                    <div class="profile-info-heading"><strong>Save to Contacts</strong></div>
+                    <img onclick="javascript:{if(document.getElementById('stcInfo').getAttribute('style') == null){document.getElementById('stcInfo').setAttribute('style','display:none;')}else{document.getElementById('stcInfo').removeAttribute('style')}}" src="../images/info-information-detail-learn-more.png" loading="lazy" data-w-id="93b12ff8-025f-8c61-5d70-b3168a49a2c3" alt="" class="image-72">
+                </div><img width="30" src="../images/contacts-icon_1contacts-icon.png" alt="" class="friend-photo menu-item reference">
+            </div>
+            <div class="information-block stcinfo1" id="stcInfo" style="display:none;">
+                <p class="paragraph-33">Toggle to show or hide Save to Contacts button on Contact Page.<br></p>
+                <p id="stcUpdate"></p>
+            </div>
+            <div class="friend-item">
+                <div class="friend-photo-container">
+                    <img width="50" src="../images/download-file-arrow.png" alt="" class="friend-photo">
+                    @if (Model.SaveToContacts)
+                    {
+                        <div class="online-status on"></div>
+
+                    }
+                    else
+                    {
+                        <div class="online-status off"></div>
+
+                    }
+                </div>
+                <div class="tap-links-form w-form">
+                    <form id="stcPreview" name="email-form-2" data-name="Email Form 2" method="get">
+                        <div>
+                            <div class="card no-padding">
+                                <div class="card-setting-container">
+                                    <div class="card-setting-text">Save to Contacts (vCard)</div>
+                                    <div class="card-setting-switcher">
+                                        <label class="w-checkbox switcher-wrapper-checkbox" onclick="javascript:{if(document.getElementById('stcToggle').getAttribute('style') == null){document.getElementById('stcToggle').setAttribute('style','display:none;')}else{document.getElementById('stcToggle').removeAttribute('style')}}">
+                                            @if (Model.SaveToContactsPreview)
+                                            {
+                                                <div class="w-checkbox-input w-checkbox-input--inputType-custom switcher-button-checkbox w--redirected-checked"></div>
+                                                <input onclick="javascript:{if(document.getElementById('stcToggle').getAttribute('style') == null){document.getElementById('stcToggle').setAttribute('style','display:none;')}else{document.getElementById('stcToggle').removeAttribute('style')} fetch('/homeboard/Index?handler=savepreviewstate&value='+this.previousElementSibling.getAttribute('class')+'&id='+this.id+'&name='+this.getAttribute('name')).then(x => x.json()).then(y=> document.getElementById('stcUpdate').innerHTML = y.status);}" type="checkbox" asp-for="SaveToContactsPreview" name="SaveToContactsPreview" id="@Model.Id" checked="checked" style="opacity:0;position:absolute;z-index:-1">
+                                                <span class="checkbox-label-8 w-form-label" for="checkbox-15"></span>
+                                            }
+                                            else
+                                            {
+                                                <div class="w-checkbox-input w-checkbox-input--inputType-custom switcher-button-checkbox"></div>
+                                                <input onclick="javascript:{if(document.getElementById('stcToggle').getAttribute('style') == null){document.getElementById('stcToggle').setAttribute('style','display:none;')}else{document.getElementById('stcToggle').removeAttribute('style')} fetch('/homeboard/Index?handler=savepreviewstate&value='+this.previousElementSibling.getAttribute('class')+'&id='+this.id+'&name='+this.getAttribute('name')).then(x => x.json()).then(y=> document.getElementById('stcUpdate').innerHTML = y.status);}" type="checkbox" asp-for="SaveToContactsPreview" name="SaveToContactsPreview" id="@Model.Id" style="opacity:0;position:absolute;z-index:-1">
+                                                <span class="checkbox-label-8 w-form-label" for="checkbox-15"></span>
+                                            }
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                    <div class="w-form-done">
+                        <div>Thank you! Your submission has been received!</div>
+                    </div>
+                    <div class="w-form-fail">
+                        <div>Oops! Something went wrong while submitting the form.</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        @if (Model.SaveToContactsPreview)
+        {
+            <div class="stc-toggles-block" id="stcToggle">
+                <div class="information-block stcinfo2">
+                    <p class="paragraph-33">Select all Tap Links and/or contact information you want included in the Save t<span>o</span> Contacts (vCard) download link on contact page. <br></p>
+                    <p class="small-paragraph">*Contact information and links must first be added under the Contact Card and/or Tap Links tab first to be listed here. By publishing Save to Contacts to your contact page, once you tap your Atlice Tap device with your prospects NFC enabled phone, your selections here will be made available to be saved when they select Save To Contacts. <br></p>
+                </div>
+                <div class="w-row" id="vcardlinks">
+                    @await Html.PartialAsync("/pages/homeboard/vcard_partial.cshtml",Model)
+
+                </div>
+                <div class="information-block">
+                    <div class="key-block stc">
+                        <div class="friend-item key-2">
+                            <div class="friend-photo-container">
+                                <div class="switcher-button-checkbox green"></div>
+                            </div>
+                            <p class="paragraph-33 key-green">= Stage and Preview</p>
+                        </div>
+                        <div class="friend-item key stc">
+                            <div class="friend-photo-container"><img src="../images/online-status-dot.png" width="50" alt="" class="friend-photo key"></div>
+                            <p class="paragraph-33 key-green">= Published to Page</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+        else
+        {
+            <div class="stc-toggles-block" id="stcToggle" style="display:none;">
+                <div class="information-block stcinfo2">
+                    <p class="paragraph-33">Select all Tap Links and/or contact information you want included in the Save t<span>o</span> Contacts (vCard) download link on contact page. <br></p>
+                    <p class="small-paragraph">*Contact information and links must first be added under the Contact Card and/or Tap Links tab first to be listed here. By publishing Save to Contacts to your contact page, once you tap your Atlice Tap device with your prospects NFC enabled phone, your selections here will be made available to be saved when they select Save To Contacts. <br></p>
+                </div>
+                <div class="w-row" id="vcardlinks">
+                    @await Html.PartialAsync("/pages/homeboard/vcard_partial.cshtml",Model)
+
+                </div>
+                <div class="information-block">
+                    <div class="key-block stc">
+                        <div class="friend-item key-2">
+                            <div class="friend-photo-container">
+                                <div class="switcher-button-checkbox green"></div>
+                            </div>
+                            <p class="paragraph-33 key-green">= Stage and Preview</p>
+                        </div>
+                        <div class="friend-item key stc">
+                            <div class="friend-photo-container"><img src="../images/online-status-dot.png" width="50" alt="" class="friend-photo key"></div>
+                            <p class="paragraph-33 key-green">= Published to Page</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+
+    </div>
+    @if (!User.IsInRole("Tourist"))
+    {
+        <div class="section-14 submit-contact wf-section">
+            <div class="page-editor-heading-block">
+                <div class="page-editor-title-block">
+                    <div class="profile-info-heading"><strong>Submit Contact</strong></div>
+                    <img onclick="javascript:{if(document.getElementById('scInfo').getAttribute('style') == null){document.getElementById('scInfo').setAttribute('style','display:none;')}else{document.getElementById('scInfo').removeAttribute('style')}}" src="../images/info-information-detail-learn-more.png" loading="lazy" data-w-id="701ee1e8-0374-e779-60c8-0de8a6d7a032" alt="" class="image-72">
+                </div><img loading="lazy" src="../images/contacts-icon_1contacts-icon.png" alt="" class="friend-photo menu-item reference">
+            </div>
+            <div class="information-block" id="scInfo">
+                <p>Toggle to show or hide Submit Contact on contact page. (Premium Feature)</p>
+            </div>
+            <p id="scUpdate"></p>
+            <div class="friend-item">
+                <div class="friend-photo-container">
+                    <img width="50" src="../images/upload-file-arrow.png" alt="" class="friend-photo">
+                    @if (Model.SubmitContact)
+                    {
+                        <div class="online-status on"></div>
+
+                    }
+                    else
+                    {
+                        <div class="online-status off"></div>
+
+                    }
+                </div>
+                <div class="tap-links-form w-form">
+                    <form id="scPreview" name="email-form-2" data-name="Email Form 2" method="get">
+                        <div>
+                            <div class="card no-padding">
+                                <div class="card-setting-container sc">
+                                    <div class="card-setting-text">Submit Contact</div>
+                                    <div class="card-setting-switcher">
+                                        <label class="w-checkbox switcher-wrapper-checkbox">
+                                            @if (Model.SubConpreview)
+                                            {
+                                                <div class="w-checkbox-input w-checkbox-input--inputType-custom switcher-button-checkbox w--redirected-checked"></div>
+                                                <input onclick="fetch('/homeboard/Index?handler=savepreviewstate&value='+this.previousElementSibling.getAttribute('class')+'&id='+this.id+'&name='+this.getAttribute('name')).then(x => x.json()).then(y=> document.getElementById('scUpdate').innerHTML = y.status)" type="checkbox" asp-for="SubConpreview" name="SubConpreview" id="@Model.Id" checked="checked" style="opacity:0;position:absolute;z-index:-1">
+                                                <span class="checkbox-label-8 w-form-label" for="checkbox-15"></span>
+                                            }
+                                            else
+                                            {
+                                                <div class="w-checkbox-input w-checkbox-input--inputType-custom switcher-button-checkbox"></div>
+                                                <input onclick="fetch('/homeboard/Index?handler=savepreviewstate&value='+this.previousElementSibling.getAttribute('class')+'&id='+this.id+'&name='+this.getAttribute('name')).then(x => x.json()).then(y=> document.getElementById('scUpdate').innerHTML = y.status)" type="checkbox" asp-for="SubConpreview" name="SubConpreview" id="@Model.Id" style="opacity:0;position:absolute;z-index:-1">
+                                                <span class="checkbox-label-8 w-form-label" for="checkbox-15"></span>
+                                            }
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                    <div class="w-form-done">
+                        <div>Thank you! Your submission has been received!</div>
+                    </div>
+                    <div class="w-form-fail">
+                        <div>Oops! Something went wrong while submitting the form.</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    }
+
+    <div class="section-14 nts-menu-block note-to-self wf-section">
+        <div class="page-editor-heading-block">
+            <div class="page-editor-title-block">
+                <div class="profile-info-heading"><strong>Note To Self</strong></div>
+                <img onclick="javascript:{if(document.getElementById('ntsInfo').getAttribute('style') == null){document.getElementById('ntsInfo').setAttribute('style','display:none;')}else{document.getElementById('ntsInfo').removeAttribute('style')}}" src="../images/info-information-detail-learn-more.png" loading="lazy" data-w-id="efe67c01-ce6d-eb68-a72b-f77778be4d2c" alt="" class="image-72">
+            </div><img loading="lazy" src="../images/edit-writing-tools-pencil.png" alt="" class="friend-photo menu-item reference">
+        </div>
+        <div class="information-block" id="ntsInfo">
+            <p>Toggle to show or hide Note to Self on contact page.</p>
+        </div>
+        <div class="friend-item">
+            <div class="friend-photo-container">
+                <img width="50" src="../images/edit-writing-tools-pencil.png" alt="" class="friend-photo">
+                @if (Model.NoteToSelf)
+                {
+                    <div class="online-status on"></div>
+
+                }
+                else
+                {
+                    <div class="online-status off"></div>
+
+                }
+            </div>
+            <div class="tap-links-form w-form">
+                <form id="ntsPreview" name="email-form-2" data-name="Email Form 2" method="get">
+                    <div>
+                        <div class="card no-padding">
+                            <div class="card-setting-container sc">
+                                <div class="card-setting-text">Note to Self</div>
+                                <div class="card-setting-switcher">
+                                    <label class="w-checkbox switcher-wrapper-checkbox">
+                                        @if (Model.NotetoSelfPreview)
+                                        {
+                                            <div class="w-checkbox-input w-checkbox-input--inputType-custom switcher-button-checkbox w--redirected-checked"></div>
+                                            <input onclick="fetch('/homeboard/Index?handler=savepreviewstate&value='+this.previousElementSibling.getAttribute('class')+'&id='+this.id+'&name='+this.getAttribute('name')).then(x => x.json()).then(y=> document.getElementById('scUpdate').innerHTML = y.status)" type="checkbox" asp-for="NotetoSelfPreview" name="NotetoSelfPreview" id="@Model.Id" checked="checked" style="opacity:0;position:absolute;z-index:-1">
+                                            <span class="checkbox-label-8 w-form-label" for="checkbox-15"></span>
+                                        }
+                                        else
+                                        {
+                                            <div class="w-checkbox-input w-checkbox-input--inputType-custom switcher-button-checkbox"></div>
+                                            <input onclick="fetch('/homeboard/Index?handler=savepreviewstate&value='+this.previousElementSibling.getAttribute('class')+'&id='+this.id+'&name='+this.getAttribute('name')).then(x => x.json()).then(y=> document.getElementById('scUpdate').innerHTML = y.status)" type="checkbox" asp-for="NotetoSelfPreview" name="NotetoSelfPreview" id="@Model.Id" style="opacity:0;position:absolute;z-index:-1">
+                                            <span class="checkbox-label-8 w-form-label" for="checkbox-15"></span>
+                                        }
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+                <div class="w-form-done">
+                    <div>Thank you! Your submission has been received!</div>
+                </div>
+                <div class="w-form-fail">
+                    <div>Oops! Something went wrong while submitting the form.</div>
+                </div>
+            </div>
+        </div>
+        <div class="information-block"></div>
+    </div>
+    <div class="key-block">
+        <div class="friend-item key-2">
+            <div class="friend-photo-container">
+                <div class="switcher-button-checkbox green"></div>
+            </div>
+            <p class="paragraph-33 key-green">= Stage and Preview</p>
+        </div>
+        <div class="friend-item key">
+            <div class="friend-photo-container"><img width="50" src="../images/online-status-dot.png" alt="" class="friend-photo key"></div>
+            <p class="paragraph-33 key-green">= Published to Page</p>
+        </div>
+    </div>
+</div>

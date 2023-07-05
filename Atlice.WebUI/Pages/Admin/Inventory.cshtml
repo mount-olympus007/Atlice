@@ -1,0 +1,227 @@
+﻿@page "{pageNo?}"
+@model Atlice.WebUI.Pages.Admin.InventoryModel
+@{
+    Layout = "_AdminLayout";
+
+}
+<div class="app-main-layout-header">
+    <div class="app-main-layout-wrapper header">
+        <div class="page-heading with-button">
+            <h2 class="heading-62">Inventory</h2>
+            <p>Device assignment and activation management</p>
+            <div>
+                Pages:
+                @for (int i = 0; i < Model.Count; i += 100)
+                {
+                    int pageNo = i / 100;
+                    <a href="/admin/inventory/@pageNo">@pageNo</a>
+                }
+            </div>
+            <div class="page-title-button">
+                <a href="/admin/fullfillment" data-w-id="12a5f6bc-13d8-b5ce-88d8-d43504309c8e" class="button atlice-button-primary w-button">Fulfillment</a>
+            </div>
+        </div>
+        <div class="page-tabs-menu hidden">
+            <a href="#" class="page-tab-link price-plans">Atlice Tap</a>
+            <a href="../AA1.3/payments/payments-variant-2-manage-subscription.html" class="page-tab-link subscription">Mastergrind Tap</a>
+            <a href="../AA1.3/payments/payments-variant-3-price-plans.html" class="page-tab-link price-plans">FutureActive</a>
+            <a href="../AA1.3/payments/payments-variant-4-receipt.html" class="page-tab-link receipt">Beta</a>
+        </div>
+    </div>
+</div>
+<div class="app-main-layout-wrapper">
+    <div class="app-main-layout-content">
+        <div class="filter-bar-form-dropdown-block">
+            <div class="app-navbar-menu-item">
+                <div data-delay="0" class="menu-dropdown-2 w-dropdown">
+                    <div class="menu-dropdown-toggle-2 dropdown-filter w-dropdown-toggle"></div>
+                    <nav class="menu-dropdown-list-2 filter-search filter-search-dropdown w-dropdown-list">
+                        <div class="search-form-block w-form">
+                            <form class="inventory-search-form" name="email-form-3" data-name="Email Form 3" asp-page-handler="FindDevice" data-ajax="true" data-ajax-method="POST" data-ajax-mode="replace" data-ajax-update="#deviceGrid">
+                                <label for="name-8" class="field-label-2">Tap ID:</label>
+                                <div class="div-block-5">
+                                    <input type="text" class="text-field-3 w-input" maxlength="256" name="tapid" data-name="Name 7" placeholder="" id="name-7">
+                                    <input type="submit" value="" data-wait="Please wait..." class="submit-button-2 search w-button">
+                                </div>
+                                <label for="name-8" class="field-label-2">Activated:</label>
+                                <div class="div-block-6">
+                                    <input type="text" class="text-field-3 w-input" maxlength="256" name="activated" data-name="Name 7" placeholder="" id="name-7">
+                                    <input type="submit" value="" data-wait="Please wait..." class="submit-button-2 search w-button">
+                                </div>
+                                <label for="email-3" class="field-label-2">Assigned:</label>
+                                <div class="div-block-7">
+                                    <input type="text" class="text-field-3 w-input" maxlength="256" name="assigned" data-name="Email 3" placeholder="" id="email-3">
+                                    <input type="submit" value="" data-wait="Please wait..." class="submit-button-2 search w-button">
+                                </div>
+                            </form>
+                            <div class="w-form-done">
+                                <div>Thank you! Your submission has been received!</div>
+                            </div>
+                            <div class="w-form-fail">
+                                <div>Oops! Something went wrong while submitting the form.</div>
+                            </div>
+                        </div>
+                    </nav>
+                </div>
+            </div>
+        </div>
+        <div class="section inventory">
+            <div class="section-inner">
+                <div class="card no-padding receipt-table">
+                    <div class="product-row">
+                        <div id="w-node-dd1f8cdf-78a6-786d-a1b0-68f62504f3a9-87935a25" class="filter-bar-form-block w-form">
+                            <form id="email-form-2" name="email-form-2" data-name="Email Form 2" class="fulfillment-filter-bar-form-item">
+                                <div id="w-node-dd1f8cdf-78a6-786d-a1b0-68f62504f3ab-87935a25" class="card-setting-text caption">Item</div>
+                                <input type="submit" value="" data-wait="Please wait..." class="submit-button-2 filter-bar-form-button w-button">
+                            </form>
+                            <div class="w-form-done">
+                                <div class="text-block-52">Thank you! Your submission has been received!</div>
+                            </div>
+                            <div class="w-form-fail">
+                                <div class="text-block-53">Oops! Something went wrong while submitting the form.</div>
+                            </div>
+                        </div>
+                        <div id="w-node-a9835915-8bb6-3090-16df-a9775d9c6f17-87935a25" class="filter-bar-form-block w-form">
+                            <form id="email-form-2" name="email-form-2" data-name="Email Form 2" class="fulfillment-filter-bar-form-item">
+                                <div id="w-node-a9835915-8bb6-3090-16df-a9775d9c6f19-87935a25" class="card-setting-text caption">Tap ID</div>
+                                <input type="submit" value="" data-wait="Please wait..." class="submit-button-2 filter-bar-form-button w-button">
+                            </form>
+                            <div class="w-form-done">
+                                <div>Thank you! Your submission has been received!</div>
+                            </div>
+                            <div class="w-form-fail">
+                                <div>Oops! Something went wrong while submitting the form.</div>
+                            </div>
+                        </div>
+                        <div id="w-node-_03be10bc-f510-9b1a-db72-4133cf3a7c30-87935a25" class="filter-bar-form-block w-form">
+                            <form id="email-form-2" name="email-form-2" data-name="Email Form 2" class="fulfillment-filter-bar-form-item">
+                                <div id="w-node-_03be10bc-f510-9b1a-db72-4133cf3a7c32-87935a25" class="card-setting-text caption">Activated</div>
+                                <input type="submit" value="" data-wait="Please wait..." class="submit-button-2 filter-bar-form-button w-button">
+                            </form>
+                            <div class="w-form-done">
+                                <div>Thank you! Your submission has been received!</div>
+                            </div>
+                            <div class="w-form-fail">
+                                <div>Oops! Something went wrong while submitting the form.</div>
+                            </div>
+                        </div>
+                        <div id="w-node-_83421015-f101-7b66-67cb-69837e9a56fd-87935a25" class="filter-bar-form-block w-form">
+                            <form id="email-form-2" name="email-form-2" data-name="Email Form 2" class="fulfillment-filter-bar-form-item">
+                                <div id="w-node-eb023710-730f-759a-d7e5-fb0c3b5d3130-87935a25" class="card-setting-text caption">Assigned</div>
+                                <input type="submit" value="" data-wait="Please wait..." class="submit-button-2 filter-bar-form-button w-button">
+                            </form>
+                            <div class="w-form-done">
+                                <div>Thank you! Your submission has been received!</div>
+                            </div>
+                            <div class="w-form-fail">
+                                <div>Oops! Something went wrong while submitting the form.</div>
+                            </div>
+                        </div>
+                        <div id="w-node-_116bef2a-9d3a-ad05-aa8a-a5be1abad133-87935a25" class="section-9">
+                            <a data-w-id="7108e539-1f5a-0dd8-c556-91ab94750b61" href="#" class="add-button w-inline-block"></a>
+                            <a href="#" class="print-download-button w-inline-block"></a>
+                        </div>
+                    </div>
+                    <div data-w-id="eb023710-730f-759a-d7e5-fb0c3b5d3138" class="product-row hidden">
+                        <div class="card-setting-text primary-text not-generated" id="generateResult">Not Generated</div>
+                        <div class="card-setting-text primary-text not-activated">Not Activated</div>
+                        <div class="input-form-block w-form">
+                            <form name="email-form-3" data-name="Email Form 3" class="form-3" asp-page-handler="CreateDevice" method="post">
+                                <input type="hidden" id="devid" name="devid" value="">
+                                <input type="submit" value="" data-wait="Please wait..." class="submit-button-2 w-button">
+                            </form>
+                            <div class="w-form-done">
+                                <div>Thank you! Your submission has been received!</div>
+                            </div>
+                            <div class="w-form-fail">
+                                <div>Oops! Something went wrong while submitting the form.</div>
+                            </div>
+                        </div>
+
+                        <div id="w-node-eb023710-730f-759a-d7e5-fb0c3b5d313f-87935a25" class="card-setting-switcher">
+                            <a href="#" class="qr-download inactive w-inline-block"></a>
+                            <a href="#" class="print-product inactive w-inline-block"></a>
+                            <a href="#" class="product-download inactive w-inline-block"></a>
+                        </div>
+                        <div id="w-node-b36463a5-df45-3f27-7b4c-e1a7286fa7cf-87935a25" class="form-block-2 w-form">
+                            <form class="form-4" name="email-form-3" data-name="Email Form 3" asp-page-handler="CreateDevice" data-ajax="true" data-ajax-method="POST" data-ajax-mode="replace" data-ajax-update="#generateResult">
+                                <select onchange="selectDevice();" id="DevSelect" name="DeviceSelection2" data-name="Device Selection 2" class="select-field-2 w-select">
+                                    <option value="">Select Device...</option>
+                                    <option value="CLSTG25GRY1">Classic Tap Tag 25mm</option>
+                                    <option value="LGYCSTLGCD1">Legacy Custom Tap Card w/ Logo</option>
+                                    <option value="Classic">Classic Tap Card</option>
+                                </select>
+                            </form>
+                            <div class="w-form-done">
+                                <div>Thank you! Your submission has been received!</div>
+                            </div>
+                            <div class="w-form-fail">
+                                <div>Oops! Something went wrong while submitting the form.</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="deviceGrid">
+                        @foreach (var tap in Model.Inventory)
+                        {
+                            <div class="product-row">
+                                <div id="w-node-ab56874d-8e7b-18f1-732b-3df176a54fc8-87935a25" class="device-in-devices-block">
+                                    <img src="@tap.Tap.GetImage(tap.Tap.Sku)" loading="lazy" height="40" sizes="100vw" srcset="@tap.Tap.GetImage(tap.Tap.Sku) 500w, @tap.Tap.GetImage(tap.Tap.Sku) 800w, @tap.Tap.GetImage(tap.Tap.Sku) 1080w, @tap.Tap.GetImage(tap.Tap.Sku) 1600w, @tap.Tap.GetImage(tap.Tap.Sku) 1800w" alt="" class="device-in-devices-image">
+
+                                    <div class="card-setting-text"><a href="/admin/devicedetails?id=@tap.Tap.Id">@tap.Tap.GetOfficialName(tap.Tap.Sku)</a></div>
+
+                                </div>
+                                <div class="card-setting-text">@tap.Tap.TapType-@tap.Tap.SNumber.Substring(0, 8)</div>
+                                @if (tap.Tap.UserId != null)
+                                {
+                                    <div class="card-setting-text primary-text">
+                                        <a href="/admin/userprofile/@tap.Tap.UserId">To User</a>
+                                    </div>
+                                }
+                                else
+                                {
+                                    <div class="card-setting-text primary-text not-activated">Not Activated</div>
+                                }
+
+                                @if (tap.Order != null)
+                                {
+                                    <div class="card-setting-text">
+                                        <a href="/admin/customerprofile/@tap.Order.UserId" data-w-id="f3e2097b-2a98-2e85-ec29-fd3bd5081d04">Order No: @tap.Order.OrderNumber</a>
+                                    </div>
+                                }
+                                else
+                                {
+                                    <div class="input-form-block w-form">
+                                        <a href="/admin/devicedetails?id=@tap.Tap.Id">No Order</a>
+                                    </div>
+                                }
+
+
+
+                                <div id="w-node-_4d4dc8a3-6c9d-898f-4bff-56278fb452bb-87935a25" class="card-setting-switcher">
+                                    <a href="#" class="qr-download w-inline-block"></a>
+                                    <a href="#" class="print-product w-inline-block"></a>
+                                    <a href="#" class="product-download w-inline-block"></a>
+                                    <a href="#Orders" data-w-id="9544085f-d84f-5b2e-7d52-03e959ecea82" class="send-to-pending-shipment inactive w-inline-block"></a>
+                                </div>
+                            </div>
+                        }
+                    </div>
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="footer">
+        <div class="w-row">
+            <div class="w-col w-col-6">
+                <div class="hint">© Copyright Atlice LLC. All rights reserved</div>
+            </div>
+            <div class="footer-right w-col w-col-6">
+                <div class="hint">
+                    <a href="https://webflow.com/" class="footer-link">Empowered by Atlice</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,327 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net7.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <UserSecretsId>aspnet-Atlice.WebUI-82ac7569-961a-401b-8f45-8a97b678ed5e</UserSecretsId>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="Areas\Identity\Pages\Account\AccessDenied.cshtml" />
+    <None Include="Areas\Identity\Pages\Account\DeviceSelect.cshtml" />
+    <None Include="Areas\Identity\Pages\Account\Lockout.cshtml" />
+    <None Include="Areas\Identity\Pages\Account\Login.cshtml" />
+    <None Include="Areas\Identity\Pages\Account\Manage\ChangePassword.cshtml" />
+    <None Include="Areas\Identity\Pages\Account\Manage\DeletePersonalData.cshtml" />
+    <None Include="Areas\Identity\Pages\Account\Manage\Disable2fa.cshtml" />
+    <None Include="Areas\Identity\Pages\Account\Manage\DownloadPersonalData.cshtml" />
+    <None Include="Areas\Identity\Pages\Account\Manage\Email.cshtml" />
+    <None Include="Areas\Identity\Pages\Account\Manage\EnableAuthenticator.cshtml" />
+    <None Include="Areas\Identity\Pages\Account\Manage\ExternalLogins.cshtml" />
+    <None Include="Areas\Identity\Pages\Account\Manage\GenerateRecoveryCodes.cshtml" />
+    <None Include="Areas\Identity\Pages\Account\Manage\Index.cshtml" />
+    <None Include="Areas\Identity\Pages\Account\Manage\PersonalData.cshtml" />
+    <None Include="Areas\Identity\Pages\Account\Manage\ResetAuthenticator.cshtml" />
+    <None Include="Areas\Identity\Pages\Account\Manage\SetPassword.cshtml" />
+    <None Include="Areas\Identity\Pages\Account\Manage\ShowRecoveryCodes.cshtml" />
+    <None Include="Areas\Identity\Pages\Account\Manage\TwoFactorAuthentication.cshtml" />
+    <None Include="Areas\Identity\Pages\Account\Manage\_Layout.cshtml" />
+    <None Include="Areas\Identity\Pages\Account\Manage\_ManageNav.cshtml" />
+    <None Include="Areas\Identity\Pages\Account\Manage\_StatusMessage.cshtml" />
+    <None Include="Areas\Identity\Pages\Account\Manage\_ViewImports.cshtml" />
+    <None Include="Areas\Identity\Pages\Account\MyPin.cshtml" />
+    <None Include="Areas\Identity\Pages\Account\onboarding-setup-contact-page.cshtml" />
+    <None Include="Areas\Identity\Pages\Account\onboarding-step-2-acct-type.cshtml" />
+    <None Include="Areas\Identity\Pages\Account\onboarding-step-2.cshtml" />
+    <None Include="Areas\Identity\Pages\Account\onboarding-step-7.cshtml" />
+    <None Include="Areas\Identity\Pages\Account\Register.cshtml" />
+    <None Include="Areas\Identity\Pages\Account\TermsAndConditions.cshtml" />
+    <None Include="Areas\Identity\Pages\Account\VerifyPhoneNumber.cshtml" />
+    <None Include="Areas\Identity\Pages\Account\Welcome.cshtml" />
+    <None Include="Areas\Identity\Pages\Account\_Layout.cshtml" />
+    <None Include="Areas\Identity\Pages\Account\_RegisterLayout.cshtml" />
+    <None Include="Areas\Identity\Pages\Account\_StatusMessage.cshtml" />
+    <None Include="Areas\Identity\Pages\Account\_ViewImports.cshtml" />
+    <None Include="Areas\Identity\Pages\Error.cshtml" />
+    <None Include="Areas\Identity\Pages\_ValidationScriptsPartial.cshtml" />
+    <None Include="Areas\Identity\Pages\_ViewImports.cshtml" />
+    <None Include="Areas\Identity\Pages\_ViewStart.cshtml" />
+    <None Include="Pages\Admin\AdminNotes.cshtml" />
+    <None Include="Pages\Admin\CreateUser.cshtml" />
+    <None Include="Pages\Admin\CustomerProfile.cshtml" />
+    <None Include="Pages\Admin\DeviceDetails.cshtml" />
+    <None Include="Pages\Admin\Emails.cshtml" />
+    <None Include="Pages\Admin\Fullfillment.cshtml" />
+    <None Include="Pages\Admin\FullfillmentList.cshtml" />
+    <None Include="Pages\Admin\Index.cshtml" />
+    <None Include="Pages\Admin\Inventory.cshtml" />
+    <None Include="Pages\Admin\OrderDetails.cshtml" />
+    <None Include="Pages\Admin\TapList.cshtml" />
+    <None Include="Pages\Admin\TapUsage.cshtml" />
+    <None Include="Pages\Admin\UserList.cshtml" />
+    <None Include="Pages\Admin\UserProfile.cshtml" />
+    <None Include="Pages\Admin\Users.cshtml" />
+    <None Include="Pages\Admin\_AdminLayout.cshtml" />
+    <None Include="Pages\BetaAsk\Credentials_Prospect.cshtml" />
+    <None Include="Pages\BetaAsk\Eligibility_Form.cshtml" />
+    <None Include="Pages\BetaAsk\Features_Preview.cshtml" />
+    <None Include="Pages\BetaAsk\Onboarding.cshtml" />
+    <None Include="Pages\BetaAsk\Opt_In_Final.cshtml" />
+    <None Include="Pages\BetaAsk\Opt_Out_Final.cshtml" />
+    <None Include="Pages\BetaAsk\Product_Features.cshtml" />
+    <None Include="Pages\BetaAsk\Try_Later.cshtml" />
+    <None Include="Pages\BetaAsk\VerifyPhoneNumber.cshtml" />
+    <None Include="Pages\BetaAsk\Welcome.cshtml" />
+    <None Include="Pages\Cards\Index.cshtml" />
+    <None Include="Pages\Error.cshtml" />
+    <None Include="Pages\Homeboard\bottom_bar.cshtml" />
+    <None Include="Pages\Homeboard\bypass_links.cshtml" />
+    <None Include="Pages\Homeboard\chain_link_partial.cshtml" />
+    <None Include="Pages\Homeboard\confirm_auth_partial.cshtml" />
+    <None Include="Pages\Homeboard\desktop_mask.cshtml" />
+    <None Include="Pages\Homeboard\device_partial.cshtml" />
+    <None Include="Pages\Homeboard\editor.cshtml" />
+    <None Include="Pages\Homeboard\features_wrap.cshtml" />
+    <None Include="Pages\Homeboard\flex_link_partial.cshtml" />
+    <None Include="Pages\Homeboard\grid_partial.cshtml" />
+    <None Include="Pages\Homeboard\Index.cshtml" />
+    <None Include="Pages\Homeboard\indicator_block.cshtml" />
+    <None Include="Pages\Homeboard\list_partial.cshtml" />
+    <None Include="Pages\Homeboard\locksUpdate.cshtml" />
+    <None Include="Pages\Homeboard\menu.cshtml" />
+    <None Include="Pages\Homeboard\modal_delete_confirm.cshtml" />
+    <None Include="Pages\Homeboard\modal_image_cropper.cshtml" />
+    <None Include="Pages\Homeboard\modal_taplinks_selection.cshtml" />
+    <None Include="Pages\Homeboard\modal_update_account.cshtml" />
+    <None Include="Pages\Homeboard\open_tap_link_partial.cshtml" />
+    <None Include="Pages\Homeboard\pages_manager.cshtml" />
+    <None Include="Pages\Homeboard\page_selector.cshtml" />
+    <None Include="Pages\Homeboard\pay_link_partial.cshtml" />
+    <None Include="Pages\Homeboard\pic_partial.cshtml" />
+    <None Include="Pages\Homeboard\preloader.cshtml" />
+    <None Include="Pages\Homeboard\preview_wrapper.cshtml" />
+    <None Include="Pages\Homeboard\qr_wrapper.cshtml" />
+    <None Include="Pages\Homeboard\settings_update_modal.cshtml" />
+    <None Include="Pages\Homeboard\shop_link_partial.cshtml" />
+    <None Include="Pages\Homeboard\vcard_partial.cshtml" />
+    <None Include="Pages\Homeboard\_OpenConnectLinkPartial.cshtml" />
+    <None Include="Pages\Index.cshtml" />
+    <None Include="Pages\Privacy.cshtml" />
+    <None Include="Pages\Shared\Emails\CitizenFeatures.cshtml" />
+    <None Include="Pages\Shared\Emails\ContactSubmission.cshtml" />
+    <None Include="Pages\Shared\Emails\ContactSubmissionConfirm.cshtml" />
+    <None Include="Pages\Shared\Emails\EnrollmentCredentialsCitizenEmail.cshtml" />
+    <None Include="Pages\Shared\Emails\EnrollReminder.cshtml" />
+    <None Include="Pages\Shared\Emails\LetterAB.cshtml" />
+    <None Include="Pages\Shared\Emails\LetterAO.cshtml" />
+    <None Include="Pages\Shared\Emails\NoteToSelf.cshtml" />
+    <None Include="Pages\Shared\Emails\OrderConfirmationEmail.cshtml" />
+    <None Include="Pages\Shared\Emails\OrderShipped.cshtml" />
+    <None Include="Pages\Shared\Emails\RegConfirm.cshtml" />
+    <None Include="Pages\Shared\Emails\WelcomeEmail.cshtml" />
+    <None Include="Pages\Shared\_Layout.cshtml" />
+    <None Include="Pages\Shared\_LoginPartial.cshtml" />
+    <None Include="Pages\Shared\_ValidationScriptsPartial.cshtml" />
+    <None Include="Pages\Tap\beta-customer-terms-and-conditions.cshtml" />
+    <None Include="Pages\Tap\features.cshtml" />
+    <None Include="Pages\Tap\Index.cshtml" />
+    <None Include="Pages\Tap\Invite.cshtml" />
+    <None Include="Pages\Tap\Locked.cshtml" />
+    <None Include="Pages\Tap\status.cshtml" />
+    <None Include="Pages\Tap\tap_try_later.cshtml" />
+    <None Include="Pages\_ViewImports.cshtml" />
+    <None Include="Pages\_ViewStart.cshtml" />
+    <None Include="wwwroot\AA1.3\images\artboard-color-small.svg" />
+    <None Include="wwwroot\AA1.3\images\artboard-dark.svg" />
+    <None Include="wwwroot\AA1.3\images\artboard-white-color.svg" />
+    <None Include="wwwroot\AA1.3\images\Chart-Circle.svg" />
+    <None Include="wwwroot\AA1.3\images\Chart-Metric-Green.svg" />
+    <None Include="wwwroot\AA1.3\images\Chart-Metric-Grey.svg" />
+    <None Include="wwwroot\AA1.3\images\Chart-Metric.svg" />
+    <None Include="wwwroot\AA1.3\images\Chart-Progress.svg" />
+    <None Include="wwwroot\AA1.3\images\Chart-Visitors.svg" />
+    <None Include="wwwroot\AA1.3\images\Crypto-Chart.svg" />
+    <None Include="wwwroot\AA1.3\images\header-menu-active.svg" />
+    <None Include="wwwroot\AA1.3\images\header-menu.svg" />
+    <None Include="wwwroot\AA1.3\images\icons8-google.svg" />
+    <None Include="wwwroot\AA1.3\images\select.svg" />
+    <None Include="wwwroot\AA1.3\images\selected.svg" />
+    <None Include="wwwroot\AA1.3\images\step-active.svg" />
+    <None Include="wwwroot\AA1.3\images\step-default.svg" />
+    <None Include="wwwroot\AA1.3\images\step-line.svg" />
+    <None Include="wwwroot\AA1.3\images\step-passed.svg" />
+    <None Include="wwwroot\AA1.3\images\Сhart-Revenue-Green.svg" />
+    <None Include="wwwroot\AA1.3\images\Сhart-Revenue.svg" />
+    <None Include="wwwroot\AA1.3\js\webflow.js" />
+    <None Include="wwwroot\atlice_emails\images\QR-code.svg" />
+    <None Include="wwwroot\atlice_emails\js\webflow.js" />
+    <None Include="wwwroot\BetaAsk3.4\images\camera.svg" />
+    <None Include="wwwroot\BetaAsk3.4\images\categories.svg" />
+    <None Include="wwwroot\BetaAsk3.4\images\check.svg" />
+    <None Include="wwwroot\BetaAsk3.4\images\component.svg" />
+    <None Include="wwwroot\BetaAsk3.4\images\cursor.svg" />
+    <None Include="wwwroot\BetaAsk3.4\images\eyes.svg" />
+    <None Include="wwwroot\BetaAsk3.4\images\facebook-dark.svg" />
+    <None Include="wwwroot\BetaAsk3.4\images\layout.svg" />
+    <None Include="wwwroot\BetaAsk3.4\images\lock.svg" />
+    <None Include="wwwroot\BetaAsk3.4\images\pinterest-dark.svg" />
+    <None Include="wwwroot\BetaAsk3.4\images\play-icon.svg" />
+    <None Include="wwwroot\BetaAsk3.4\images\play.svg" />
+    <None Include="wwwroot\BetaAsk3.4\images\podcast.svg" />
+    <None Include="wwwroot\BetaAsk3.4\images\quote.svg" />
+    <None Include="wwwroot\BetaAsk3.4\images\series.svg" />
+    <None Include="wwwroot\BetaAsk3.4\images\Telly-Logo.svg" />
+    <None Include="wwwroot\BetaAsk3.4\images\template_bg.svg" />
+    <None Include="wwwroot\BetaAsk3.4\images\twitter-dark.svg" />
+    <None Include="wwwroot\BetaAsk3.4\images\video.svg" />
+    <None Include="wwwroot\BetaAsk3.4\images\webinar.svg" />
+    <None Include="wwwroot\BetaAsk3.4\images\youtube-dark.svg" />
+    <None Include="wwwroot\BetaAsk3.4\js\webflow.js" />
+    <None Include="wwwroot\croppie\croppie.js" />
+    <None Include="wwwroot\croppie\croppie.min.js" />
+    <None Include="wwwroot\images\arrow-right.svg" />
+    <None Include="wwwroot\images\baseline-keyboard_arrow_down-24px.svg" />
+    <None Include="wwwroot\images\Browser-site-b.svg" />
+    <None Include="wwwroot\images\browser-site.svg" />
+    <None Include="wwwroot\images\facebook-icon2.svg" />
+    <None Include="wwwroot\images\facebook.svg" />
+    <None Include="wwwroot\images\file-document-paper-article.svg" />
+    <None Include="wwwroot\images\file-text-check.svg" />
+    <None Include="wwwroot\images\header-menu-active.svg" />
+    <None Include="wwwroot\images\header-menu.svg" />
+    <None Include="wwwroot\images\iconmonstr-facebook-6.svg" />
+    <None Include="wwwroot\images\iconmonstr-instagram-11.svg" />
+    <None Include="wwwroot\images\iconmonstr-linkedin-2.svg" />
+    <None Include="wwwroot\images\iconmonstr-pinterest-1.svg" />
+    <None Include="wwwroot\images\instagram.svg" />
+    <None Include="wwwroot\images\linkedin.svg" />
+    <None Include="wwwroot\images\medium-icon.svg" />
+    <None Include="wwwroot\images\Orion_calls-1.svg" />
+    <None Include="wwwroot\images\Orion_download-manual.svg" />
+    <None Include="wwwroot\images\Orion_find-user.svg" />
+    <None Include="wwwroot\images\Orion_flag.svg" />
+    <None Include="wwwroot\images\Orion_mail-1.svg" />
+    <None Include="wwwroot\images\Orion_maximize-screen.svg" />
+    <None Include="wwwroot\images\Orion_men.svg" />
+    <None Include="wwwroot\images\play.svg" />
+    <None Include="wwwroot\images\security-shield-key.svg" />
+    <None Include="wwwroot\images\Tag-delete.svg" />
+    <None Include="wwwroot\images\template_bg.svg" />
+    <None Include="wwwroot\images\twitter.svg" />
+    <None Include="wwwroot\images\youtube-play.svg" />
+    <None Include="wwwroot\jquery-ajax-unobtrusive\jquery.unobtrusive-ajax.js" />
+    <None Include="wwwroot\jquery-ajax-unobtrusive\jquery.unobtrusive-ajax.min.js" />
+    <None Include="wwwroot\jqueryui\jquery-ui.js" />
+    <None Include="wwwroot\jqueryui\jquery-ui.min.js" />
+    <None Include="wwwroot\jquery\jquery.js" />
+    <None Include="wwwroot\jquery\jquery.min.js" />
+    <None Include="wwwroot\jquery\jquery.min.map" />
+    <None Include="wwwroot\jquery\jquery.slim.js" />
+    <None Include="wwwroot\jquery\jquery.slim.min.js" />
+    <None Include="wwwroot\jquery\jquery.slim.min.map" />
+    <None Include="wwwroot\js\homeboard.js" />
+    <None Include="wwwroot\js\webflow.js" />
+    <None Include="wwwroot\lib\bootstrap\dist\css\bootstrap-grid.css.map" />
+    <None Include="wwwroot\lib\bootstrap\dist\css\bootstrap-grid.min.css.map" />
+    <None Include="wwwroot\lib\bootstrap\dist\css\bootstrap-grid.rtl.css.map" />
+    <None Include="wwwroot\lib\bootstrap\dist\css\bootstrap-grid.rtl.min.css.map" />
+    <None Include="wwwroot\lib\bootstrap\dist\css\bootstrap-reboot.css.map" />
+    <None Include="wwwroot\lib\bootstrap\dist\css\bootstrap-reboot.min.css.map" />
+    <None Include="wwwroot\lib\bootstrap\dist\css\bootstrap-reboot.rtl.css.map" />
+    <None Include="wwwroot\lib\bootstrap\dist\css\bootstrap-reboot.rtl.min.css.map" />
+    <None Include="wwwroot\lib\bootstrap\dist\css\bootstrap-utilities.css.map" />
+    <None Include="wwwroot\lib\bootstrap\dist\css\bootstrap-utilities.min.css.map" />
+    <None Include="wwwroot\lib\bootstrap\dist\css\bootstrap-utilities.rtl.css.map" />
+    <None Include="wwwroot\lib\bootstrap\dist\css\bootstrap-utilities.rtl.min.css.map" />
+    <None Include="wwwroot\lib\bootstrap\dist\css\bootstrap.css.map" />
+    <None Include="wwwroot\lib\bootstrap\dist\css\bootstrap.min.css.map" />
+    <None Include="wwwroot\lib\bootstrap\dist\css\bootstrap.rtl.css.map" />
+    <None Include="wwwroot\lib\bootstrap\dist\css\bootstrap.rtl.min.css.map" />
+    <None Include="wwwroot\lib\bootstrap\dist\js\bootstrap.bundle.js" />
+    <None Include="wwwroot\lib\bootstrap\dist\js\bootstrap.bundle.js.map" />
+    <None Include="wwwroot\lib\bootstrap\dist\js\bootstrap.bundle.min.js" />
+    <None Include="wwwroot\lib\bootstrap\dist\js\bootstrap.bundle.min.js.map" />
+    <None Include="wwwroot\lib\bootstrap\dist\js\bootstrap.esm.js" />
+    <None Include="wwwroot\lib\bootstrap\dist\js\bootstrap.esm.js.map" />
+    <None Include="wwwroot\lib\bootstrap\dist\js\bootstrap.esm.min.js" />
+    <None Include="wwwroot\lib\bootstrap\dist\js\bootstrap.esm.min.js.map" />
+    <None Include="wwwroot\lib\bootstrap\dist\js\bootstrap.js" />
+    <None Include="wwwroot\lib\bootstrap\dist\js\bootstrap.js.map" />
+    <None Include="wwwroot\lib\bootstrap\dist\js\bootstrap.min.js" />
+    <None Include="wwwroot\lib\bootstrap\dist\js\bootstrap.min.js.map" />
+    <None Include="wwwroot\lib\bootstrap\LICENSE" />
+    <None Include="wwwroot\lib\jquery-validation-unobtrusive\jquery.validate.unobtrusive.js" />
+    <None Include="wwwroot\lib\jquery-validation-unobtrusive\jquery.validate.unobtrusive.min.js" />
+    <None Include="wwwroot\lib\jquery-validation\dist\additional-methods.js" />
+    <None Include="wwwroot\lib\jquery-validation\dist\additional-methods.min.js" />
+    <None Include="wwwroot\lib\jquery-validation\dist\jquery.validate.js" />
+    <None Include="wwwroot\lib\jquery-validation\dist\jquery.validate.min.js" />
+    <None Include="wwwroot\lib\jquery-validation\LICENSE.md" />
+    <None Include="wwwroot\lib\jquery\dist\jquery.js" />
+    <None Include="wwwroot\lib\jquery\dist\jquery.min.js" />
+    <None Include="wwwroot\lib\jquery\dist\jquery.min.map" />
+    <None Include="wwwroot\microsoft-signalr\signalr.js" />
+    <None Include="wwwroot\microsoft-signalr\signalr.min.js" />
+    <None Include="wwwroot\react\cjs\react-jsx-dev-runtime.development.js" />
+    <None Include="wwwroot\react\cjs\react-jsx-dev-runtime.development.min.js" />
+    <None Include="wwwroot\react\cjs\react-jsx-dev-runtime.production.min.js" />
+    <None Include="wwwroot\react\cjs\react-jsx-dev-runtime.profiling.min.js" />
+    <None Include="wwwroot\react\cjs\react-jsx-runtime.development.js" />
+    <None Include="wwwroot\react\cjs\react-jsx-runtime.development.min.js" />
+    <None Include="wwwroot\react\cjs\react-jsx-runtime.production.min.js" />
+    <None Include="wwwroot\react\cjs\react-jsx-runtime.profiling.min.js" />
+    <None Include="wwwroot\react\cjs\react.development.js" />
+    <None Include="wwwroot\react\cjs\react.development.min.js" />
+    <None Include="wwwroot\react\cjs\react.production.min.js" />
+    <None Include="wwwroot\react\cjs\react.shared-subset.development.js" />
+    <None Include="wwwroot\react\cjs\react.shared-subset.development.min.js" />
+    <None Include="wwwroot\react\cjs\react.shared-subset.production.min.js" />
+    <None Include="wwwroot\react\umd\react.development.js" />
+    <None Include="wwwroot\react\umd\react.development.min.js" />
+    <None Include="wwwroot\react\umd\react.production.min.js" />
+    <None Include="wwwroot\react\umd\react.profiling.min.js" />
+    <None Include="wwwroot\signalr.js\jquery.signalR.js" />
+    <None Include="wwwroot\signalr.js\jquery.signalR.min.js" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Adobe.DocumentServices.PDFTools" Version="1.3.1" />
+    <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="7.0.4" />
+    <PackageReference Include="Microsoft.AspNetCore.HeaderPropagation" Version="7.0.4" />
+    <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="7.0.4" />
+    <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="7.0.4" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="7.0.4" />
+    <PackageReference Include="Microsoft.AspNetCore.Owin" Version="7.0.4" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="7.0.4" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="7.0.4">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.IdentityModel.Tokens" Version="6.27.0" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+    <PackageReference Include="Shippo" Version="3.3.0" />
+    <PackageReference Include="Syncfusion.HtmlToPdfConverter.Net.Windows" Version="20.4.0.54" />
+    <PackageReference Include="Syncfusion.Pdf.Net.Core" Version="20.4.0.54" />
+    <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="6.27.0" />
+    <PackageReference Include="Wangkanai.Detection" Version="7.0.0" />
+    <PackageReference Include="WebEssentials.AspNetCore.PWA" Version="1.0.65" />
+    <PackageReference Include="WebflowSharp" Version="0.0.8" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="wwwroot\emails\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Atlice.Domain\Atlice.Domain.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Update="wwwroot\images\webclip.png">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+  </ItemGroup>
+
+</Project>

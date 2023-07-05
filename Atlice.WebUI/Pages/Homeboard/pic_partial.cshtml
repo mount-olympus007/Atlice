@@ -1,0 +1,7 @@
+﻿@model string[]
+@{
+    Layout = null;
+}
+<div id="previewImage" class="avatar big" style="background-image:url('@Model[0]')">
+    <a onclick="javascript:{$('.image-cropper').attr('style','display:block;'); document.getElementById('imageidholder').setAttribute('data_id','@Model[1]');}" data-w-id="8dd5b4d7-9985-b9a4-6871-3b44fa2f6f59" href="#" class="edit-profile-bg w-inline-block"></a>
+</div>

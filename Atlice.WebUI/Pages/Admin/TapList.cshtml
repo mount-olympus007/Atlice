@@ -1,0 +1,49 @@
+﻿@model IEnumerable<Atlice.WebUI.Pages.Admin.InventoryModel.TapModel>
+@{
+    Layout = null;
+}
+
+@foreach (var tap in Model)
+{
+    <div class="product-row">
+        <div id="w-node-ab56874d-8e7b-18f1-732b-3df176a54fc8-87935a25" class="device-in-devices-block">
+            <img src="@tap.Tap.GetImage(tap.Tap.Sku)" loading="lazy" height="40" sizes="100vw" srcset="@tap.Tap.GetImage(tap.Tap.Sku) 500w, @tap.Tap.GetImage(tap.Tap.Sku) 800w, @tap.Tap.GetImage(tap.Tap.Sku) 1080w, @tap.Tap.GetImage(tap.Tap.Sku) 1600w, @tap.Tap.GetImage(tap.Tap.Sku) 1800w" alt="" class="device-in-devices-image">
+
+            <div class="card-setting-text"><a href="/admin/devicedetails?id=@tap.Tap.Id">@tap.Tap.GetOfficialName(tap.Tap.Sku)</a></div>
+
+        </div>
+        <div class="card-setting-text">@tap.Tap.TapType-@tap.Tap.SNumber.Substring(0, 8)</div>
+        @if (tap.Tap.UserId != null)
+        {
+            <div class="card-setting-text primary-text">
+                <a href="/admin/userprofile/@tap.Tap.UserId">To User</a>
+            </div>
+        }
+        else
+        {
+            <div class="card-setting-text primary-text not-activated">Not Activated</div>
+        }
+
+        @if (tap.Order != null)
+        {
+            <div class="card-setting-text">
+                <a href="/admin/customerprofile/@tap.Order.UserId" data-w-id="f3e2097b-2a98-2e85-ec29-fd3bd5081d04">Order No: @tap.Order.OrderNumber</a>
+            </div>
+        }
+        else
+        {
+            <div class="input-form-block w-form">
+                <a href="/admin/devicedetails?id=@tap.Tap.Id">No Order</a>
+            </div>
+        }
+
+
+
+        <div id="w-node-_4d4dc8a3-6c9d-898f-4bff-56278fb452bb-87935a25" class="card-setting-switcher">
+            <a href="#" class="qr-download w-inline-block"></a>
+            <a href="#" class="print-product w-inline-block"></a>
+            <a href="#" class="product-download w-inline-block"></a>
+            <a href="#Orders" data-w-id="9544085f-d84f-5b2e-7d52-03e959ecea82" class="send-to-pending-shipment inactive w-inline-block"></a>
+        </div>
+    </div>
+}

@@ -1,0 +1,220 @@
+﻿@model Atlice.WebUI.Pages.Homeboard.IndexModel.TapViewModel
+@{
+    string updateId = "deviceinfo" + Model.AtliceTap.Id;
+    string pagetypeupdate = "pagetypeupdate" + Model.AtliceTap.Id;
+    string bypassIdHolder = "bypassIdHolder" + Model.AtliceTap.Id;
+    string deviceNameUpdate = "deviceNameUpdate" + Model.AtliceTap.Id;
+    Layout = null;
+    var taplink = new Atlice.Domain.Entities.TapLink
+            {
+                Id = Model.AtliceTap.Id
+            };
+    if (Model.AtliceTap.ContactPage is not null)
+    {
+        Model.AtliceTap.ContactPage.TapLinks.Add(taplink);
+    }
+
+}
+
+<div class="device-container-2">
+    @if (Model.AtliceTap.ContactPage is not null)
+    {
+        foreach (var link in Model.AtliceTap.ContactPage.TapLinks)
+        {
+            var bypassDeviceId = "bypassDeviceId" + link.Id;
+            <div class="hidden" id="@bypassDeviceId">@Model.AtliceTap.Id</div>
+        }
+    }
+    @if (Model.AtliceTap.Sku != Domain.Entities.SKU.Virtual)
+    {
+        <div class="device-image-block"><img src="@Model.AtliceTap.GetImage(Model.AtliceTap.Sku)" height="65" alt="" class="device-icon"></div>
+
+    }
+    else
+    {
+        <div id="@Model.AtliceTap.Id" onclick="fetch('/homeboard/Index?handler=pageqr&virtualid=' + this.id).then(x => x.json()).then(y => document.getElementById('qrWrapper').innerHTML = y.view).then(z=> $('#qrWrapper').show())" class="device-image-block"><img src="../icons/qrblack.png" height="65" alt="" class="device-icon"></div>
+
+    }
+    <div class="div-block-62" style="text-align:center;">
+        <div class="device-info-heading-3">
+
+            @if (!string.IsNullOrEmpty(Model.AtliceTap.CustomName))
+            {
+                <strong class="bold-text-111" id="@deviceNameUpdate">@Model.AtliceTap.CustomName</strong>
+
+
+            }
+            else
+            {
+                <strong class="bold-text-111" id="@deviceNameUpdate">@Model.AtliceTap.GetOfficialName(Model.AtliceTap.Sku)</strong>
+
+            }
+        </div>
+        @if (Model.AtliceTap.Sku != Domain.Entities.SKU.Virtual)
+        {
+            <a data-w-id="e9841a5f-80ec-3388-d0d2-b49ba15a2c97" href="#" class="device-name edit-icon w-inline-block"><img src="../images/edit-pencil-writing.png" loading="lazy" width="20" alt="" class="image-76"></a>
+
+        }
+        else
+        {
+            <a onclick="fetch('/homeboard/Index?handler=pageqr&virtualid=' + this.id).then(x => x.json()).then(y => document.getElementById('qrWrapper').innerHTML = y.view).then(z=> $('#qrWrapper').show())" id="@Model.AtliceTap.Id" data-w-id="a0645753-8b9e-2919-997c-3ef00d891eec" style="background-image:url('../icons/fingerprint-solid.svg')" href="#" class="device-name w-inline-block"><img src="../icons/fingerprint-solid.svg" loading="lazy" width="20" alt="" class="image-76"></a>
+
+        }
+
+    </div>
+    @if (Model.AtliceTap.Sku != Domain.Entities.SKU.Virtual)
+    {
+        <div style="display:none;opacity:0" class="single-line-form-submission w-form">
+            <form id="email-form-4" name="email-form-4" data-name="Email Form 4" method="get" class="form-14">
+                <input type="text" class="input-2 device-name-input w-input" maxlength="256" name="CustomName" data-name="Name 8" placeholder="" id="name-8">
+                <input onclick="javascript:{var a =this.previousElementSibling.getAttribute('name');  fetch('/homeboard/index?handler=editdevicestate&id=@Model.AtliceTap.Id&propname='+ a +'&value='+this.previousElementSibling.value).then(x=> x.json()).then(y=> document.getElementById('@deviceNameUpdate').innerHTML = y.status); }" type="submit" value="Submit" data-wait="Please wait..." data-w-id="56c4217b-ba24-4a11-ae1d-899acec46801" class="atlice-tap-button device-name-input w-button">
+            </form>
+
+        </div>
+    }
+
+
+
+    <div class="device-info-2">
+        <div class="hint-3">Tap ID# @Model.AtliceTap.SNumber.Substring(0,8)</div>
+        <div class="device-status-box locked hidden">Locked</div>
+    </div>
+
+
+
+
+    <div id="@updateId">
+        @if (Model.AtliceTap.Locked)
+        {
+            <div id="lockstatus" class="indicator-block locked">
+                <div class="div-block-51">
+                    <div class="div-block-50"><img src="../images/Artboard-1.png" loading="lazy" alt=""></div>
+                    @if (Model.AtliceTap.ContactPage != null)
+                    {
+                        <div class="device-status-box contact-page-selection" id="@pagetypeupdate">@Model.AtliceTap.ContactPage.PageType</div>
+
+                    }
+                </div>
+
+            </div>
+            <div class="device-status-box locked">Device Not Activated</div>
+        }
+        else
+        {
+            if (Model.AtliceTap.ContactPage is not null)
+            {
+                <div id="lockstatus" class="indicator-block">
+                    <div class="div-block-51">
+                        <div class="div-block-50"><img src="../images/Artboard-1.png" loading="lazy" alt=""></div>
+                        <div class="device-status-box contact-page-selection" id="@pagetypeupdate">@Model.AtliceTap.ContactPage.PageType</div>
+                    </div>
+                    @if (Model.AtliceTap.Bypass)
+                    {
+                        <div class="indicator-block horizontal">
+                            <div class="div-block-47"><img src="../images/Artboard-22_1.png" loading="lazy" alt=""></div>
+                            <div class="div-block-46"><img src="@Model.AtliceTap.BypassImage" loading="lazy" alt=""></div>
+                        </div>
+                    }
+
+                </div>
+            }
+
+
+        }
+    </div>
+
+
+
+
+
+
+</div>
+
+
+<div class="device-options-container w-container">
+    <div style="background-color:black;" onclick="javascript:{document.getElementById('pageselectmodal').setAttribute('style', 'display:block;'); document.getElementById('pageSelectDeviceIdHolder').setAttribute('data-name',this.id);}" id="@Model.AtliceTap.Id" data-w-id="36cc34fc-1cd7-d272-dcf8-2cf092caaedb" class="device-management-button-block"><img src="../icons/pagesWhite.png" loading="lazy" width="50" alt=""></div>
+    @if (Model.AtliceTap.Locked)
+    {
+        var activateButtonId = Model.AtliceTap.Id + "activate";
+        <div style="background-color:black;" onclick="javascript:{fetch('/homeboard/index?handler=lockdevice&id=@Model.AtliceTap.Id').then(x=> x.json()).then(y=> document.getElementById('@updateId').innerHTML = y.view); if(document.getElementById('@activateButtonId').getAttribute('src')=='https://atlicemedia.blob.core.windows.net/atliceapp/lockWhite.png'){document.getElementById('@activateButtonId').setAttribute('src','https://atlicemedia.blob.core.windows.net/atliceapp/boltWhite.png');}else{document.getElementById('@activateButtonId').setAttribute('src','https://atlicemedia.blob.core.windows.net/atliceapp/lockWhite.png');}}" class="device-management-button-block"><img id="@activateButtonId" src="https://atlicemedia.blob.core.windows.net/atliceapp/boltWhite.png" loading="lazy" width="50" alt=""></div>
+
+    }
+    else
+    {
+        var activateButtonId = Model.AtliceTap.Id + "activate";
+        <div style="background-color:black;" onclick="javascript:{fetch('/homeboard/index?handler=lockdevice&id=@Model.AtliceTap.Id').then(x=> x.json()).then(y=> document.getElementById('@updateId').innerHTML = y.view); if(document.getElementById('@activateButtonId').getAttribute('src')=='https://atlicemedia.blob.core.windows.net/atliceapp/lockWhite.png'){document.getElementById('@activateButtonId').setAttribute('src','https://atlicemedia.blob.core.windows.net/atliceapp/boltWhite.png');}else{document.getElementById('@activateButtonId').setAttribute('src','https://atlicemedia.blob.core.windows.net/atliceapp/lockWhite.png');}}" class="device-management-button-block"><img id="@activateButtonId" src="https://atlicemedia.blob.core.windows.net/atliceapp/lockWhite.png" loading="lazy" width="50" alt=""></div>
+
+    }
+    @if (Model.AtliceTap.ContactPage is not null && !User.IsInRole("Tourist"))
+    {
+        <div style="background-color:black;" onclick="javascript:{document.getElementById('taplinkselectmodal').setAttribute('style', 'display:block;'); updateBypassGrid(@Newtonsoft.Json.JsonConvert.SerializeObject(Model));}" data-w-id="dfeed039-12cc-15df-eb53-21b00d3c9ab3" class="device-management-button-block"><img src="../icons/bypassWhite.png" loading="lazy" width="50" alt=""></div>
+
+    }
+
+</div>
+
+
+
+
+@*
+@if (Model.QR is not null && Model.AtliceTap.UserId != null)
+{
+    
+}
+else
+{
+    <div class="device-container-2">
+
+        <div class="device-image-block"><img src="@Model.AtliceTap.GetImage(Model.AtliceTap.Sku)" height="65" alt="" class="device-icon"></div>
+
+        <div class="div-block-62" style="text-align:center;">
+            <div class="device-info-heading-3">
+                <strong class="bold-text-111" id="@deviceNameUpdate">@Model.AtliceTap.GetOfficialName(Model.AtliceTap.Sku)</strong>
+
+            </div>
+            <a data-w-id="e9841a5f-80ec-3388-d0d2-b49ba15a2c97" href="#" class="device-name edit-icon w-inline-block"><img src="../images/edit-pencil-writing.png" loading="lazy" width="20" alt="" class="image-76"></a>
+
+        </div>
+
+
+
+
+        <div class="device-info-2">
+            <div class="hint-3">Tap ID# @Model.AtliceTap.SNumber.Substring(0,8)</div>
+            <div class="device-status-box locked hidden">Locked</div>
+        </div>
+
+
+
+
+        <div>
+            <div id="lockstatus" class="indicator-block locked">
+                <div class="div-block-51">
+                </div>
+
+            </div>
+            <div class="device-status-box locked">Device Not Activated</div>
+
+        </div>
+
+
+
+
+
+
+    </div>
+
+
+    <div class="device-options-container w-container">
+        @if (Model.AtliceTap.Locked)
+        {
+            var activateButtonId = Model.AtliceTap.Id + "activate";
+            <div style="background-color:black;" class="device-management-button-block"><a href="/identity/account/deviceselect?tapid=@Model.AtliceTap.SNumber[..8]"><img src="https://atlicemedia.blob.core.windows.net/atliceapp/boltWhite.png" loading="lazy" width="50" alt=""></a></div>
+
+        }
+
+
+    </div>
+}
+*@
+

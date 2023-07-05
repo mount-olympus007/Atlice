@@ -1,0 +1,291 @@
+﻿@model List<Atlice.Domain.Entities.News>
+@{
+    Layout = null;
+}
+@foreach (var post in Model)
+{
+   
+    if (post.PostType == Domain.Entities.PostType.AboutMe)
+    {
+        <article class="eltd-blog-list-expandable-item eltd-blei-h-1 eltd-blei-post @post.Id post type-post status-publish format-standard has-post-thumbnail hentry category-interior tag-art tag-creative tag-geometric" id="@post.Id" style="left: 789px; top: 460px; position: absolute;" data-importance="10000">
+            <div class="eltd-blei-inner">
+                <div class="eltd-blei-upper-wrapper even" style="width: 387px; height: 222px;">
+                    <div class="image-container" style="background-image: url('@post.Photos.FirstOrDefault().FilePath')">
+                        <a href="@Url.Action("Index", "Home",  new { ArticleID = post.Title, blogName = post.Title.ToLower().Replace(" ", "-").Replace(":", "-"), title = post.Title.ToLower().Replace(":", "-").Replace(" ", "-").Replace("\"", "-").Replace("?", "-")})"></a>
+                    </div>
+
+                    <div class="description-container">
+                        <div class="latest-post">
+                            <div class="eltd-post-info eltd-category">
+                                <div class="eltd-post-info-category">
+                                    <a href="@Url.Action("Index", "Home",  new { userName = post.Title})" class="external-link eltd-external-link" data-cat-id="@post.Category">
+                                        <span>
+                                            @post.Title
+                                        </span>
+                                    </a>
+                                </div>
+                            </div>
+                            <h4 class="eltd-post-title">
+                                <a title="@post.Title" href="@Url.Action("Index", "Home",  new { ArticleID = post.Title, blogName = post.Title.ToLower().Replace(" ", "-").Replace(":", "-"), title = post.Title.ToLower().Replace(":", "-").Replace(" ", "-").Replace("\"", "-").Replace("?", "-") })" target="_self">
+                                    About Me
+                                </a>
+                            </h4>
+                            <p class="eltd-post-excerpt eltd-long-excerpt">@post.Title</p>
+                            <p class="eltd-post-excerpt eltd-short-excerpt">@post.Title</p>
+                        </div>
+                        <a class="eltd-btn eltd-btn-small eltd-btn-solid  eltd-read-more " href="@Url.Action("Index", "Home",  new { ArticleID = post.Title, blogName = post.Title.ToLower().Replace(" ", "-").Replace(":", "-"), title = post.Title.ToLower().Replace(":", "-").Replace(" ", "-").Replace("\"", "-").Replace("?", "-")})" target="_self">
+                            <span class="eltd-btn-text">Read More</span>
+                        </a>
+                        <div class="eltd-post-info">
+                            <div class="eltd-post-info-date">
+                            </div>
+
+
+                        </div>
+                    </div>
+                </div>
+                <div class="eltd-blei-lower-wrapper">
+                    <div class="full-text-container">
+                    </div>
+                </div>
+                <div class="eltd-blei-collapse"><span class="icon_close"></span></div>
+            </div>
+        </article>
+    }
+    if (post.PostType == Domain.Entities.PostType.Reel)
+    {
+        <article id="@post.Id" class="sticky-slider eltd-blog-list-expandable-item eltd-blei-h-2 eltd-blei-post @post.Id post type-post status-publish format-gallery has-post-thumbnail hentry category-posters tag-creative tag-vector post_format-post-format-gallery" data-importance="10000">
+            <div class="eltd-blei-inner">
+                <div class="eltd-blei-upper-wrapper">
+                    <div class="slides">
+                        @foreach (var pic in post.Photos)
+                        {
+                            <div class="eltd-blei-slide" style="background-image: url('@pic.FilePath')">
+                                <a class="eltd-blei-link" href="@Url.Action("Index", "Home",  new { ArticleID = post.Id, blogName = post.Title.ToLower().Replace(" ", "-").Replace(":", "-"), title = post.Title.ToLower().Replace(":", "-").Replace(" ", "-").Replace("\"", "-").Replace("?", "-")})"></a>
+                            </div>
+                        }
+
+                    </div>
+                    <div class="eltd-single-post-preload-holder eltd-format-gallery">
+                        <span class="eltd-preload-square eltd-preload-square-1"></span>
+                        <span class="eltd-preload-square eltd-preload-square-2"></span>
+                        <span class="eltd-preload-square eltd-preload-square-4"></span>
+                        <span class="eltd-preload-square eltd-preload-square-3"></span>
+                    </div>
+                    <div class="slides-cover"></div>
+                    <h4 class="eltd-post-title">
+                        <a href="@Url.Action("Index", "Home",  new { ArticleID = post.Id, blogName = post.Title.ToLower().Replace(" ", "-").Replace(":", "-"), title = post.Title.ToLower().Replace(":", "-").Replace(" ", "-").Replace("\"", "-").Replace("?", "-")})" class="" title="@post.Title" target="_self">
+                            @post.Title
+                        </a>
+                    </h4>
+                </div>
+                <div class="eltd-blei-lower-wrapper">
+                    <div class="full-text-container"></div>
+                </div>
+                <div class="eltd-blei-collapse"><span class="icon_close"></span></div>
+            </div>
+        </article>
+    }
+    if (post.PostType == Domain.Entities.PostType.Video)
+    {
+        <article class="sticky-slider eltd-blog-list-expandable-item eltd-blei-h-2 eltd-blei-post @post.Id type-post status-publish format-video has-post-thumbnail hentry category-design tag-artwork tag-vector post_format-post-format-video" id="@post.Id" style="left: 0px; top: 920px; position: absolute;" data-importance="10000">
+            <div class="eltd-blei-inner">
+                <div class="eltd-featured-triangle-holder">
+                    <div class="eltd-featured-triangle"></div>
+                    <span class="icon_star_alt"></span>
+                </div>
+                <div class="eltd-blei-upper-wrapper even" style="width: 387px; height: 452px;">
+                    <div class="slides owl-carousel owl-theme" style="display: block; opacity: 1;">
+                        <div class="owl-wrapper-outer">
+                            <div class="owl-wrapper" style="left: 0px; width: 774px; display: block;">
+                                <div class="owl-item" style="width: 387px;">
+                                    @if (post.Photos.Count() != 0)
+                                    {
+                                        var y = post.Photos.FirstOrDefault().FilePath;
+
+                                        <div class="eltd-blei-slide" style="background-image: url('@y')"></div>
+                                    }
+                                    else
+                                    {
+
+                                        <div class="eltd-blei-slide" style="background-image: url('/Content/mgmain.png')"></div>
+
+                                    }
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="owl-controls clickable" style="display: none;"><div class="owl-pagination"><div class="owl-page active"><span></span></div></div></div>
+                    </div>
+                    <div class="eltd-blei-video-holder">
+                        <div class="eltd-blei-video-holder-inner">
+
+
+
+
+
+                            <div class="fluidvids" style="padding-top: 56.22%;">
+                                <video controls="controls" width="1060" height="596" title="@post.Title" class="fluidvids-item" src="@post.Films.FirstOrDefault().FilePath" frameborder="0" allowfullscreen="" mozallowfullscreen="" webkitallowfullscreen="" data-fluidvids="loaded" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"></video>
+
+                            </div>
+                        </div>
+                    </div>
+                    <a class="eltd-blei-link" href="@Url.Action("Index", "Home",  new { ArticleID = post.Id, blogName = post.Title.ToLower().Replace(" ", "-").Replace(":", "-"), title = post.Title.ToLower().Replace(":", "-").Replace(" ", "-").Replace("\"", "-").Replace("?", "-")})"><span class="eltd-play-button ion-play"></span></a>
+                    <div class="slides-cover"></div>
+                    <h4 class="eltd-post-title">
+                        <a title="@post.Title" href="@Url.Action("Index", "Home",  new { ArticleID = post.Id, blogName = post.Title.ToLower().Replace(" ", "-").Replace(":", "-"), title = post.Title.ToLower().Replace(":", "-").Replace(" ", "-").Replace("\"", "-").Replace("?", "-")})" target="_self">
+                            @post.Title
+                        </a>
+                    </h4>
+                </div>
+                <div class="eltd-blei-lower-wrapper">
+                    <div class="full-text-container"></div>
+                </div>
+                <div class="eltd-blei-collapse"><span class="icon_close"></span></div>
+            </div>
+        </article>
+    }
+    if (post.PostType == Domain.Entities.PostType.Embed)
+    {
+        var msg = Html.Raw(post.EmbedCode);
+
+        <article class="eltd-blog-list-expandable-item eltd-blei-h-1 eltd-blei-post post-3021 post type-post status-publish format-audio has-post-thumbnail hentry category-illustrations tag-art tag-style post_format-post-format-audio" id="post-3021" style="left: 1113px; top: 200px; position: absolute;" data-importance="10000">
+            <div class="eltd-blei-inner">
+                <div class="eltd-blog-souncloud-holder">
+                    @msg
+                </div>
+            </div>
+        </article>
+    }
+    if (post.PostType == Domain.Entities.PostType.Quote)
+    {
+        
+        <article class="eltd-blog-list-expandable-item eltd-blei-h-1 eltd-blei-post @post.Id type-post status-publish format-quote has-post-thumbnail hentry category-travel tag-creative tag-photo post_format-post-format-quote" id="@post.Id" style="left: 394px; top: 920px; position: absolute;">
+            <div class="eltd-post-content" style="background-image: url('post.Photos.FirstOrDefault().FilePath')">
+                <div class="eltd-post-text">
+                    <div class="eltd-post-text-inner">
+                        <div class="eltd-quote-icon">
+                            <span class="icon_quotations"></span>
+                        </div>
+                        <div class="eltd-quote-text">
+                            @post.Title
+                        </div>
+                        <h4 class="eltd-post-title">
+                            <a title="@post.Title" href="@Url.Action("Index", "Home",  new { ArticleID = post.Id, blogName = post.Title.ToLower().Replace(" ", "-").Replace(":", "-"), title = post.Title.ToLower().Replace(":", "-").Replace(" ", "-").Replace("\"", "-").Replace("?", "-")})" target="_self">
+                                @post.Description
+                            </a>
+                        </h4>
+                    </div>
+                </div>
+                <div class="eltd-post-info-wrapper">
+                    <div class="eltd-post-info eltd-left-section">
+                        <div class="eltd-post-info-date">
+                            @post.Location.City
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </article>
+    }
+    if (post.PostType == Domain.Entities.PostType.Photo)
+    {
+
+        <article class="eltd-blog-list-expandable-item eltd-blei-h-1 eltd-blei-post @post.Id post type-post status-publish format-standard has-post-thumbnail hentry category-interior tag-art tag-creative tag-geometric" id="@post.Id" style="left: 789px; top: 460px; position: absolute;" data-importance="10000">
+            <div class="eltd-blei-inner">
+                <div class="eltd-blei-upper-wrapper even" style="width: 387px; height: 222px;">
+                    <div class="image-container" style="background-image: url('@post.Photos.First().FilePath')">
+                        <a href="@Url.Action("Index", "Home",  new { ArticleID = post.Id, blogName = post.Title.ToLower().Replace(" ", "-").Replace(":", "-"), title = post.Title.ToLower().Replace(":", "-").Replace(" ", "-").Replace("\"", "-").Replace("?", "-")})"></a>
+                    </div>
+                    <div class="description-container">
+                        <div class="latest-post">
+                            <div class="eltd-post-info eltd-category">
+                                <div class="eltd-post-info-category">
+                                    <a href="@Url.Action("Index", "Home",  new { catName = post.Category})" class="external-link eltd-external-link" data-cat-id="@post.Category">
+                                        <span>
+                                            @post.Category
+                                        </span>
+                                    </a>
+                                </div>
+                            </div>
+                            <h4 class="eltd-post-title">
+                                <a title="@post.Title" href="@Url.Action("Index", "Home",  new { ArticleID = post.Id, blogName = post.Title.ToLower().Replace(" ", "-").Replace(":", "-"), title = post.Title.ToLower().Replace(":", "-").Replace(" ", "-").Replace("\"", "-").Replace("?", "-") })" target="_self">
+                                    @post.Title
+                                </a>
+                            </h4>
+                            <p class="eltd-post-excerpt eltd-long-excerpt">@post.Title</p>
+                            <p class="eltd-post-excerpt eltd-short-excerpt">@post.Title</p>
+                        </div>
+                        <a class="eltd-btn eltd-btn-small eltd-btn-solid  eltd-read-more " href="@Url.Action("Index", "Home",  new { ArticleID = post.Id, blogName = post.Title.ToLower().Replace(" ", "-").Replace(":", "-"), title = post.Title.ToLower().Replace(":", "-").Replace(" ", "-").Replace("\"", "-").Replace("?", "-")})" target="_self">
+                            <span class="eltd-btn-text">Read More</span>
+                        </a>
+                        <div class="eltd-post-info">
+                            @if(post.Location is not null)
+                            {
+                                <div class="eltd-post-info-date">
+                                    @post.Location.Name
+                                </div>
+                            }
+                            
+
+
+                        </div>
+                    </div>
+                </div>
+                <div class="eltd-blei-lower-wrapper">
+                    <div class="full-text-container"></div>
+                </div>
+                <div class="eltd-blei-collapse"><span class="icon_close"></span></div>
+            </div>
+        </article>
+
+    }
+
+    if (post.PostType == Domain.Entities.PostType.Link)
+    {
+        <article class="eltd-blog-list-expandable-item eltd-blei-h-1 eltd-blei-post  @post.Id type-post status-publish format-link has-post-thumbnail hentry category-design tag-artwork tag-drawing tag-style post_format-post-format-link" id="@post.Id" style="left: 789px; top: 1380px; position: absolute;">
+            <div class="eltd-post-content" style="background-image: url('@post.Photos.FirstOrDefault().FilePath')">
+                <div class="eltd-post-text">
+                    <div class="eltd-post-text-inner">
+                        <div class="eltd-link-icon">
+                            <i class="icon_link"></i>
+                        </div>
+                        <h3 class="eltd-post-title">
+                            <a title="@post.Title" class="eltd-external-link" href="@post.SharedLink" target="blank">
+                                @post.Title
+                            </a>
+                        </h3>				<div class="eltd-post-info-author-holder">
+                            <div class="eltd-post-info-author">
+                                @post.Category
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="eltd-post-info-wrapper">
+                    <div class="eltd-post-info eltd-left-section">
+                        <div class="eltd-post-info-date">
+                            @post.Location.City
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </article>
+    }
+
+    if (post.PostType == Domain.Entities.PostType.Music)
+    {
+        var msg = Html.Raw(post.EmbedCode);
+        <article class="eltd-blog-list-expandable-item eltd-blei-h-1 eltd-blei-post post-3021 post type-post status-publish format-audio has-post-thumbnail hentry category-illustrations tag-art tag-style post_format-post-format-audio" id="post-3021" style="left: 1113px; top: 200px; position: absolute;" data-importance="10000">
+            <div class="eltd-blei-inner">
+                <div class="eltd-blog-souncloud-holder">
+                    @msg
+                </div>
+            </div>
+        </article>
+    }
+
+
+
+}

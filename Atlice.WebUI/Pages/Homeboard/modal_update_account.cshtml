@@ -1,0 +1,45 @@
+﻿@model string
+@{
+    Layout = null;
+}
+
+
+
+@if(Model == "name")
+{
+    <form id="wf-form-Account-Information-Form" name="wf-form-Account-Information-Form" data-name="Account Information Form" method="get">
+    <label for="name" class="field-label-9">Name</label>
+    <input type="text" class="input-2 w-input" maxlength="256" name="fullname" data-name="Name 10" placeholder="" id="name-10">
+    <div class="page-editor-top-bar image-save-button">
+        <a onclick="fetch('/homeboard/index?handler=saveaccountstate&value='+this.parentElement.previousElementSibling.value+'&name='+this.parentElement.previousElementSibling.getAttribute('name')).then(x=>x.json()).then(y=>document.getElementById('nameUpdate').innerHTML = y.view).then(z=> document.getElementById('accountSettingModal').setAttribute('style','display:none;'))" href="#" data-w-id="802b3264-2e60-8d91-8e57-0263d478e077" class="button-5 atlice-button-primary w-button">Confirm Update</a>
+    </div>
+</form>
+}
+@if(Model == "mobile")
+{
+    <form id="confirmPhone" name="wf-form-Account-Information-Form" data-name="Account Information Form" method="get">
+    <label for="email" class="field-label-9">Mobile Number</label>
+    <input type="tel" class="input-2 w-input" maxlength="256" name="email-15" data-name="Email 15" placeholder="" id="email-15" required="">
+    <div class="page-editor-top-bar image-save-button">
+        <a href="#" onclick="fetch('/homeboard/index?handler=sendtext&value='+this.parentElement.previousElementSibling.value).then(x=>x.json()).then(y=>document.getElementById('confirmPhone').innerHTML = y.view)" data-w-id="802b3264-2e60-8d91-8e57-0263d478e077" class="button-5 atlice-button-primary w-button">Send Text</a>
+    </div>
+</form>
+}
+@if(Model == "email")
+{
+    <form id="confirmEmail" name="wf-form-Account-Information-Form" data-name="Account Information Form" method="get">
+   
+    <label for="email-16" class="field-label-9">Email Address</label>
+    <input type="email" class="input-2 w-input" maxlength="256" name="email-15" data-name="Email 15" placeholder="" id="email-15" required="">
+    <div class="page-editor-top-bar image-save-button">
+        <a href="#" onclick="fetch('/homeboard/index?handler=sendemail&value='+this.parentElement.previousElementSibling.value).then(x=>x.json()).then(y=>document.getElementById('confirmEmail').innerHTML = y.view)" data-w-id="802b3264-2e60-8d91-8e57-0263d478e077" class="button-5 atlice-button-primary w-button">Send Email</a>
+    </div>
+</form>
+}
+
+<div class="w-form-done">
+    <div>Thank you! Your submission has been received!</div>
+</div>
+<div class="w-form-fail">
+    <div>Oops! Something went wrong while submitting the form.</div>
+</div>

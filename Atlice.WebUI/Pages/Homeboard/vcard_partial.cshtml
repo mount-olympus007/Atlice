@@ -1,0 +1,252 @@
+﻿@model Atlice.Domain.Entities.ContactPage
+@{
+    Layout = null;
+}
+
+<div class="w-col w-col-6">
+    <div class="friend-item">
+        <div class="friend-photo-container">
+            <img width="50" src="../images/call-phone-calling.png" alt="" class="friend-photo">
+            @if (Model.VPhone)
+            {
+                <div class="online-status on"></div>
+
+            }
+            else
+            {
+                <div class="online-status off"></div>
+            }
+        </div>
+        <div class="tap-links-form w-form">
+            <form id="email-form-2" name="email-form-2" data-name="Email Form 2" method="get">
+                <div>
+                    <div class="card no-padding">
+                        <div class="card-setting-container">
+                            <div class="card-setting-switcher">
+                                <label class="w-checkbox switcher-wrapper-checkbox" style="max-width:250px;">
+                                    @if (Model.VPhonePreview)
+                                    {
+                                        <div class="w-checkbox-input w-checkbox-input--inputType-custom switcher-button-checkbox w--redirected-checked"></div>
+                                        <input onclick="fetch('/homeboard/Index?handler=savepreviewstate&value='+this.previousElementSibling.getAttribute('class')+'&id='+this.id+'&name='+this.getAttribute('name')).then(x => x.json()).then(y=> document.getElementById('stcUpdate').innerHTML = y.status)" type="checkbox" name="VPhonePreview" asp-for="VPhonePreview" id="@Model.Id" data-name="Checkbox 15" checked="" style="opacity:0;position:absolute;z-index:-1">
+                                        <span class="checkbox-label-8 w-form-label" for="checkbox-15"></span>
+
+                                    }
+                                    else
+                                    {
+                                        <div class="w-checkbox-input w-checkbox-input--inputType-custom switcher-button-checkbox"></div>
+                                        <input onclick="fetch('/homeboard/Index?handler=savepreviewstate&value='+this.previousElementSibling.getAttribute('class')+'&id='+this.id+'&name='+this.getAttribute('name')).then(x => x.json()).then(y=> document.getElementById('stcUpdate').innerHTML = y.status)" type="checkbox" name="VPhonePreview" asp-for="VPhonePreview" id="@Model.Id" data-name="Checkbox 15" style="opacity:0;position:absolute;z-index:-1">
+                                        <span class="checkbox-label-8 w-form-label" for="checkbox-15"></span>
+
+                                    }
+                                </label>
+                            </div>
+                            <div class="card-setting-text">Phone</div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+            <div class="w-form-done">
+                <div>Thank you! Your submission has been received!</div>
+            </div>
+            <div class="w-form-fail">
+                <div>Oops! Something went wrong while submitting the form.</div>
+            </div>
+        </div>
+    </div>
+    <div class="friend-item">
+        <div class="friend-photo-container">
+            <img width="50" src="../images/email-mail-inbox-message.png" alt="" class="friend-photo">
+            @if (Model.VEmail)
+            {
+                <div class="online-status on"></div>
+            }
+            else
+            {
+
+                <div class="online-status off"></div>
+            }
+        </div>
+        <div class="tap-links-form w-form">
+            <form id="email-form-2" name="email-form-2" data-name="Email Form 2" method="get">
+                <div>
+                    <div class="card no-padding">
+                        <div class="card-setting-container">
+                            <div class="card-setting-switcher">
+                                <label class="w-checkbox switcher-wrapper-checkbox">
+                                    @if (Model.VEmailPreview)
+                                    {
+                                        <div class="w-checkbox-input w-checkbox-input--inputType-custom switcher-button-checkbox w--redirected-checked"></div>
+                                        <input onclick="fetch('/homeboard/Index?handler=savepreviewstate&value='+this.previousElementSibling.getAttribute('class')+'&id='+this.id+'&name='+this.getAttribute('name')).then(x => x.json()).then(y=> document.getElementById('stcUpdate').innerHTML = y.status)" type="checkbox" asp-for="VEmailPreview" name="VEmailPreview" id="@Model.Id" checked="checked" style="opacity:0;position:absolute;z-index:-1">
+                                        <span class="checkbox-label-8 w-form-label" for="checkbox-15"></span>
+                                    }
+                                    else
+                                    {
+                                        <div class="w-checkbox-input w-checkbox-input--inputType-custom switcher-button-checkbox"></div>
+                                        <input onclick="fetch('/homeboard/Index?handler=savepreviewstate&value='+this.previousElementSibling.getAttribute('class')+'&id='+this.id+'&name='+this.getAttribute('name')).then(x => x.json()).then(y=> document.getElementById('stcUpdate').innerHTML = y.status)" type="checkbox" asp-for="VEmailPreview" name="VEmailPreview" id="@Model.Id" style="opacity:0;position:absolute;z-index:-1">
+                                        <span class="checkbox-label-8 w-form-label" for="checkbox-15"></span>
+                                    }
+                                </label>
+                            </div>
+                            <div class="card-setting-text">Email</div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+            <div class="w-form-done">
+                <div>Thank you! Your submission has been received!</div>
+            </div>
+            <div class="w-form-fail">
+                <div>Oops! Something went wrong while submitting the form.</div>
+            </div>
+        </div>
+    </div>
+    <div class="friend-item">
+        <div class="friend-photo-container">
+            <img width="50" sizes="100vw" src="../images/c5305453-fe7a-49eb-8cc6-8f1b9f7a2ea6.png" srcset="../images/c5305453-fe7a-49eb-8cc6-8f1b9f7a2ea6-p-500.png 500w, ../images/c5305453-fe7a-49eb-8cc6-8f1b9f7a2ea6.png 501w" alt="" class="friend-photo">
+            @if (Model.VWebsite)
+            {
+                <div class="online-status on"></div>
+            }
+            else
+            {
+
+                <div class="online-status off"></div>
+            }
+        </div>
+        <div class="tap-links-form w-form">
+            <form id="email-form-2" name="email-form-2" data-name="Email Form 2" method="get">
+                <div>
+                    <div class="card no-padding">
+                        <div class="card-setting-container">
+                            <div class="card-setting-switcher">
+                                <label class="w-checkbox switcher-wrapper-checkbox">
+                                    @if (Model.VWebsitePreview)
+                                    {
+                                        <div class="w-checkbox-input w-checkbox-input--inputType-custom switcher-button-checkbox w--redirected-checked"></div>
+                                        <input onclick="fetch('/homeboard/Index?handler=savepreviewstate&value='+this.previousElementSibling.getAttribute('class')+'&id='+this.id+'&name='+this.getAttribute('name')).then(x => x.json()).then(y=> document.getElementById('stcUpdate').innerHTML = y.status)" type="checkbox" asp-for="VWebsitePreview" name="VWebsitePreview" id="@Model.Id" checked="checked" style="opacity:0;position:absolute;z-index:-1">
+                                        <span class="checkbox-label-8 w-form-label" for="checkbox-15"></span>
+                                    }
+                                    else
+                                    {
+                                        <div class="w-checkbox-input w-checkbox-input--inputType-custom switcher-button-checkbox"></div>
+                                        <input onclick="fetch('/homeboard/Index?handler=savepreviewstate&value='+this.previousElementSibling.getAttribute('class')+'&id='+this.id+'&name='+this.getAttribute('name')).then(x => x.json()).then(y=> document.getElementById('stcUpdate').innerHTML = y.status)" type="checkbox" asp-for="VWebsitePreview" name="VWebsitePreview" id="@Model.Id" style="opacity:0;position:absolute;z-index:-1">
+                                        <span class="checkbox-label-8 w-form-label" for="checkbox-15"></span>
+                                    }
+                                </label>
+                            </div>
+                            <div class="card-setting-text">Website</div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+            <div class="w-form-done">
+                <div>Thank you! Your submission has been received!</div>
+            </div>
+            <div class="w-form-fail">
+                <div>Oops! Something went wrong while submitting the form.</div>
+            </div>
+        </div>
+    </div>
+
+    @foreach (var link in Model.TapLinks.Where(x => x.LinkType == Domain.Entities.LinkType.Connect || x.LinkType == Domain.Entities.LinkType.Pay).Take(10))
+    {
+        <div class="friend-item">
+            <div class="friend-photo-container">
+                <img width="50" src="@link.GetLogo(link.SocialProvider)" alt="" class="friend-photo">
+                @if(link.VCard){
+                    <div class="online-status on"></div>
+                }
+                else{
+                    <div class="online-status off"></div>
+                }
+                
+            </div>
+            <div class="tap-links-form w-form">
+                <form id="email-form-2" name="email-form-2" data-name="Email Form 2" method="get">
+                    <div>
+                        <div class="card no-padding">
+                            <div class="card-setting-container">
+                                <div class="card-setting-switcher">
+                                    <label class="w-checkbox switcher-wrapper-checkbox">
+                                        @if (link.VPreview)
+                                        {
+                                            <div class="w-checkbox-input w-checkbox-input--inputType-custom switcher-button-checkbox w--redirected-checked"></div>
+                                            <input onclick="fetch('/homeboard/Index?handler=savetaplinkstate&value='+this.previousElementSibling.getAttribute('class')+'&id='+this.id+'&name='+this.getAttribute('name')).then(x => x.json()).then(y=> document.getElementById('stcUpdate').innerHTML = y.status)" type="checkbox" name="VPreview" asp-for="@link.VPreview" id="@link.Id" data-name="Checkbox 15" checked="" style="opacity:0;position:absolute;z-index:-1">
+                                            <span class="checkbox-label-8 w-form-label" for="checkbox-15"></span>
+
+                                        }
+                                        else
+                                        {
+                                            <div class="w-checkbox-input w-checkbox-input--inputType-custom switcher-button-checkbox"></div>
+                                            <input onclick="fetch('/homeboard/Index?handler=savetaplinkstate&value='+this.previousElementSibling.getAttribute('class')+'&id='+this.id+'&name='+this.getAttribute('name')).then(x => x.json()).then(y=> document.getElementById('stcUpdate').innerHTML = y.status)" type="checkbox" name="VPreview" asp-for="@link.VPreview" id="@link.Id" data-name="Checkbox 15" style="opacity:0;position:absolute;z-index:-1">
+                                            <span class="checkbox-label-8 w-form-label" for="checkbox-15"></span>
+
+                                        }
+                                    </label>
+                                </div>
+                                <div class="card-setting-text">@link.SocialProvider</div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+                <div class="w-form-done">
+                    <div>Thank you! Your submission has been received!</div>
+                </div>
+                <div class="w-form-fail">
+                    <div>Oops! Something went wrong while submitting the form.</div>
+                </div>
+            </div>
+        </div>
+    }
+
+
+</div>
+@if(Model.TapLinks.Where(x => x.LinkType == Domain.Entities.LinkType.Connect || x.LinkType == Domain.Entities.LinkType.Pay).Count() > 10)
+{
+    <div class="w-col w-col-6">
+    @foreach (var link in Model.TapLinks.Where(x => x.LinkType == Domain.Entities.LinkType.Connect || x.LinkType == Domain.Entities.LinkType.Pay).Skip(10))
+    {
+        <div class="friend-item">
+            <div class="friend-photo-container">
+                <img width="50" src="@link.GetLogo(link.SocialProvider)" alt="" class="friend-photo">
+                <div class="online-status off"></div>
+            </div>
+            <div class="tap-links-form w-form">
+                <form id="email-form-2" name="email-form-2" data-name="Email Form 2" method="get">
+                    <div>
+                        <div class="card no-padding">
+                            <div class="card-setting-container">
+                                <div class="card-setting-switcher">
+                                    <label class="w-checkbox switcher-wrapper-checkbox">
+                                        @if (link.VPreview)
+                                        {
+                                            <div class="w-checkbox-input w-checkbox-input--inputType-custom switcher-button-checkbox w--redirected-checked"></div>
+                                            <input onclick="fetch('/homeboard/Index?handler=savetaplinkstate&value='+this.previousElementSibling.getAttribute('class')+'&id='+this.id+'&name='+this.getAttribute('name')).then(x => x.json()).then(y=> document.getElementById('stcUpdate').innerHTML = y.status)" type="checkbox" name="VPreview" asp-for="@link.VPreview" id="@link.Id" data-name="Checkbox 15" checked="" style="opacity:0;position:absolute;z-index:-1">
+                                            <span class="checkbox-label-8 w-form-label" for="checkbox-15"></span>
+
+                                        }
+                                        else
+                                        {
+                                            <div class="w-checkbox-input w-checkbox-input--inputType-custom switcher-button-checkbox"></div>
+                                            <input onclick="fetch('/homeboard/Index?handler=savetaplinkstate&value='+this.previousElementSibling.getAttribute('class')+'&id='+this.id+'&name='+this.getAttribute('name')).then(x => x.json()).then(y=> document.getElementById('stcUpdate').innerHTML = y.status)" type="checkbox" name="ShowPreview" asp-for="@link.VPreview" id="@link.Id" data-name="Checkbox 15" style="opacity:0;position:absolute;z-index:-1">
+                                            <span class="checkbox-label-8 w-form-label" for="checkbox-15"></span>
+
+                                        }
+                                    </label>
+                                </div>
+                                <div class="card-setting-text">@link.SocialProvider</div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+                <div class="w-form-done">
+                    <div>Thank you! Your submission has been received!</div>
+                </div>
+                <div class="w-form-fail">
+                    <div>Oops! Something went wrong while submitting the form.</div>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+}

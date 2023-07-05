@@ -1,0 +1,990 @@
+﻿@page "{id}"
+@model Atlice.WebUI.Pages.Admin.UserProfileModel
+@{
+    TimeZoneInfo Eastern_Standard_Time = TimeZoneInfo.FindSystemTimeZoneById("Eastern Standard Time");
+    var time = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, Eastern_Standard_Time).ToLocalTime().ToShortTimeString();
+    Layout = "_AdminLayout";
+    var adm = "";
+    if (User.Identity is not null)
+    {
+        adm = User.Identity.Name;
+    }
+    Atlice.Domain.Entities.ContactPage? cp = Model.UserProfile.Pages.FirstOrDefault(x => x.PageType == Domain.Entities.PageType.Business);
+    var personal = Model.UserProfile.Pages.FirstOrDefault(x => x.PageType == Domain.Entities.PageType.Personal);
+    var professional = Model.UserProfile.Pages.FirstOrDefault(x => x.PageType == Domain.Entities.PageType.Professional);
+    List<Atlice.Domain.Entities.ChatMessage> messages = new List<Atlice.Domain.Entities.ChatMessage>();
+    var plus = new Dictionary<string, string>
+        {
+           { "userid", Model.UserProfile.User.Id.ToString() },
+           { "value", "1" }
+        };
+        var minus = new Dictionary<string, string>
+        {
+           { "userid", Model.UserProfile.User.Id.ToString() },
+           { "value", "-1" }
+        };
+}
+<div class="app-main-layout-header-2">
+    <input type="hidden" value="@User.Identity.Name" id="adminUserName" />
+        <input type="hidden" value="@Model.UserProfile.User.UserName" id="memberUserName" />
+
+    <div class="app-main-layout-wrapper header">
+        <div class="page-heading">
+            <h2 class="heading-62">Citizen Profile</h2>
+            <p>Components for editing profile, friends list, public profile and post view.</p>
+          
+
+        </div>
+    </div>
+</div>
+<div class="app-main-layout-wrapper">
+    <div class="app-main-layout-content">
+        <div class="section">
+            <div class="row w-row">
+                <div class="col w-col w-col-8">
+                    <div class="card-5">
+                        <div class="profile-bg">
+                            
+                            <form name="email-form-3" data-name="Email Form 3" asp-page-handler="BookMarkem" data-ajax="true" data-ajax-method="POST" data-ajax-mode="replace" data-ajax-update="#bookmarkEm">
+                                <input type="hidden" asp-for="@Model.UserProfile.User.Id" name="UserId" value="@Model.UserProfile.User.Id" />
+                                <div id="bookmarkEm">
+                                    @if (Model.UserProfile.User.Bookmarked)
+                                    {
+
+                                        <input type="submit" class="hidden" />
+                                        <input type="hidden" value="false" name="bookmarked" checked="checked" />
+                                        <a onclick="javascript: { $(this).prev().click(); $(this).prev().prev().click(); }" data-w-id="ebf40d32-69b4-db1c-da09-bc2efda9fcc6" href="#" class="bookmark w-inline-block" style="background-color: rgb(45, 179, 247);"></a>
+                                    }
+                                    else
+                                    {
+                                        <input type="submit" class="hidden" />
+                                        <input type="hidden" value="true" name="bookmarked" />
+                                        <a onclick="javascript: { $(this).prev().click(); $(this).prev().prev().click(); }" data-w-id="ebf40d32-69b4-db1c-da09-bc2efda9fcc6" href="#" class="bookmark w-inline-block"></a>
+                                    }
+                                </div>
+
+                            </form>
+                            <a href="#" class="edit-profile-bg-2 hidden w-inline-block"></a>
+                        </div>
+                        <div class="profile-info">
+                            @if (Model.UserProfile.Pages.Count() == 0)
+                            {
+                                <div class="avatar sb" style="background-image:url(../../wwwroot/Content/userpng.png);"></div>
+                            }
+                            else
+                            {
+                                if (cp is not null)
+                                {
+                                    <div class="avatar sb" style="background-image:url(@cp.ProImage);"></div>
+                                }
+
+                            }
+                            <div class="profile-details">
+                                <h5 class="profile-name citizen-profile">@Model.UserProfile.User.FirstName @Model.UserProfile.User.LastName</h5>
+                                @if (cp != null)
+                                {
+                                    <div>@cp.BusinessName</div>
+
+                                }
+                            </div>
+                            <div class="profile-follow">
+                                <div class="device-images fulfillment top-page">
+                                    @foreach (var device in Model.UserProfile.Taps)
+                                    {
+                                        <div id="w-node-a7e022b8-a2e0-53cd-52f5-468223f00706-87935a25" class="device-div-block fb">
+                                            <img src="@device.GetImage(device.Sku)" loading="lazy" sizes="34px" srcset="@device.GetImage(device.Sku) 500w, @device.GetImage(device.Sku) 800w, @device.GetImage(device.Sku) 1013w" alt="">
+                                        </div>
+
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                        <div data-duration-in="300" data-duration-out="100" class="w-tabs">
+                            <div class="tabs-menu-5 w-tab-menu">
+                                <a data-w-tab="Tab 1" class="tab-link-3 w-inline-block w-tab-link w--current">
+                                    <div>Account</div>
+                                </a>
+                                <a data-w-tab="Tab 4" class="tab-link-3 right w-inline-block w-tab-link">
+                                    <div>Tap Links</div>
+                                </a>
+                                <a data-w-tab="Tab 5" class="tab-link-3 right w-inline-block w-tab-link">
+                                    <div>Orders</div>
+                                </a>
+                                <a data-w-tab="Tab 6" class="tab-link-3 w-inline-block w-tab-link">
+                                    <div>Devices</div>
+                                </a>
+                                <a data-w-tab="Tab 30" class="tab-link-3 w-inline-block w-tab-link">
+                                    <div>Contact Pages</div>
+                                </a>
+                                <a data-w-tab="Tab 31" class="tab-link-3 w-inline-block w-tab-link">
+                                    <div>Contact Lists</div>
+                                </a>
+                            </div>
+                            <div class="tabs-content w-tab-content">
+                                <div data-w-tab="Tab 1" class="w-tab-pane w--tab-active">
+                                    <div class="row w-row">
+                                        <div class="col w-col w-col-6">
+                                            @if(Model.UserProfile.Passport is not null)
+                                            {
+                                                <form asp-page-handler="AddStamp">
+                                                    <input type="hidden" value="@Model.UserProfile.User.Id" name="userid" />
+                                                    <select name="stampName">
+                                                        <option value="Founder's Stamp">Founder's Stamp</option>
+                                                        <option value="Citizen's Stamp">Citizen's Stamp</option>
+                                                        <option value="Tourist Stamp">Tourist Stamp</option>
+                                                        <option value="Lead Stamp">Lead Stamp</option>
+                                                    </select>
+                                                    <input type="submit" value="Add Stamp" />
+                                                </form>
+                                                <div class="flex-center profile-about-row" style="border:dashed black 2px;">
+                                                    <div class="profile-info-heading-2">
+                                                        <strong><img src="~/images/passport.png" height="50" /> Passport</strong>
+                                                    </div>
+
+                                                    <div>
+                                                        <p>Last Updated: @Model.UserProfile.Passport.LastUpdated</p>
+                                                        <div>
+                                                            @foreach(var stamp in Model.UserProfile.Passport.Stamps)
+                                                            {
+                                                                <div style="border:dashed red 2px;">
+                                                                    <img src="@stamp.GetImage(stamp.Name,stamp.Platform)" height="50" width="50" />
+                                                                    <br />
+                                                                    <p>@stamp.Name</p>
+                                                                    <p>@stamp.TimeStamp</p>
+                                                                </div>
+                                                            }
+                                                            
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            }
+                                            
+                                            <div class="flex-center profile-about-row">
+                                                <div class="profile-info-heading-2">
+                                                    <strong>Phone</strong>
+                                                </div>
+                                                @if (string.IsNullOrEmpty(Model.UserProfile.User.PhoneNumber))
+                                                {
+                                                    <form asp-page-handler="AddPhone">
+                                                        <p>@TempData["Error"]</p>
+                                                        <input type="hidden" name="userid" value="@Model.UserProfile.User.Id" />
+                                                        <input type="text" name="phone">
+                                                        <input type="submit" value="Save">
+                                                    </form>
+                                                }
+                                                else
+                                                {
+                                                    <div>@Model.UserProfile.User.PhoneNumber</div>
+                                                }
+                                                
+                                            </div>
+                                            <div class="flex-center profile-about-row">
+                                                <div class="profile-info-heading-2">
+                                                    <strong>Email</strong>
+                                                </div>
+                                                <div id="emailResult">@Model.UserProfile.User.Email</div>
+                                                <form asp-page-handler="ChangeEmail" data-ajax="true" data-ajax-method="POST" data-ajax-mode="replace" data-ajax-update="#emailResult">
+                                                    <input type="hidden" name="UserId" value="@Model.UserProfile.User.Id" />
+                                                    <input type="email" name="email" placeholder="Email" />
+                                                    <input type="submit" value="Change" />
+                                                </form>
+                                            </div>
+
+                                        </div>
+                                        <div class="col w-col w-col-6">
+                                            <div class="flex-center profile-about-row">
+                                                <div class="profile-info-heading-2">
+                                                    <strong>Invited By</strong>
+                                                </div>
+                                                <div>
+                                                    @if (Model.UserProfile.Affiliate != null)
+                                                    {
+                                                        <a href="/Admin/Userprofile/@Model.UserProfile.Affiliate.Id">@Model.UserProfile.Affiliate.FirstName @Model.UserProfile.Affiliate.LastName</a>
+
+                                                    }
+                                                </div>
+                                            </div>
+                                            <div class="flex-center profile-about-row">
+                                                <div class="profile-info-heading-2">
+                                                    <strong>Location</strong>
+                                                </div>
+                                                @if (Model.UserProfile.Pages.Any(x => x.Location != null))
+                                                {
+                                                    var loc = Model.UserProfile.Pages.FirstOrDefault(x => x.Location != null);
+                                                    if (loc is not null)
+                                                    {
+                                                        <div>@loc.Location</div>
+                                                    }
+
+
+                                                }
+                                                else
+                                                {
+                                                    <div>
+                                                        No Location
+                                                    </div>
+                                                }
+                                            </div>
+                                            <div class="flex-center profile-about-row">
+                                                <div class="profile-info-heading-2">
+
+                                                    <strong id="roleupdate">Role: @Model.UserProfile.Role</strong>
+                                                </div>
+                                                <form asp-page-handler="ChangeRole" data-ajax="true" data-ajax-method="POST" data-ajax-mode="replace" data-ajax-update="#roleupdate">
+                                                    <input type="hidden" value="@Model.UserProfile.User.Id" name="UserId" />
+
+                                                    <select name="role">
+                                                        <option value="Citizen">Citizen</option>
+                                                        <option value="Tourist">Tourist</option>
+                                                        <option value="Prospect">Prospect</option>
+
+                                                    </select>
+                                                    <input type="submit" value="Submit" />
+                                                </form>
+                                            </div>
+                                            @if (Model.UserProfile.User.Email != null)
+                                            {
+                                                <div class="flex-center profile-about-row">
+                                                    <div class="profile-info-heading-2">
+                                                        <strong>Status: <strong id="emailupdate"></strong> </strong>
+                                                    </div>
+                                                    <form asp-page-handler="SendEmail" data-ajax="true" data-ajax-method="POST" data-ajax-mode="replace" data-ajax-update="#emailupdate">
+                                                        <input type="hidden" value="@Model.UserProfile.User.Id" name="UserId" />
+                                                        <select name="emailType">
+                                                            <option value="LetterfromAlex">Letter from Alex</option>
+                                                            <option value="homeboard">v3 Guide Homeboard</option>
+                                                            <option value="takecontrol">Homeboard Take Control</option>
+                                                            <option value="stats">Stats</option>
+                                                            <option value="premium">Premium</option>
+                                                        </select>
+                                                        <input type="submit" value="Send Email" />
+                                                    </form>
+                                                </div>
+                                            }
+
+
+                                        </div>
+                                    </div>
+                                    <div class="devider-2 transparent"></div>
+                                    <div class="profile-info-heading-2">
+
+                                        <strong>Plan</strong>
+                                        <br />
+                                        <p>@Model.UserProfile.Role </p>
+                                        @if (Model.UserProfile.YouLoveProfile != null)
+                                        {
+                                            <ul style="list-style-type:none;">
+                                                <li>
+                                                    State of Mind: @Model.UserProfile.YouLoveProfile.StateofMind
+                                                </li>
+                                                <li>
+                                                    Entrepreneur: @Model.UserProfile.YouLoveProfile.Entrepreneur
+                                                </li>
+                                                <li>
+                                                    Creator: @Model.UserProfile.YouLoveProfile.Creator
+                                                </li>
+                                                <li>
+
+                                                    Brand Owner: @Model.UserProfile.YouLoveProfile.BrandOwner
+                                                </li>
+                                                <li>
+                                                    Team Leader: @Model.UserProfile.YouLoveProfile.TeamLeader
+                                                </li>
+                                                <li>
+                                                    Independent Contractor: @Model.UserProfile.YouLoveProfile.IndependentContractor
+                                                </li>
+                                                <li>
+                                                    Employee: @Model.UserProfile.YouLoveProfile.Employee
+                                                </li>
+                                                <li>
+                                                    Business cards?: @Model.UserProfile.YouLoveProfile.Cards
+                                                </li>
+                                                <li>
+                                                    Payments?: @Model.UserProfile.YouLoveProfile.Payments
+                                                </li>
+                                                <li>
+                                                    PayPal: @Model.UserProfile.YouLoveProfile.Paypal
+                                                </li>
+                                                <li>
+                                                    Cash App: @Model.UserProfile.YouLoveProfile.Cashapp
+                                                </li>
+                                                <li>
+                                                    Venmo: @Model.UserProfile.YouLoveProfile.Venmo
+                                                <li>
+                                                    Stripe: @Model.UserProfile.YouLoveProfile.Stripe
+                                                <li>
+                                                    Apple: @Model.UserProfile.YouLoveProfile.Apple
+                                                </li>
+                                                <li>
+                                                    Google: @Model.UserProfile.YouLoveProfile.Google
+                                                </li>
+                                                <li>
+                                                    Other: @Model.UserProfile.YouLoveProfile.Other
+                                                </li>
+                                                <li>
+                                                    Social Media: @Model.UserProfile.YouLoveProfile.SocialMedia
+                                                </li>
+                                                <li>
+                                                    Social Media Use: @Model.UserProfile.YouLoveProfile.SocialMediaUse
+                                                </li>
+                                                <li>
+                                                    Business Page: @Model.UserProfile.YouLoveProfile.BusinessPage
+                                                </li>
+                                                <li>
+                                                    Zoom: @Model.UserProfile.YouLoveProfile.Zoom
+                                                </li>
+                                                <li>
+                                                    Content Creator: @Model.UserProfile.YouLoveProfile.ContentCreator
+                                                </li>
+                                                <li>
+                                                    Writing: @Model.UserProfile.YouLoveProfile.Write
+                                                </li>
+                                                <li>
+                                                    Videographer: @Model.UserProfile.YouLoveProfile.Video
+                                                </li>
+                                                <li>
+                                                    Photographer: @Model.UserProfile.YouLoveProfile.Photographer
+                                                </li>
+                                                <li>
+                                                    Designer: @Model.UserProfile.YouLoveProfile.Design
+                                                </li>
+                                                <li>
+                                                    Artist: @Model.UserProfile.YouLoveProfile.Artwork
+                                                </li>
+                                                <li>
+                                                    Musician: @Model.UserProfile.YouLoveProfile.Music
+                                                </li>
+                                                <li>
+                                                    Other Job: @Model.UserProfile.YouLoveProfile.Otherjob
+                                                </li>
+                                                <li>
+                                                    Blockchain Assests?: @Model.UserProfile.YouLoveProfile.ChainAssets
+                                                </li>
+                                                <li>
+                                                    Retail Assests?: @Model.UserProfile.YouLoveProfile.StoreAssets
+                                                </li>
+                                            </ul>
+                                        }
+
+                                    </div>
+                                    <div class="devider-2 transparent"></div>
+                                    <div class="profile-info-heading-2">
+                                        <strong>Notes</strong>
+                                    </div>
+                                    <p class="user-notes">
+                                        @if (Model.UserProfile.Notes is not null)
+                                        {
+                                            foreach (var note in Model.UserProfile.Notes.OrderBy(x => x.When))
+                                            {
+                                            <p>@note.When - </p>
+                                            <strong>[@note.Who]: </strong>
+
+                                                @note.What
+                                            <br />
+                                            <br />
+
+                                            }
+                                        }
+
+
+                                    </p>
+                                    <div id="adminNote"></div>
+                                    <div class="post-form">
+                                        <div class="w-form">
+                                            <form name="email-form-3" data-name="Email Form 3" asp-page-handler="SubmitAdminNote" data-ajax="true" data-ajax-method="POST" data-ajax-mode="replace" data-ajax-update="#adminNote">
+                                                <input type="hidden" name="UserId" value="@Model.UserProfile.User.Id" />
+                                                <input type="hidden" name="who" value="AO" />
+                                                <input type="hidden" name="when" value="@TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, Eastern_Standard_Time).ToLocalTime()" />
+                                                <textarea placeholder="Enter note here" maxlength="5000" id="field-5" name="what" class="textarea-3 w-input"></textarea>
+                                                <input type="submit" value="Add" data-wait="Please wait..." class="button-5 atlice-button-primary button-small w-button" />
+                                            </form>
+
+                                        </div>
+                                    </div>
+                                </div>
+                                <div data-w-tab="Tab 4" class="w-tab-pane">
+                                    <div class="w-row" id="userProfile">
+                                        
+                                        @if (!Model.UserProfile.Pages.Any())
+                                        {
+                                            <form asp-page-handler="CreateProfile" data-ajax="true" data-ajax-method="POST" data-ajax-mode="replace" data-ajax-update="#userProfile">
+
+                                                <input type="submit" value="Create Profile" />
+                                                <input type="hidden" name="id" value="@Model.UserProfile.User.Id" />
+                                            </form>
+                                        }
+                                        <div class="w-col w-col-6">
+                                            @foreach (var pag in Model.UserProfile.Pages)
+                                            {
+                                                foreach (var link in pag.TapLinks.Take(10))
+                                                {
+
+                                                    <div class="friend-item">
+                                                        <div class="friend-photo-container">
+                                                            <img src="@link.GetLogo(link.SocialProvider)" width="50" alt="" class="tap-link-photo">
+                                                            @if (link.ContactPage == true)
+                                                            {
+                                                                <div class="online-status-2 on"></div>
+
+                                                            }
+                                                            else
+                                                            {
+                                                                <div class="online-status-2 off"></div>
+
+                                                            }
+                                                        </div>
+                                                        <div>
+                                                            <div>@link.SocialProvider: @pag.PageType </div>
+                                                        </div>
+                                                    </div>
+                                                }
+                                            }
+                                           
+                                        </div>
+                                        <div class="w-col w-col-6">
+                                            @foreach (var page in Model.UserProfile.Pages)
+                                            {
+                                                foreach (var link in page.TapLinks.Skip(10))
+                                                {
+
+                                                    <div class="friend-item">
+                                                        <div class="friend-photo-container">
+                                                            <img src="@link.GetLogo(link.SocialProvider)" width="50" alt="" class="tap-link-photo">
+                                                            @if (link.ContactPage == true)
+                                                            {
+                                                                <div class="online-status-2 on"></div>
+
+                                                            }
+                                                            else
+                                                            {
+                                                                <div class="online-status-2 off"></div>
+
+                                                            }
+                                                        </div>
+                                                        <div>
+                                                            <div>@link.SocialProvider</div>
+                                                        </div>
+                                                    </div>
+                                                }
+                                            }
+
+                                        </div>
+                                    </div>
+                                </div>
+                                <div data-w-tab="Tab 5" class="w-tab-pane">
+                                    <div>
+                                        @foreach (var order in Model.UserProfile.Orders.OrderByDescending(x => x.OrderRecieved))
+                                        {
+                                            <div class="section-inner">
+                                                <div class="card">
+                                                    <div class="table-wrapper">
+                                                        <div class="table extra-wide single">
+                                                            <div class="row table-row flex-center single-row w-row">
+                                                                <div class="col table-col left-padding w-col w-col-4">
+                                                                    <a href="/admin/customerprofile/@order.UserId" class="contact-profile w-inline-block">
+                                                                        <img src="~/AA1.3/images/Artboard-20.png" alt="" class="contacts-avatar">
+                                                                        <div class="contact-profile-info">
+                                                                            <h6 class="mb-0 customer-link">@order.Name</h6>
+                                                                            <div class="text-block-50">Order# @order.OrderNumber</div>
+                                                                        </div>
+                                                                    </a>
+                                                                </div>
+                                                                <div class="col table-col w-col w-col-2">
+                                                                    <div class="label-item yellow">@order.Status</div>
+                                                                </div>
+                                                                <div class="col table-col w-col w-col-2">
+                                                                    <div class="device-images fulfillment">
+                                                                        <form asp-page-handler="AttachToOrder">
+                                                                            <input type="hidden" name="orderid" value="@order.Id">
+                                                                            <input type="hidden" name="userid" value="@Model.UserProfile.User.Id">
+                                                                            <input type="submit" value="Add All Devices">
+                                                                        </form>
+                                                                        @foreach (var device in order.Taps)
+                                                                        {
+                                                                            <div class="device-div-block fb">
+                                                                                <img src="@device.GetImage(device.Sku)" loading="lazy" sizes="100vw" srcset="@device.GetImage(device.Sku) 500w, @device.GetImage(device.Sku) 800w, @device.GetImage(device.Sku) 1013w" alt="">
+                                                                            </div>
+
+                                                                        }
+
+
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col table-col w-col w-col-2">
+                                                                    <div class="status">@order.OrderRecieved.ToShortDateString()</div>
+                                                                </div>
+                                                                <div class="col table-col w-col w-col-2">
+                                                                    <div class="contact-actions">
+                                                                        <a data-w-id="25fc1321-2b83-1f55-02fb-65e7023ae774" href="#" class="show-purchase-order w-inline-block"></a>
+                                                                        <a target="_blank" href="/admin/orderdetails/@order.Id" class="print-contact-order w-inline-block"></a>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="purchase-details-block">
+                                                        <div class="row w-row">
+                                                            <div class="col w-col w-col-6">
+                                                                <div class="flex-center profile-about-row">
+                                                                    <div class="profile-info-heading-2">
+                                                                        <strong>Order #</strong>
+                                                                    </div>
+                                                                    <div>@order.OrderNumber</div>
+                                                                </div>
+                                                                <div class="flex-center profile-about-row">
+                                                                    <div class="profile-info-heading-2">
+                                                                        <strong>Name</strong>
+                                                                    </div>
+                                                                    <div>@order.Name</div>
+                                                                </div>
+                                                                <div class="flex-center profile-about-row">
+                                                                    <div class="profile-info-heading-2">
+                                                                        <strong>Phone</strong>
+                                                                    </div>
+                                                                    <div>@order.Phone</div>
+                                                                </div>
+                                                                <div class="flex-center profile-about-row">
+                                                                    <div class="profile-info-heading-2">
+                                                                        <strong>Email</strong>
+                                                                    </div>
+                                                                    <div>@order.Email</div>
+                                                                </div>
+                                                                <div class="flex-center profile-about-row">
+                                                                    <div class="profile-info-heading-2">
+                                                                        <strong>Shipping Address</strong>
+                                                                    </div>
+                                                                    <div>
+                                                                        @order.ShipAddressLine1.
+                                                                        <br>@order.ShipAddressLine2
+                                                                        <br>@order.ShipCity @order.ShipCode
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col w-col w-col-6">
+                                                                <div class="flex-center profile-about-row">
+                                                                    <div class="profile-info-heading-2">
+                                                                        <strong>Payment</strong>
+                                                                    </div>
+                                                                    <p>
+                                                                        <strong></strong>xxxx-xxxx-xxxx-@order.Last4
+                                                                        <strong> @order.Brand</strong>
+                                                                        <strong><br></strong>
+                                                                    </p>
+                                                                </div>
+                                                                <div class="flex-center profile-about-row">
+                                                                    <div class="profile-info-heading-2">
+                                                                        <strong>Items Ordered</strong>
+                                                                    </div>
+                                                                    @foreach (var device in order.Taps)
+                                                                    {
+                                                                        <div class="item-1-block">
+                                                                            <div id="w-node-_25fc1321-2b83-1f55-02fb-65e7023ae7af-023ae6ec">
+                                                                                <img src="@device.GetImage(device.Sku)" loading="lazy" sizes="100vw" height="20" srcset="@device.GetImage(device.Sku) 800w, @device.GetImage(device.Sku) 1013w" alt="" class="item-photo">
+                                                                            </div>
+                                                                            <div class="div-block-11">
+                                                                                <div class="item-text-box">@device.GetOfficialName(device.Sku)</div>
+                                                                            </div>
+                                                                            <div>
+                                                                                <div class="quantity-text-box">1</div>
+                                                                            </div>
+                                                                        </div>
+                                                                        @if (device.GetOfficialName(device.Sku).ToString().Contains("Custom"))
+                                                                        {
+                                                                            <div style="text-align:center;">
+                                                                                <img height="50" width="100" src="@order.LogoUrl" style="padding:2px 2px 2px 2px;" />
+                                                                                <p>@order.Comments</p>
+                                                                            </div>
+                                                                        }
+                                                                    }
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="section-inner"></div>
+                                        }
+
+
+
+                                    </div>
+                                </div>
+                                <div data-w-tab="Tab 6" class="w-tab-pane">
+                                    <div class="section-inner-2">
+                                        <div class="citizen-devices-card">
+                                            <div class="div-block-13">
+                                                @foreach (var device in Model.UserProfile.Taps)
+                                                {
+                                                    <div class="citizen-device-info-div-block">
+                                                        <div class="device block-center" style="text-align:center;">
+                                                            <img src="@device.GetImage(device.Sku)" loading="lazy" sizes="(max-width: 479px) 100vw, (max-width: 991px) 158.765625px, (max-width: 1439px) 15vw, 11vw" height="100" srcset="@device.GetImage(device.Sku) 500w, @device.GetImage(device.Sku) 800w, @device.GetImage(device.Sku) 1013w" alt="">
+
+                                                        </div>
+                                                        <div class="page-type">@device.GetOfficialName(device.Sku)</div>
+
+                                                        <div class="text-center">@device.TapType-@device.SNumber.Substring(0, 8)</div>
+                                                        @if (device.ContactPage != null && device.TapType != Atlice.Domain.Entities.TapType.Virtual)
+                                                        {
+                                                            <div class="text-center">@device.ContactPage.PageType Page</div>
+
+                                                            <div class="text-center">From Customer <a href="/admin/customerprofile/@Model.UserProfile.User.Id">@Model.UserProfile.User.FirstName @Model.UserProfile.User.LastName</a></div>
+                                                        }
+
+                                                        <div class="profile-social text-center">
+                                                            <a href="https://atlice.com/tap/@device.UserId" class="device-div-block fb w-inline-block"><img src="~/AA1.3/images/link-hyperlink-chain.png" loading="lazy" alt="" class="image-64"></a>
+                                                            <form class="hidden" asp-page-handler="DeleteDevice"><input type="hidden" value="@device.Id" name="deviceid" /></form>
+                                                            <a href="#" onclick="($(this).prev().submit())" class="device-div-block twitter w-inline-block"><img src="~/AA1.3/images/delete-trash-bin-remove.png" loading="lazy" alt="" class="image-63"></a>
+                                                            <a href="https://www.instagram.com/" class="device-div-block insta w-inline-block"><img src="~/AA1.3/images/Artboard-22_3.png" loading="lazy" alt="" class="image-62"></a>
+                                                        </div>
+                                                        <p>
+                                                            Current Page:@if (device.ContactPage is null)
+                                                            {
+                                                                <strong id="pageType">No Connected Page</strong>
+                                                            }
+                                                            else
+                                                            {
+                                                                <strong id="pageType">@device.ContactPage.PageType</strong>
+                                                            }
+                                                        </p>
+                                                        <form asp-page-handler="UpdateTapPage" method="post">
+                                                            <input type="hidden" name="userid" value="@device.UserId" />
+                                                            <input type="hidden" name="deviceid" value="@device.Id" />
+                                                            <select name="pageType">
+                                                                <option value="Personal">Personal</option>
+                                                                <option value="Business">Business</option>
+                                                                <option value="Professional">Professional</option>
+                                                            </select>
+                                                            <input type="submit" value="Save" />
+
+                                                        </form>
+
+                                                    </div>
+                                                }
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div data-w-tab="Tab 30" class="w-tab-pane">
+                                    <div class="section-inner-2">
+                                        <div class="citizen-devices-card">
+                                            <div class="div-block-13">
+                                              
+                                                    <form asp-page-handler="AddContactPage">
+                                                        <select name="pageType">
+                                                        <option value="@Domain.Entities.PageType.Personal">Personal</option>
+                                                        <option value="@Domain.Entities.PageType.Business">Business</option>
+                                                        <option value="@Domain.Entities.PageType.Professional">Professional</option>
+                                                        </select>
+                                                        <input type="hidden" name="userid" value="@Model.UserProfile.User.Id" />
+                                                        <input type="submit" value="Create Business 2 Contact Page" />
+                                                    </form>
+                                               
+                                                
+                                                @foreach (var p in Model.UserProfile.Pages)
+                                                {
+                                                    <div class="citizen-device-info-div-block">
+                                                        <div class="device block-center" style="text-align:center;">
+                                                            <img src="@p.ProImage" loading="lazy" sizes="(max-width: 479px) 100vw, (max-width: 991px) 158.765625px, (max-width: 1439px) 15vw, 11vw" height="100" srcset="@p.ProImage 500w, @p.ProImage 800w, @p.ProImage 1013w" alt="">
+
+                                                        </div>
+                                                        <div class="page-type">@p.PageType</div>
+
+                                                        <div class="text-center">@p.Name</div>
+                                                        <form asp-page-handler="DeletePage">
+                                                            <input type="hidden" name="pageid" value="@p.Id">
+                                                            <button type="submit">Delete</button>
+                                                        </form>
+                                                        <div class="profile-social text-center">
+                                                            @foreach (var link in p.TapLinks)
+                                                            {
+                                                                <a href="#" class="device-div-block fb w-inline-block"><img src="@link.GetLogo(link.SocialProvider)" loading="lazy" alt="" class="image-64"></a>
+                                                            }
+
+                                                        </div>
+                                                    </div>
+                                                }
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div data-w-tab="Tab 31" class="w-tab-pane">
+                                    <div class="section-inner-2">
+                                        <div class="citizen-devices-card">
+                                            <div class="div-block-13">
+                                                @foreach (var p in Model.UserProfile.ContactLists)
+                                                {
+                                                    <div class="citizen-device-info-div-block">
+
+
+                                                        <form asp-page-handler="DeleteContactList">
+                                                            <input type="hidden" name="listid" value="@p.Id">
+                                                            <button type="submit">Delete</button>
+                                                        </form>
+                                                        <div class="profile-social text-center">
+                                                            @foreach (var user in p.Contacts)
+                                                            {
+                                                                <p href="#" class="device-div-block fb w-inline-block">@user.Name</p>
+                                                            }
+
+                                                        </div>
+                                                    </div>
+                                                }
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                        @if (cp is not null && personal is not null && professional is not null)
+                        {
+                            <div class="profile-card-columns-2">
+                                <div class="row w-row">
+                                    <div class="col col-border-right text-center w-col w-col-4 w-col-small-4 w-col-tiny-4">
+                                        <div class="profile-card-col">
+                                            <div class="profile-card-col-number-2">@personal.Visits.Count()</div>
+                                            <div class="hint-4">Personal</div>
+                                        </div>
+                                    </div>
+                                    <div class="col text-center col-border-right w-col w-col-4 w-col-small-4 w-col-tiny-4">
+                                        <div class="profile-card-col">
+                                            <div class="profile-card-col-number-2">@cp.Visits.Count()</div>
+                                            <div class="hint-4">Business</div>
+                                        </div>
+                                    </div>
+                                    <div class="col text-center w-col w-col-4 w-col-small-4 w-col-tiny-4">
+                                        <div class="profile-card-col">
+                                            <div class="profile-card-col-number-2">@professional.Visits.Count()</div>
+                                            <div class="hint-4">Professional</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                       
+                    </div>
+                    <div class="page-title-button">
+                        <form asp-page-handler="StartBeta">
+                        </form>
+                        <a href="/admin/customerprofile/@Model.UserProfile.User.Id" data-w-id="b7ff888a-1d43-be60-14f1-1ec313129e69" class="button atlice-button-primary w-button">Customer Profile</a>
+
+                    </div>
+                    <div class="page-title-button">
+                        <form asp-page-handler="StartBeta">
+                        </form>
+                        <a href="#" onclick="($(this).prev().submit())" data-w-id="b7ff888a-1d43-be60-14f1-1ec313129e69" class="button atlice-button-primary w-button">Start Beta</a>
+
+                    </div>
+                    <div class="page-title-button">
+                        <form asp-page-handler="DeleteUser">
+                            <input type="hidden" value="@Model.UserProfile.User.Id" name="UserId" />
+                        </form>
+                        <a href="#" onclick="($(this).prev().submit())" data-w-id="b7ff888a-1d43-be60-14f1-1ec313129e69" class="button atlice-button-warning w-button">Delete User</a>
+
+                    </div>
+                </div>
+                @if (cp is not null)
+                {
+                    <div class="col w-col w-col-4">
+                        <div class="section-inner-2">
+                            <div class="card-5 no-padding">
+                                <div class="post-author-2">
+                                    <div class="friend-photo-container">
+                                        <img src="@cp.ProImage" width="50" sizes="50px" srcset="@cp.ProImage 500w, @cp.ProImage 800w" alt="" class="friend-photo">
+                                        <div class="online-status-2 off" id="chatStatus"></div>
+                                    </div>
+                                    <div>
+                                        <div class="text-heading-grey-2">@cp.Name</div>
+
+                                        <div class="hint-4">12 days ago</div>
+                                        <p id="userStateLabel">Ready to connect...</p>
+                                    </div>
+                                </div>
+                                <ul class="post-content-2" id="chatLog">
+                                </ul>
+                                <div class="post-feedback-2">
+                                    <form class="hidden" asp-page-handler="AddRemoveError" asp-all-route-data="minus" method="post"></form>
+                                    <a onclick="$(this).prev().submit()" href="#" class="post-feedback-item">
+                                        <img src="~/AA1.3/images/minus-remove-minimize.png" width="25" alt="" class="post-feedback-icon">
+                                    </a>
+                                    <div class="post-feedback-item bullseye">
+                                        <img src="~/AA1.3/images/target-round-circle-mark.png" width="40" alt="" class="post-feedback-icon">
+                                        <div class="hint-4 bounty" id="count">@Model.UserProfile.ErrorFeedbacks</div>
+                                    </div>
+                                    <form class="hidden" asp-page-handler="AddRemoveError" asp-all-route-data="plus"></form>
+                                    <a onclick="$(this).prev().submit()" href="#" class="post-feedback-item w-inline-block"><img src="~/AA1.3/images/-add-plus.png" width="25" alt="" class="post-feedback-icon"></a>
+                                </div>
+                                <div class="post-form">
+                                    <div class="w-form">
+                                        <form id="wf-form-profile" name="wf-form-profile" data-name="profile" class="form-5">
+                                            <textarea placeholder="Example Text" maxlength="5000" id="sendMessage" name="field-5" class="textarea-3 w-input"></textarea>
+                                            <input id="sendButton" type="submit" value="Send" data-wait="Please wait..." class="button-5 atlice-button-primary button-small w-button">
+                                        </form>
+                                        <div class="success-message-3 w-form-done">
+                                            <div>Saved!</div>
+                                        </div>
+                                        <div class="error-message-3 w-form-fail">
+                                            <div>Oops! Something went wrong while submitting the form.</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+
+            </div>
+        </div>
+    </div>
+    <div class="footer-3">
+        <div class="w-row">
+            <div class="w-col w-col-6">
+                <div class="hint-4">© Copyright Atlice LLC. All rights reserved</div>
+            </div>
+            <div class="footer-right w-col w-col-6">
+                <div class="hint-4">
+                    <a href="https://webflow.com/" class="footer-link-5">Empowered by Atlice</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts{
+     <script>
+       
+        var userStateLabel = document.getElementById("userStateLabel");
+        var sendMessage = document.getElementById("sendMessage");
+        var sendButton = document.getElementById("sendButton");
+        var adminUserName = document.getElementById('adminUserName');
+        var memberUserName = document.getElementById('memberUserName');
+        var chatLog = document.getElementById("chatLog");
+
+        var socket;
+
+        var scheme = document.location.protocol === "https:" ? "wss" : "ws";
+        var port = document.location.port ? (":" + document.location.port) : "";
+
+
+        var connectionUrl = scheme + "://" + document.location.hostname + port + "/ws?username=";
+
+
+        function updateState() {
+            function disable() {
+                sendMessage.disabled = true;
+                sendButton.disabled = true;
+            }
+            function enable() {
+                sendMessage.disabled = false;
+                sendButton.disabled = false;
+            }
+
+            memberUserName.disabled = true;
+
+            if (!socket) {
+                disable();
+            } else {
+                switch (socket.readyState) {
+                    case WebSocket.CLOSED:
+                        userStateLabel.innerHTML = "Closed";
+                        disable();
+                        userName.disabled = false;
+                        break;
+                    case WebSocket.CLOSING:
+                        userStateLabel.innerHTML = "Closing...";
+                        disable();
+                        break;
+                    case WebSocket.CONNECTING:
+                        userStateLabel.innerHTML = "Connecting...";
+                        disable();
+                        break;
+                    case WebSocket.OPEN:
+                        userStateLabel.innerHTML = "Open";
+                        enable();
+                        break;
+                    default:
+                        userStateLabel.innerHTML = "Unknown WebSocket State: " + htmlEscape(socket.readyState);
+                        disable();
+                        break;
+                }
+            }
+        }
+
+       
+
+        sendButton.onclick = function () {
+            if (!socket || socket.readyState !== WebSocket.OPEN) {
+                alert("socket not connected");
+            }
+            var data = sendMessage.value;
+
+            var message = {};
+            message.Type = "chat";
+            message.Sender = "Admin";
+            message.Content = data;
+            message.Receiver = memberUserName.value;
+            message.IsPrivate = true;
+            console.log(JSON.stringify(message));
+
+            socket.send(JSON.stringify(message));
+
+            sendMessage.value = "";
+        };
+
+        $(document).ready(function(){
+         
+            userStateLabel.innerHTML = "Checking if Connected";
+            socket = new WebSocket(connectionUrl + adminUserName.value);
+         
+            socket.onopen = function (event) {
+                updateState();
+
+                console.log("socket opened", event);
+                var message = {};
+                message.Type = "connection";
+                message.Sender = adminUserName.value;
+                message.Content = "Ping";
+                message.Receiver = memberUserName.value;
+                message.IsPrivate = true;
+                console.log(JSON.stringify(message));
+
+                socket.send(JSON.stringify(message));
+
+                sendMessage.value = "";
+            };
+            socket.onclose = function (event) {
+                updateState();
+                chatLog.innerHTML += '<p>Connection closed: ' + htmlEscape(event.reason) + '</p>';
+            };
+            socket.onerror = updateState;
+            socket.onmessage = function (event) {
+                console.log(event.data);
+                var receivedMessage = JSON.parse(event.data);
+
+                if (receivedMessage.Content) {
+                    if (receivedMessage.Content.includes("Is online")){
+                        document.getElementById("chatStatus").setAttribute("class", "online-status-2 on");
+                    }
+                    chatLog.innerHTML += '<li>' + htmlEscape(receivedMessage.Content) + '</li>';
+                }
+
+            };
+        });
+
+
+
+        function htmlEscape(str) {
+            return str.toString()
+                .replace(/&/g, '&amp;')
+                .replace(/"/g, '&quot;')
+                .replace(/'/g, '&#39;')
+                .replace(/</g, '&lt;')
+                .replace(/>/g, '&gt;');
+        }
+    </script>
+    
+}

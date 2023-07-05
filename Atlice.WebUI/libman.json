@@ -1,0 +1,22 @@
+{
+  "version": "1.0",
+  "defaultProvider": "cdnjs",
+  "libraries": [
+    {
+      "library": "popper.js@2.11.6",
+      "destination": "wwwroot/popper.js/"
+    },
+    {
+      "library": "Chart.js@4.2.1",
+      "destination": "wwwroot/lib/Chartjs/"
+    },
+    {
+      "library": "microsoft-signalr@7.0.4",
+      "destination": "wwwroot/lib/microsoft-signalr/"
+    },
+    {
+      "library": "intro.js@6.0.0",
+      "destination": "wwwroot/lib/intro.js/"
+    }
+  ]
+}

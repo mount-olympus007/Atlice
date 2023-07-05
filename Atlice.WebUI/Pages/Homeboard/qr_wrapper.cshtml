@@ -1,0 +1,242 @@
+﻿@model Atlice.WebUI.Pages.Homeboard.IndexModel.QRModel
+@{
+    Layout = null;
+}
+<div class="div-block-60 qr">
+    <div data-w-id="50da6a71-3cf5-d16e-d43b-e92afceb5954" class="page-editor-top-bar qr">
+        <a href="#" class="close-editor-button w-inline-block"><img src="../images/back-button---white.png" loading="lazy" width="40" alt="" class="image-83"></a>
+        <div class="div-block-29 qr">
+            <a href="#" class="button-5 atlice-button-primary publish qr w-button"></a>
+        </div>
+    </div>
+</div>
+<div class="business-contact-page-container preview qr">
+    <div class="modal link-to stc-notes">
+        <div class="modal-mask pages-intro"></div>
+    </div>
+    <div id="1" class="content-container-2 contact-page qr-preview">
+        <div class="div-block-26">
+            <div class="brand-hero qr">
+                <div class="brand-hero-div desktop-background w-container"></div>
+                <div class="div-block-25 qr"><img src="../images/atlice-tap-nfc-tag-4.png" sizes="100vw" srcset="../images/atlice-tap-nfc-tag-4-p-500.png 500w, ../images/atlice-tap-nfc-tag-4-p-800.png 800w, ../images/atlice-tap-nfc-tag-4-p-1080.png 1080w, ../images/atlice-tap-nfc-tag-4-p-1600.png 1600w, ../images/atlice-tap-nfc-tag-4.png 1800w" alt="" class="form11_image qr"></div>
+            </div>
+            <div id="Hero" class="brand-logo-wrapper-old atlice">
+                <a href="#" class="nav-logo-link w-inline-block"><img src="../images/Atlice-Tap-NFC-Tag--256px.png" alt="" class="nav-logo"></a>
+            </div>
+            <div id="Hero" class="profile-wrapper-2 qr w-clearfix">
+                <div class="div-block-73"><img src="@Model.ContactPage.ProImage" loading="lazy" alt="" class="image-81"></div>
+                <div class="profile-left-col-2 qr"><img src="../images/IMG_7176-2.JPG" width="195" sizes="100vw" srcset="../images/IMG_7176-2-p-500.jpeg 500w, ../images/IMG_7176-2.JPG 720w" alt="" class="profile-image-mobile qr"></div>
+                <div class="qr-code-image-container mobile"><img src="@String.Format("data:image/png;base64,{0}", Convert.ToBase64String(Model.QR))" loading="lazy" width="200" id="w-node-_42d7fb5c-3665-c303-51fa-81590d68b01c-9c649d68" alt=""></div>
+                <div id="w-node-_6a123a08-5e0e-8d79-9a22-6c2b5584e187-9c649d68">
+                    <h2 id="w-node-_50da6a71-3cf5-d16e-d43b-e92afceb5acf-9c649d68" class="profile-h2-3 qr">@Model.ContactPage.Name</h2>
+                    @if (Model.ContactPage.Location != null)
+                    {
+                        <div class="container-21 qr w-container">
+                            <img src="../images/location.png" loading="lazy" height="15" alt="">
+                            <div class="text-block-36 qr">@Model.ContactPage.Location</div>
+                        </div>
+                    }
+
+
+                </div>
+            </div>
+            <div class="contact-page-atchd-profile-card-columns _1">
+                <a href="#" class="profile-card-link w-inline-block">
+                    <div class="profile-card-col">
+                        <img src="../images/download-file-arrow.png" loading="lazy" height="50" alt="" class="image-58 menu-icon">
+                        <div class="hint-4 pages">Save To Contacts</div>
+                    </div>
+                </a>
+            </div>
+            <div class="contact-page-atchd-profile-card-columns _3">
+                <div class="row-2 w-row">
+                    <div class="col text-center col-border-right w-col w-col-4 w-col-small-4 w-col-tiny-4">
+                        <a href="#" class="profile-card-link w-inline-block">
+                            <div class="profile-card-col">
+                                <img src="../images/download-file-arrow.png" loading="lazy" height="50" alt="" class="image-58 menu-icon">
+                                <div class="hint-4 pages"><strong class="bold-text-106">Save To Contacts</strong></div>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="col text-center col-border-right w-col w-col-4 w-col-small-4 w-col-tiny-4">
+                        <a href="#" class="profile-card-link w-inline-block">
+                            <div class="profile-card-col">
+                                <img src="../images/date-calendar-month-year.png" loading="lazy" height="50" alt="" class="image-58 menu-icon">
+                                <div class="hint-4 pages"><strong class="bold-text-107">Calendar</strong></div>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="col text-center col-border-right w-col w-col-4 w-col-small-4 w-col-tiny-4">
+                        <a href="#" class="profile-card-link w-inline-block">
+                            <div class="profile-card-col">
+                                <img src="../images/upload-file-arrow.png" loading="lazy" height="50" alt="" class="image-58 menu-icon">
+                                <div class="hint-4 pages"><strong class="bold-text-108">Submit Contact</strong></div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="contact-page-atchd-profile-card-columns _2">
+                <div class="row-2 w-row">
+                    <div class="col text-center col-border-right w-col w-col-6">
+                        <a href="#" class="profile-card-link w-inline-block">
+                            <div class="profile-card-col menu">
+                                <img src="../images/download-file-arrow.png" loading="lazy" height="50" alt="" class="image-58 menu-icon">
+                                <div class="hint-4 pages menu">Save To Contacts</div>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="col text-center col-border-right w-col w-col-6">
+                        <a href="#" class="profile-card-link w-inline-block">
+                            <div class="profile-card-col menu">
+                                <img src="../images/date-calendar-month-year.png" loading="lazy" height="50" alt="" class="image-58 menu-icon">
+                                <div class="hint-4 pages menu">Schedule</div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="contact-page-menu-grids-block qr">
+            <div class="menu-links-grid stc-sc-cal-nts qr">
+                <div class="w-layout-grid grid-8 hidden">
+                    <a href="#" id="w-node-_50da6a71-3cf5-d16e-d43b-e92afceb5b5d-9c649d68" class="profile-card-link w-inline-block">
+                        <div class="profile-card-col">
+                            <img src="../images/download-file-arrow.png" loading="lazy" height="50" alt="" class="image-58 menu-icon">
+                            <div class="hint-4 pages"><strong class="bold-text-106">Save to Contacts</strong></div>
+                        </div>
+                    </a>
+                    <a href="#" class="profile-card-link w-inline-block">
+                        <div class="profile-card-col">
+                            <img src="../images/upload-file-arrow.png" loading="lazy" height="50" alt="" class="image-58 menu-icon">
+                            <div class="hint-4 pages"><strong class="bold-text-106">Submit Contact</strong></div>
+                        </div>
+                    </a>
+                    <a href="#" class="profile-card-link w-inline-block">
+                        <div class="profile-card-col">
+                            <img src="../images/date-calendar-month-year.png" loading="lazy" height="50" alt="" class="image-58 menu-icon">
+                            <div class="hint-4 pages"><strong class="bold-text-106">Calendar</strong></div>
+                        </div>
+                    </a>
+                    <a href="#" class="profile-card-link w-inline-block">
+                        <div class="profile-card-col">
+                            <img src="../images/edit-writing-tools-pencil.png" loading="lazy" height="50" alt="" class="image-58 menu-icon">
+                            <div class="hint-4 pages"><strong class="bold-text-106">Note to Self</strong></div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+            <ul role="list" class="social-media-list-2 black w-list-unstyled">
+                <li class="social-media-list-item-2 hidden">
+                    <a href="https://www.linkedin.com/in/alexander-oliver-011348b/" target="_blank" class="w-inline-block"><img src="../images/iconmonstr-linkedin-2.svg" width="20" height="20" alt=""></a>
+                </li>
+                <li class="social-media-list-item-2 hidden">
+                    <a href="http://facebook.com/soskyhigh-media" target="_blank" class="w-inline-block"><img src="../images/iconmonstr-facebook-6.svg" width="20" height="20" alt=""></a>
+                </li>
+                <li class="social-media-list-item-2 hidden">
+                    <a href="http://instagram.com/frames-by-soskyhigh" target="_blank" class="w-inline-block"><img src="../images/iconmonstr-instagram-11.svg" width="20" height="20" alt=""></a>
+                </li>
+                <li class="social-media-list-item-2 hidden">
+                    <a href="#" class="w-inline-block"><img src="../images/iconmonstr-pinterest-1.svg" width="20" height="20" alt=""></a>
+                </li>
+                <li class="social-media-list-item-2 hidden">
+                    <a href="http://twitter.com/soskyhigh" target="_blank" class="w-inline-block"><img src="../images/Twitter_1Twitter.png" width="20" height="20" alt=""></a>
+                </li>
+                <li class="social-media-list-item-2 hidden">
+                    <a href="http://linkyou.page/alexander-oliver" target="_blank" class="w-inline-block"><img src="../images/Image-401.png" width="20" height="20" alt=""></a>
+                </li>
+                <li class="social-media-list-item-2">
+                    <a href="#" class="menu-contact-icon-link w-inline-block"><img src="../images/call-phone-calling.png" width="30" height="30" alt=""></a>
+                </li>
+                <li class="social-media-list-item-2">
+                    <a href="#" class="menu-contact-icon-link w-inline-block"><img src="../images/chat-conversation-message-bubble.png" width="30" height="30" alt=""></a>
+                </li>
+                <li class="social-media-list-item-2">
+                    <a href="#" class="menu-contact-icon-link w-inline-block"><img src="../images/email-mail-inbox-message.png" width="30" height="30" alt=""></a>
+                </li>
+                <li class="social-media-list-item-2">
+                    <a href="#" class="menu-contact-icon-link w-inline-block"><img src="../images/c5305453-fe7a-49eb-8cc6-8f1b9f7a2ea6.png" width="30" height="30" sizes="100vw" srcset="../images/c5305453-fe7a-49eb-8cc6-8f1b9f7a2ea6-p-500.png 500w, ../images/c5305453-fe7a-49eb-8cc6-8f1b9f7a2ea6.png 501w" alt=""></a>
+                </li>
+            </ul>
+            <div class="menu-links-grid stc-sc">
+                <div class="w-layout-grid grid-8">
+                    <a href="#" id="w-node-_50da6a71-3cf5-d16e-d43b-e92afceb5b77-9c649d68" class="profile-card-link w-inline-block">
+                        <div class="profile-card-col">
+                            <img src="../images/download-file-arrow.png" loading="lazy" height="50" alt="" class="image-58 menu-icon">
+                            <div class="hint-4 pages"><strong class="bold-text-106">Save to Contacts</strong></div>
+                        </div>
+                    </a>
+                    <a href="#" id="w-node-_50da6a71-3cf5-d16e-d43b-e92afceb5b7d-9c649d68" class="profile-card-link w-inline-block">
+                        <div class="profile-card-col">
+                            <img src="../images/upload-file-arrow.png" loading="lazy" height="50" alt="" class="image-58 menu-icon">
+                            <div class="hint-4 pages"><strong class="bold-text-106">Submit Contact</strong></div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="contact-page-tap-links-section qr">
+            <div class="pay-tap-links-container _2">
+                <p class="paragraph-23">Pay</p>
+                <div class="row-2 w-row">
+                    <div class="col col-border-right text-center w-col w-col-6">
+                        <div class="profile-card-col">
+                            <img src="../images/SquareCash.png" loading="lazy" height="50" alt="" class="image-58">
+                            <div class="hint-4 pages">Cash App</div>
+                        </div>
+                    </div>
+                    <div class="col text-center col-border-right w-col w-col-6">
+                        <div class="profile-card-col">
+                            <img src="../images/VenmoHex.png" loading="lazy" height="50" alt="" class="image-58">
+                            <div class="hint-4 pages">Venmo</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div data-delay="4000" data-animation="slide" class="slider-2 atlice-page w-slider" data-autoplay="true" data-easing="ease" data-hide-arrows="false" data-disable-swipe="false" data-autoplay-limit="0" data-nav-spacing="3" data-duration="500" data-infinite="true">
+                <div class="mask-7 w-slider-mask">
+                    <div class="slide-8 w-slide">
+                        <a href="http://linkyou.page/alexander-oliver" class="link-block-32 w-inline-block">
+                            <h2 class="profile-h2-3"><strong class="bold-text-56">Alexander&#x27;s LinkYou Page</strong></h2><img src="../images/arrow-right.svg" loading="lazy" alt="" class="image-13">
+                        </a>
+                    </div>
+                    <div class="slide-9 w-slide">
+                        <a href="http://mastergrindnetwork.com" class="link-block-32 w-inline-block">
+                            <h2 class="profile-h2-3"><strong class="bold-text-56">Mastergrind NETWORK</strong></h2><img src="../images/arrow-right.svg" loading="lazy" alt="" class="image-13">
+                        </a>
+                    </div>
+                    <div class="slide-10 w-slide">
+                        <a href="http://atlice.com" class="link-block-32 w-inline-block">
+                            <h2 class="profile-h2-3"><strong class="bold-text-56">Atlice pORTAL</strong></h2><img src="../images/arrow-right.svg" loading="lazy" alt="" class="image-13">
+                        </a>
+                    </div>
+                </div>
+                <div class="w-slider-arrow-left">
+                    <div class="w-icon-slider-left"></div>
+                </div>
+                <div class="w-slider-arrow-right">
+                    <div class="w-icon-slider-right"></div>
+                </div>
+                <div class="w-slider-nav w-slider-nav-invert w-round w-num"></div>
+            </div>
+            <div class="footer-wrap-2 qr"><img src="../images/Image-410.png" width="100" sizes="100vw" srcset="../images/Image-410-p-500.png 500w, ../images/Image-410-p-800.png 800w, ../images/Image-410-p-1080.png 1080w, ../images/Image-410.png 1316w" alt="" class="image-5 white"><img src="../images/Image-427.png" width="100" sizes="100vw" srcset="../images/Image-427-p-500.png 500w, ../images/Image-427-p-800.png 800w, ../images/Image-427-p-1080.png 1080w, ../images/Image-427.png 1316w" alt="" class="image-5 black"></div>
+        </div>
+    </div>
+    <div class="div-block-16">
+        <div id="top" class="hero-background-image atlice wf-section" data-ix="header-image-fade-in-and-move-up-on-load"></div>
+    </div>
+    <div id="Top" class="nav02_top preview">
+        <div class="nav02_top_wrap contact-page">
+            <div class="nav02_top_right top-bar contact-page">
+                <div data-delay="0" data-hover="false" class="nav02_account w-dropdown">
+                    <div class="nav02_account_toggle top-bar-contact-page w-dropdown-toggle"><img src="../images/Atlice-Tap-NFC-Tag-3.png" sizes="100vw" srcset="../images/Atlice-Tap-NFC-Tag-3-p-500.png 500w, ../images/Atlice-Tap-NFC-Tag-3-p-800.png 800w, ../images/Atlice-Tap-NFC-Tag-3-p-1080.png 1080w, ../images/Atlice-Tap-NFC-Tag-3-p-1600.png 1600w, ../images/Atlice-Tap-NFC-Tag-3.png 1800w" alt="" class="nav-logo-contact-page"></div>
+                    <nav class="nav02_en_dropdown w-dropdown-list">
+                        <a href="#" class="nav02_dropdown_link hidden w-dropdown-link">My Devices</a>
+                        <a href="http://atlice.com" class="nav02_dropdown_link w-dropdown-link">Shop</a>
+                        <a href="http://atlice.com" class="nav02_dropdown_link w-dropdown-link">Sign in</a>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

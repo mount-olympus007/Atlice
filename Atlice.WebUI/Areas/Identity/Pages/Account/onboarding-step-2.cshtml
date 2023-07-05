@@ -1,0 +1,55 @@
+@page
+@model Atlice.Areas.Identity.Pages.Account.onboarding_step_2Model
+@{
+    ViewData["Title"] = "Register";
+    Layout = "_RegisterLayout";
+
+}
+<div class="single-layout-col right w-col w-col-12">
+    <div class="single-layout-right">
+        <div class="single-layout-right-content">
+            <div class="card">
+                <div class="atlice-register-form">
+                    <h3 class="form11_h5">Make Atlice yours!</h3>
+                    <p class="mb-40 text-center">
+                        Register for a new myAtlice account here.
+
+                        <br />
+                        <span class="text-danger">@TempData["message"]</span>
+                    </p>
+                    <div class="form11_line"></div>
+                    <div class="form11_form_block w-form">
+                        <form asp-page-handler="Step2" method="post" id="email-form-2" name="email-form-2" data-name="Email Form 2" class="form11_form">
+                            <input type="text" asp-for="Input.FullName" class="input w-input" maxlength="256" data-name="Project Name" placeholder="Full Name" id="Project-Name" required="">
+                            <input type="tel" asp-for="Input.PhoneNumber" class="input w-input" maxlength="256" data-name="Phone" placeholder="Mobile Number" id="Phone" required="">
+                            <input type="email" asp-for="Input.Email" class="input w-input" maxlength="256" data-name="Email" placeholder="Email" id="Email" required="">
+                            <a onclick="($(this).next().click())" href="#" class="button atlice-button-primary mt-20 button-block w-button">Create account</a>
+                            <input type="submit" class="hidden" />
+                        </form>
+                        <div class="form09_success w-form-done">
+                            <div class="form_alert">
+                                <div class="form_alert_wrap">
+                                    <img src="https://uploads-ssl.webflow.com/5de5e999eee2054fa942a10b/5de5e999eee205041f42a33c_check-white.svg" width="14" alt="" class="form_alert_icon">
+                                    <div class="form_alert_line"></div>
+                                    <div class="form_alert_text white-text">Your information has been saved.</div>
+                                </div>
+                                <img src="https://uploads-ssl.webflow.com/5de5e999eee2054fa942a10b/5de5e999eee2056a2b42a336_x_white.svg" width="10" alt="">
+                            </div>
+                        </div>
+                        <div class="form09_error w-form-fail">
+                            <div class="form_error">
+                                <div class="form_error_wrap">
+                                    <img src="https://uploads-ssl.webflow.com/5de5e999eee2054fa942a10b/5de5e999eee205e71a42a33a_alert-circle-white.svg" width="16" alt="" class="form_error_icon">
+                                    <div class="form_error_line"></div>
+                                    <div class="form_error_paragraph white-text">Looks like we&#x27;re having trouble</div>
+                                </div>
+                                <img src="https://uploads-ssl.webflow.com/5de5e999eee2054fa942a10b/5de5e999eee2056a2b42a336_x_white.svg" width="10" alt="">
+                            </div>
+                        </div>
+                    </div>
+                    <img src="~/images/Atlice-Tap-NFC-Tag-3.png" sizes="60px" srcset="/images/Atlice-Tap-NFC-Tag-3-p-500.png 500w, /images/Atlice-Tap-NFC-Tag-3-p-800.png 800w, /images/Atlice-Tap-NFC-Tag-3-p-1080.png 1080w, /images/Atlice-Tap-NFC-Tag-3-p-1600.png 1600w, /images/Atlice-Tap-NFC-Tag-3.png 1800w" alt="" class="form11_image">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,29 @@
+﻿@model Atlice.Domain.Entities.ContactPage
+
+@{
+    Layout = null;
+}
+<div style="display:none;opacity:0" class="modal link-to tap-links-selection" id="taplinkselectmodal">
+    <div class="modal-mask"></div>
+    <div class="modal-container-2 tap-links">
+        <div class="single-layout-right">
+            <div class="single-layout-right-content">
+                <div class="single-layout-logo-right hidden">
+                    <a href="#" class="w-inline-block"><img src="../images/Atlice-Tap-NFC-Tag--256px.png" width="40" alt=""></a>
+                </div>
+                <div class="section-inner tap-links">
+                    <div class="contact-page-tap-links-section selection-modal">
+
+                        <div class="contact-page-tap-links-section business-conttact selection-modal" id="bypassdiv">
+                            @await Html.PartialAsync("/pages/homeboard/bypass_links.cshtml", Model)
+                      
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <a data-w-id="ee16bbdf-8e64-27cc-1cd9-61dd9b07b2c5" href="#" class="modal-close hidden w-inline-block"></a>
+    </div>
+</div>
